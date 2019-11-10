@@ -10,6 +10,9 @@
     <Filter Include="Source\Hash">
       <UniqueIdentifier>{8fb6fb8d-cea7-47f6-9ec6-2f7c2e7018d1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Math">
+      <UniqueIdentifier>{e966a0f7-636d-4131-942f-197e5d386d8e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Software\Crypto\Hash\SHA.cpp">
@@ -26,6 +29,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Software\Crypto\Hash\Algorithm.cpp">
       <Filter>Source\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Software\Crypto\Math\GaloisField.cpp">
+      <Filter>Source\Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -46,6 +52,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Software\Crypto\Types.h">
       <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Software\Crypto\Math\GaloisField.h">
+      <Filter>Source\Math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

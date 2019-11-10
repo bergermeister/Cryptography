@@ -31,17 +31,17 @@ namespace GNCrypto
       class TcSHA512 : public TcSHA
       {
       public:        // Public Attributes
-         static const Tu32 XuiLengthHash = 64;   ///< Length of Hash in bytes
+         static const Tu32 XuiLength = 64;   ///< Length of Hash in bytes
 
       private:       // Private Attributes
-         static const Tu32 xuiConstCnt    = 80;                               ///< 
-         static const Tu32 xuiLengthBlock = 128;                              ///< Length of pad buffer in bytes 
-         static const Tu64 xulConstant[ xuiConstCnt ];                        ///< 
-         static const Tu64 xulDefaultHash[ XuiLengthHash / sizeof( Tu64 ) ];  ///< 
-         static const Tu8  xucPadding[ xuiLengthBlock ];                      ///< 
+         static const Tu32 xuiConstCnt    = 80;                            ///< 
+         static const Tu32 xuiLengthBlock = 128;                           ///< Length of pad buffer in bytes 
+         static const Tu64 xulConstant[ xuiConstCnt ];                     ///< 
+         static const Tu64 xulDefaultHash[ XuiLength / sizeof( Tu64 ) ];   ///< 
+         static const Tu8  xucPadding[ xuiLengthBlock ];                   ///< 
 
          Tu64 vulBlock[ xuiLengthBlock / sizeof( Tu64 ) ];  ///< Padding buffer 
-         Tu64 vulHash[ XuiLengthHash / sizeof( Tu64 ) ];    ///< Calculated Hash 
+         Tu64 vulHash[ XuiLength / sizeof( Tu64 ) ];        ///< Calculated Hash 
          Tu32 vuiDigested;                                  ///< Number of bytes digested 
          Tu32 vuiBlockSize;
 
