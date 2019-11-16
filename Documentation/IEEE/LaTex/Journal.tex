@@ -247,12 +247,12 @@
 % a separate \thanks must be used for each paragraph as LaTeX2e's \thanks
 % was not built to handle multiple paragraphs
 
-\author{Edward~Eisenberger,~\IEEEmembership{Member,~IEEE}
-	
+\author{Edward~Eisenberger,~\IEEEmembership{Member,~IEEE}	
 % <-this % stops a space
-\thanks{Pending1}% <-this % stops a space
-\thanks{Pending2}% <-this % stops a space
-\thanks{Pending3}}
+%\thanks{Pending1}% <-this % stops a space
+%\thanks{Pending2}% <-this % stops a space
+%\thanks{Pending3}
+}
 
 % note the % following the last \IEEEmembership and also \thanks - 
 % these prevent an unwanted space from occurring between the last author name
@@ -330,30 +330,33 @@ Advanced Encryption Standard (AES), S-Box, Secure Hash Algorithm (SHA)
 
 I wish you the best of success.
 
-\hfill mds
+%\hfill mds
  
-\hfill August 26, 2015
+%\hfill August 26, 2015
 
 \section{Related Work}
 
-\cite{AESDynamicKey} Dang, T. N. and H. M. Vo
+\cite{AESDynamicKey} Dang, T. N. and H. M. Vo have proposed a method for dynamically modifying the shared key based on the frame sequence.
 
-\cite{AESDiffieHellman} Yusfrizal, Y., et al.,
+\cite{AESDiffieHellman} Yusfrizal, Y., et al. have proposed a method for exchanging secret keys using Diffie-Hellman Key Exchange. The shared secret key is used in the AES encryption and decryption.
 
-\cite{AESDynamicSBox} M, G. and H. S. M.
-
-\section{Hash Function}
+\cite{AESDynamicSBox} M, G. and H. S. M. have proposed a method for dynamically generating S-Boxes. The S-Box is initialized with values from 0 to 255. 256 random numbers are generated and run through a hashing algorithm. The resultant hash is stored in a Key matrix. The values of the S-Box are swapped based on the Key matrix resulting in a dynamic S-Box. 
 
 \section{Dynamic S-Box Exchange}
 
-\subsection{Subsection Heading Here}
-Subsection text here.
+\subsection{Diffie-Hellman Exchange}
+
+\subsection{Hash Function}
+
+\subsection{S-Box Generation}
+
+%Subsection text here.
 
 % needed in second column of first page if using \IEEEpubid
 %\IEEEpubidadjcol
 
-\subsubsection{Subsubsection Heading Here}
-Subsubsection text here.
+%\subsubsection{Subsubsection Heading Here}
+%Subsubsection text here.
 
 
 % An example of a floating figure using the graphicx package.
@@ -471,13 +474,13 @@ Subsubsection text here.
 
 
 \appendices
-\section{Proof of the First Zonklar Equation}
-Appendix one text goes here.
+%\section{Proof of the First Zonklar Equation}
+%Appendix one text goes here.
 
 % you can choose not to have a title for an appendix
 % if you want by leaving the argument blank
-\section{}
-Appendix two text goes here.
+%\section{}
+%Appendix two text goes here.
 
 
 % use section* for acknowledgment
