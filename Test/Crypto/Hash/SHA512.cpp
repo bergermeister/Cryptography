@@ -156,6 +156,7 @@ namespace CryptoTest
                   kuiRem = xuiLen;
                }
                koSHA.MProcess( xucpMsg, kuiRem );
+               kuiProc += kuiRem;
             }
             koSHA.MFinalize( );
 

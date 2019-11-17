@@ -9,7 +9,8 @@
  */
 #include <Types.h>
 #include <Hash/SHA.h>
-#include <Hash\SHA512.h>
+#include <Hash/SHA512.h>
+#include <string.h>
 
 using namespace GNCrypto;
 using namespace GNCrypto::NHash;
@@ -95,20 +96,14 @@ TcSHA512& TcSHA512::operator=( const TcSHA512& aorSHA )
 
 void TcSHA512::MInitialize( void )
 {
-   Tu32 kuiIndex;
-
-   // Preprocess
-   // 1. Set the initial hash to the default
-   for( kuiIndex = 0; kuiIndex < ( XuiLength / sizeof( Tu64 ) ); kuiIndex++ )
-   {
-      this->vulHash[ kuiIndex ] = xulDefaultHash[ kuiIndex ];
-   }
+   /// @par Process Design Language
+   /// -# Set the initial hash to the default
+   memcpy( reinterpret_cast< void* >( this->vulHash ),
+           reinterpret_cast< const void* >( xulDefaultHash ),
+           XuiLength );
 
    // Clear the working block
-   for( kuiIndex = 0; kuiIndex < ( xuiLengthBlock / sizeof( Tu64 ) ); kuiIndex++ )
-   {
-      this->vulBlock[ kuiIndex ] = 0;
-   }
+   memset( reinterpret_cast< void* >( this->vulBlock ), 0, xuiLengthBlock );
 
    // Reset the digested byte count and block count
    this->vuiDigested = 0;
@@ -119,7 +114,6 @@ void TcSHA512::MProcess( const Tu8* aucpMessage, const Tu32 auiLength )
 {
    Tu32 kuiRemaining = auiLength;
    Tu32 kuiBytes;
-   Tu32 kuiIndex;
    Tu8* kucpBlock = reinterpret_cast< Tu8* >( this->vulBlock );
    Tu8* kucpData = const_cast< Tu8* >( aucpMessage );
 
@@ -130,17 +124,15 @@ void TcSHA512::MProcess( const Tu8* aucpMessage, const Tu32 auiLength )
    {
       // The buffer can hold at most 128 bytes
       kuiBytes = xuiLengthBlock - vuiBlockSize;
-
       if( kuiBytes > kuiRemaining )
       {
          kuiBytes = kuiRemaining;
       }
 
       // Copy the data to the buffer
-      for( kuiIndex = 0; kuiIndex < kuiBytes; kuiIndex++ )
-      {
-         kucpBlock[ kuiIndex ] = kucpData[ kuiIndex ];
-      }
+      memcpy( reinterpret_cast< void* >( kucpBlock ),
+              reinterpret_cast< const void* >( kucpData ),
+              kuiBytes );
 
       // Update the SHA-512 context
       this->vuiBlockSize += kuiBytes;
@@ -166,7 +158,6 @@ void TcSHA512::MProcess( const Tu8* aucpMessage, const Tu32 auiLength )
 
 void TcSHA512::MFinalize( void )
 {
-   Tu32 kuiIndex;
    Tu32 kuiPadSize;
    Tu32 kuiTotal;
    
@@ -180,15 +171,15 @@ void TcSHA512::MFinalize( void )
    }
    else
    {
-      kuiPadSize = 128 + 112 - this->vuiBlockSize;
+      kuiPadSize = ( 128 + 112 ) - this->vuiBlockSize;
    }
-
-   // Append padding
-   this->MProcess( xucPadding, kuiPadSize );
 
    // Append the length of the original message
    this->vulBlock[ 14 ] = 0;
    this->vulBlock[ 15 ] = MSwap( kuiTotal );
+
+   // Append padding
+   this->MProcess( xucPadding, kuiPadSize );
 
    // Calculate the message digest
    this->mProcessBlock( );
