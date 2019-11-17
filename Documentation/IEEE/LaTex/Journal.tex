@@ -327,15 +327,37 @@ Advanced Encryption Standard (AES), National Institute of Standards and Technolo
 % 
 % Here we have the typical use of a "T" for an initial drop letter
 % and "HIS" in caps to complete the first word.
-\IEEEPARstart{T}{he} Advanced Encryption Standard (AES) is a symmetric block cipher that can encrypt and decrypt electronic information. The National Institute of Standards and Technology (NIST) published the algorithm in the Federal Information Processing Standards (FIPS) 197.
+\IEEEPARstart{T}{he} Advanced Encryption Standard (AES) is a symmetric block cipher that can encrypt and 
+decrypt electronic information. The National Institute of Standards and Technology (NIST) published the 
+algorithm in the Federal Information Processing Standards (FIPS) 197.
 
-AES is used when an Endpoint, A, wishes to transmit some Plaintext to another Endpoint, B, and ensure that anything listening on the medium cannot understand Plaintext. Figure ~\ref{Figure:AESProcess} illustrates the process involved to encrypt Plaintext into Ciphertext at Endpoint A and decrypt Ciphertext into Plaintext at Endpoint B. Endpoints A and B must share a Secret Key, 256-Byte Substitution Box (S-Box), and 256-Byte Inverse Substitution Box.
+AES is used when an Endpoint, A, wishes to transmit some Plaintext to another Endpoint, B, and ensure that 
+anything listening on the medium cannot understand Plaintext. Figure ~\ref{Figure:AESProcess} illustrates 
+the process involved to encrypt Plaintext into Ciphertext at Endpoint A and decrypt Ciphertext into Plaintext 
+at Endpoint B. Endpoints A and B must share a Secret Key, 256-Byte Substitution Box (S-Box), and 256-Byte 
+Inverse Substitution Box.
 
-EndPoint A and EndPoint B perform Key Expansion on the Secret Key to generate a key for each round of the AES algorithm. EndPoint A encrypts Plaintext into Ciphertext through multiple rounds of Round Key Addition, Row Shifting, Mixing Columns, and S-Box substitution. Each Round Key Addition uses a different key from the Key Expansion. Endpoint A transmits the resultant Ciphertext through the medium. EndPoint B receives Ciphertext then decrypts it through multiple rounds of Round Key Addition, Inverse Shifting, Inverse Mixing Columns, and Inverse S-Box substitution. Endpoint B now has access to the original Plaintext.
+EndPoint A and EndPoint B perform Key Expansion on the Secret Key to generate a key for each round of the 
+AES algorithm. EndPoint A encrypts Plaintext into Ciphertext through multiple rounds of Round Key Addition, 
+Row Shifting, Mixing Columns, and S-Box substitution. Each Round Key Addition uses a different key from the 
+Key Expansion. Endpoint A transmits the resultant Ciphertext through the medium. EndPoint B receives 
+Ciphertext then decrypts it through multiple rounds of Round Key Addition, Inverse Shifting, Inverse Mixing 
+Columns, and Inverse S-Box substitution. Endpoint B now has access to the original Plaintext.
 
-AES implementations generally agree upon a static S-Box but learn the Secret Key through various methods. One method of learning a Secret Key is Diffie-Hellman Key Exchange. As illustrated in Figure ~\ref{Figure:DiffieHellman}, Alice and Bob wish to create a Shared Secret without divulging to Eve. Alice and Bob agree on public variables p and g, where p is prime and g is a primitive root modulo p, then each generates a random number. Alice calculates public key A (1 to p-1) and Bob calculates public key B (1 to p-1). Alice and Bob openly exchange their public keys. Alice is able to calculate Shared Secret, s, using public key B and Bob is able to calculate the same Shared Secret, s, using public key A. Eve has learned p, g, A, and B but it would be computationally difficult to determine the Shared Secret, s. Alice and Bob can use s to encrypt their data.
+AES implementations generally agree upon a static S-Box but learn the Secret Key through various methods. 
+One method of learning a Secret Key is Diffie-Hellman Key Exchange. As illustrated in Figure 
+~\ref{Figure:DiffieHellman}, Alice and Bob wish to create a Shared Secret without divulging to Eve. Alice 
+and Bob agree on public variables p and g, where p is prime and g is a primitive root modulo p, then each 
+generates a random number. Alice calculates public key A (1 to p-1) and Bob calculates public key B 
+(1 to p-1). Alice and Bob openly exchange their public keys. Alice is able to calculate Shared Secret, s, 
+using public key B and Bob is able to calculate the same Shared Secret, s, using public key A. Eve has 
+learned p, g, A, and B but it would be computationally difficult to determine the Shared Secret, s. Alice 
+and Bob can use s to encrypt their data.
 
-While methods exist to exchange keys between endpoints, the S-Box generally remains static. This leaves AES open to potential exploitation. This paper proposes a method of utilizing Diffie-Hellman Key Exchange coupled with a Hashing algorithm to generate Shared Secrets which can be used to dynamically generate S-Boxes and Inverse S-Boxes.
+While methods exist to exchange keys between endpoints, the S-Box generally remains static. This leaves AES
+open to potential exploitation. This paper proposes a method of utilizing Diffie-Hellman Key Exchange coupled
+with a Hashing algorithm to generate Shared Secrets which can be used to dynamically generate S-Boxes and 
+Inverse S-Boxes.
 
 \begin{figure}[!t]
 	\centering
@@ -350,19 +372,35 @@ While methods exist to exchange keys between endpoints, the S-Box generally rema
 	\label{Figure:DiffieHellman}
 \end{figure}
 
-%\hfill mds
- 
-%\hfill August 26, 2015
-
 \section{Related Work}
 
-\cite{AESDynamicKey} Dang, T. N. and H. M. Vo have proposed a method for dynamically modifying the shared key based on the frame sequence.
+\cite{AESDynamicKey} Dang, T. N. and H. M. Vo have proposed a method for dynamically modifying the 
+shared key based on the frame sequence.
 
-\cite{AESDiffieHellman} Yusfrizal, Y., et al. have proposed a method for exchanging secret keys using Diffie-Hellman Key Exchange. The shared secret key is used in the AES encryption and decryption.
+\cite{AESDiffieHellman} Yusfrizal, Y., et al. have proposed a method for exchanging secret keys using
+Diffie-Hellman Key Exchange. The shared secret key is used in the AES encryption and decryption.
 
-\cite{AESDynamicSBox} M, G. and H. S. M. have proposed a method for dynamically generating S-Boxes. The S-Box is initialized with values from 0 to 255. 256 random numbers are generated and run through a hashing algorithm. The resultant hash is stored in a Key matrix. The values of the S-Box are swapped based on the Key matrix resulting in a dynamic S-Box. 
+\cite{AESDynamicSBox} M, G. and H. S. M. have proposed a method for dynamically generating S-Boxes. 
+The S-Box is initialized with values from 0 to 255. 256 random numbers are generated and run through 
+a hashing algorithm. The resultant hash is stored in a Key matrix. The values of the S-Box are swapped 
+based on the Key matrix resulting in a dynamic S-Box. 
 
-\section{Dynamic S-Box Exchange}
+\section{Dynamic S-Box Generation and Exchange}
+In this design, illustrated in ~\ref{Figure:DynamicSBoxExchange}, Diffie-Hellman Key Exchange is combined
+with Dynamic S-Box Generation to enhance 128-bit AES. Endpoints A and B generate 5 64-bit random numbers. 
+A and B perform Diffie-Hellman Key Exchange to generate 5 Shared Secrets. Both endpoints calculate and 
+store the SHA-512 hash of each Shared Secret. 4 of the Shared Secret Hashes are combined into a 256-Byte 
+Index box. 128 bits of the fifth Shared Secret Hash are used as the Secret Key. A and B initialize their
+respective S-Box to the Rijndael S-Box. The endpoints then iterate through each byte in the Index box and
+exchange values in the S-Box based on the value of the Index Box. This design will be implemented in a 
+Visual C++ static library.
+
+\begin{figure}[!t]
+	\centering
+	\includegraphics[width=2.5in]{DiffieHellman}
+	\caption{Dynamic S-Box Generation and Exchange}
+	\label{Figure:DynamicSBoxExchange}
+\end{figure}
 
 \subsection{Diffie-Hellman Exchange}
 
