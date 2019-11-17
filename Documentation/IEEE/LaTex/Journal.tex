@@ -386,7 +386,7 @@ a hashing algorithm. The resultant hash is stored in a Key matrix. The values of
 based on the Key matrix resulting in a dynamic S-Box. 
 
 \section{Dynamic S-Box Generation and Exchange}
-In this design, illustrated in ~\ref{Figure:DynamicSBoxExchange}, Diffie-Hellman Key Exchange is combined
+In this design, illustrated in Figure ~\ref{Figure:DynamicSBoxExchange}, Diffie-Hellman Key Exchange is combined
 with Dynamic S-Box Generation to enhance 128-bit AES. Endpoints A and B generate 5 64-bit random numbers. 
 A and B perform Diffie-Hellman Key Exchange to generate 5 Shared Secrets. Both endpoints calculate and 
 store the SHA-512 hash of each Shared Secret. 4 of the Shared Secret Hashes are combined into a 256-Byte 
@@ -397,16 +397,10 @@ Visual C++ static library.
 
 \begin{figure}[!t]
 	\centering
-	\includegraphics[width=2.5in]{DiffieHellman}
+	\includegraphics[width=2.5in]{AESDynamicSBox}
 	\caption{Dynamic S-Box Generation and Exchange}
 	\label{Figure:DynamicSBoxExchange}
 \end{figure}
-
-\subsection{Diffie-Hellman Exchange}
-
-\subsection{Hash Function}
-
-\subsection{S-Box Generation}
 
 %Subsection text here.
 
