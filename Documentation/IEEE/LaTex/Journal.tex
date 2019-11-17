@@ -28,9 +28,9 @@
 
 % *** GRAPHICS RELATED PACKAGES ***
 \ifCLASSINFOpdf
-  % \usepackage[pdftex]{graphicx}
+  \usepackage[pdftex]{graphicx}
   % declare the path(s) where your graphic files are
-  % \graphicspath{{../pdf/}{../jpeg/}}
+  \graphicspath{{../eps/}{../png/}}
   % and their extensions so you won't have to specify these with
   % every instance of \includegraphics
   % \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
@@ -247,7 +247,8 @@
 % a separate \thanks must be used for each paragraph as LaTeX2e's \thanks
 % was not built to handle multiple paragraphs
 
-\author{Edward~Eisenberger,~\IEEEmembership{Member,~IEEE}	
+%\author{Edward~Eisenberger,~\IEEEmembership{Member,~IEEE}	
+\author{Edward~Eisenberger,~\IEEEmembership{Software Engineer,~Leonardo DRS}	
 % <-this % stops a space
 %\thanks{Pending1}% <-this % stops a space
 %\thanks{Pending2}% <-this % stops a space
@@ -292,12 +293,12 @@
 % As a general rule, do not put math, special symbols or citations
 % in the abstract or keywords.
 \begin{abstract}
-The Advanced Encryption Standard is a widely used encryption algorithm. This algorithm relies on an key and a substitution box. Most implementations use a predetermined static substitution box which can be exploited to extract the key and decrypt the data. Generating the substitution box dynamically protects against such exploitation. 
+The Advanced Encryption Standard is a widely used encryption algorithm. This algorithm utilizes an encryption key and a substitution box. Most implementations use a predetermined static substitution box which can be exploited to extract the key and decrypt the data. Generating the substitution box dynamically protects against such exploitation. 
 \end{abstract}
 
 % Note that keywords are not normally used for peerreview papers.
 \begin{IEEEkeywords}
-Advanced Encryption Standard (AES), S-Box, Secure Hash Algorithm (SHA)
+Advanced Encryption Standard (AES), National Institute of Standards and Technology (NIST), Federal Information Processing Standards (FIPS), S-Box, Secure Hash Algorithm (SHA)
 \end{IEEEkeywords}
 
 % For peer review papers, you can put extra information on the cover
@@ -326,9 +327,28 @@ Advanced Encryption Standard (AES), S-Box, Secure Hash Algorithm (SHA)
 % 
 % Here we have the typical use of a "T" for an initial drop letter
 % and "HIS" in caps to complete the first word.
-\IEEEPARstart{T}{he} AES algorithm is used to protect the exchange of data between parties. 
+\IEEEPARstart{T}{he} Advanced Encryption Standard (AES) is a symmetric block cipher that can encrypt and decrypt electronic information. The National Institute of Standards and Technology (NIST) published the algorithm in the Federal Information Processing Standards (FIPS) 197.
 
-I wish you the best of success.
+AES is used when an Endpoint, A, wishes to transmit some Plaintext to another Endpoint, B, and ensure that anything listening on the medium cannot understand Plaintext. Figure ~\ref{Figure:AESProcess} illustrates the process involved to encrypt Plaintext into Ciphertext at Endpoint A and decrypt Ciphertext into Plaintext at Endpoint B. Endpoints A and B must share a Secret Key, 256-Byte Substitution Box (S-Box), and 256-Byte Inverse Substitution Box.
+
+EndPoint A and EndPoint B perform Key Expansion on the Secret Key to generate a key for each round of the AES algorithm. EndPoint A encrypts Plaintext into Ciphertext through multiple rounds of Round Key Addition, Row Shifting, Mixing Columns, and S-Box substitution. Each Round Key Addition uses a different key from the Key Expansion. Endpoint A transmits the resultant Ciphertext through the medium. EndPoint B receives Ciphertext then decrypts it through multiple rounds of Round Key Addition, Inverse Shifting, Inverse Mixing Columns, and Inverse S-Box substitution. Endpoint B now has access to the original Plaintext.
+
+AES implementations generally agree upon a static S-Box but learn the Secret Key through various methods. One method of learning a Secret Key is Diffie-Hellman Key Exchange. As illustrated in Figure ~\ref{Figure:DiffieHellman}, Alice and Bob wish to create a Shared Secret without divulging to Eve. Alice and Bob agree on public variables p and g, where p is prime and g is a primitive root modulo p, then each generates a random number. Alice calculates public key A (1 to p-1) and Bob calculates public key B (1 to p-1). Alice and Bob openly exchange their public keys. Alice is able to calculate Shared Secret, s, using public key B and Bob is able to calculate the same Shared Secret, s, using public key A. Eve has learned p, g, A, and B but it would be computationally difficult to determine the Shared Secret, s. Alice and Bob can use s to encrypt their data.
+
+While methods exist to exchange keys between endpoints, the S-Box generally remains static. This leaves AES open to potential exploitation. This paper proposes a method of utilizing Diffie-Hellman Key Exchange coupled with a Hashing algorithm to generate Shared Secrets which can be used to dynamically generate S-Boxes and Inverse S-Boxes.
+
+\begin{figure}[!t]
+	\centering
+	\includegraphics[width=2.5in]{AESProcess}
+	\caption{128-Bit AES Process}
+	\label{Figure:AESProcess}
+\end{figure}
+\begin{figure}[!t]
+	\centering
+	\includegraphics[width=2.5in]{DiffieHellman}
+	\caption{Diffie-Hellman Key Exchange}
+	\label{Figure:DiffieHellman}
+\end{figure}
 
 %\hfill mds
  
