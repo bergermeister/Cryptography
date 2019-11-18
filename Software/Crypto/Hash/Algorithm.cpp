@@ -34,7 +34,7 @@ TcAlgorithm& TcAlgorithm::operator=( const TcAlgorithm& aorHash )
    // Prevent self-assignment
    if( this != &aorHash )
    {
-      // Nothing to copy
+      this->vuiDigested = aorHash.vuiDigested;
    }
 
    return( *this );
@@ -43,5 +43,10 @@ TcAlgorithm& TcAlgorithm::operator=( const TcAlgorithm& aorHash )
 const GNCrypto::Tu8* TcAlgorithm::MDigest( void ) const
 {
    return( this->vucpDigest );
+}
+
+const Tu32 TcAlgorithm::MDigested( void ) const
+{
+   return( this->vuiDigested );
 }
 

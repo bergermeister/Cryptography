@@ -35,15 +35,14 @@ namespace GNCrypto
 
       private:       // Private Attributes
          static const Tu32 xuiConstCnt    = 80;                            ///< 
-         static const Tu32 xuiLengthBlock = 128;                           ///< Length of pad buffer in bytes 
+         static const Tu32 xuiLengthBlock = 128;                           ///< Block size in bytes 
+         static const Tu32 xuiLengthWords = XuiLength / sizeof( Tu64 );    ///< Length of digest in 64-bit words
+         static const Tu32 xuiPadMax      = 112;
+         static const Tu32 xuiPadEnd      = 123;
          static const Tu64 xulConstant[ xuiConstCnt ];                     ///< 
-         static const Tu64 xulDefaultHash[ XuiLength / sizeof( Tu64 ) ];   ///< 
-         static const Tu8  xucPadding[ xuiLengthBlock ];                   ///< 
+         static const Tu64 xulDefaultHash[ xuiLengthWords ];               ///< 
 
-         Tu64 vulBlock[ xuiLengthBlock / sizeof( Tu64 ) ];  ///< Padding buffer 
-         Tu64 vulHash[ XuiLength / sizeof( Tu64 ) ];        ///< Calculated Hash 
-         Tu32 vuiDigested;                                  ///< Number of bytes digested 
-         Tu32 vuiBlockSize;
+         Tu64 vulHash[ xuiLengthWords ];                                   ///< Calculated Hash 
 
       public:        // Public Methods
          TcSHA512( void );
@@ -56,33 +55,29 @@ namespace GNCrypto
          void MFinalize( void );
 
          using TcAlgorithm::MDigest;
+         using TcAlgorithm::MDigested;
 
       private:       // Private Methods
-         void mProcessBlock( void );
+         void mProcessBlock( const Tu8* aucpBlock );
 
-         inline Tu64 mSig1( const Tu64& aulrX )
+         inline Tu64 mSig1( const Tu64 aulX )
          {
-            return( mROTR( aulrX, 28, 64 ) ^ mROTR( aulrX, 34, 64 ) ^ mROTR( aulrX, 39, 64 ) );
+            return( mROTR< Tu64 >( aulX, 28 ) ^ mROTR< Tu64 >( aulX, 34 ) ^ mROTR< Tu64 >( aulX, 39 ) );
          }
 
-         inline Tu64 mSig2( const Tu64& aulrX )
+         inline Tu64 mSig2( const Tu64 aulX )
          {
-            return( mROTR( aulrX, 14, 64 ) ^ mROTR( aulrX, 18, 64 ) ^ mROTR( aulrX, 41, 64 ) );
+            return( mROTR< Tu64 >( aulX, 14 ) ^ mROTR< Tu64 >( aulX, 18 ) ^ mROTR< Tu64 >( aulX, 41 ) );
          }
 
-         inline Tu64 mSig3( const Tu64& aulrX )
+         inline Tu64 mSig3( const Tu64 aulX )
          {
-            return( mROTR( aulrX, 1, 64 ) ^ mROTR( aulrX, 8, 64 ) ^ mSHR( aulrX, 7 ) );
+            return( mROTR< Tu64 >( aulX, 1 ) ^ mROTR< Tu64 >( aulX, 8 ) ^ mSHR< Tu64 >( aulX, 7 ) );
          }
 
-         inline Tu64 mSig4( const Tu64& aulrX )
+         inline Tu64 mSig4( const Tu64 aulX )
          {
-            return( mROTR( aulrX, 19, 64 ) ^ mROTR( aulrX, 61, 64 ) ^ mSHR( aulrX, 6 ) );
-         }
-
-         inline Tu64& mW( const Tu32 auiT )
-         {
-            return( this->vulBlock[ auiT & 0x0F ] );
+            return( mROTR< Tu64 >( aulX, 19 ) ^ mROTR< Tu64 >( aulX, 61 ) ^ mSHR< Tu64 >( aulX, 6 ) );
          }
       };
    }

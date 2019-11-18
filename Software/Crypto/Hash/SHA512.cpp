@@ -39,22 +39,10 @@ const Tu64 TcSHA512::xulConstant[ xuiConstCnt ] =
    0x4cc5d4becb3e42b6, 0x597f299cfc657e2a, 0x5fcb6fab3ad6faec, 0x6c44198c4a475817
 };
 
-const Tu64 TcSHA512::xulDefaultHash[ XuiLength / sizeof( Tu64 ) ] =
+const Tu64 TcSHA512::xulDefaultHash[ xuiLengthWords ] =
 {
    0x6A09E667F3BCC908, 0xBB67AE8584CAA73B, 0x3C6EF372FE94F82B, 0xA54FF53A5F1D36F1,
    0x510E527FADE682D1, 0x9B05688C2B3E6C1F, 0x1F83D9ABFB41BD6B, 0x5BE0CD19137E2179
-};
-
-const Tu8 TcSHA512::xucPadding[ xuiLengthBlock ]
-{
-   0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
 TcSHA512::TcSHA512( void ) : TcSHA( reinterpret_cast< const Tu8* >( this->vulHash ) )
@@ -76,19 +64,13 @@ TcSHA512::~TcSHA512( void )
 
 TcSHA512& TcSHA512::operator=( const TcSHA512& aorSHA )
 {
-   Tu32 kuiIdx;
-
    if( this != &aorSHA )
    {
       TcSHA::operator=( static_cast< const TcSHA& >( aorSHA ) );
 
-      for( kuiIdx = 0; kuiIdx < ( XuiLength / sizeof( Tu64 ) ); kuiIdx++ )
-      {
-         this->vulBlock[ kuiIdx ] = aorSHA.vulBlock[ kuiIdx ];
-         this->vulHash[ kuiIdx ]  = aorSHA.vulHash[ kuiIdx ];
-         this->vuiDigested        = aorSHA.vuiDigested;
-         this->vuiBlockSize       = aorSHA.vuiBlockSize;
-      }
+      memcpy( reinterpret_cast< void* >( this->vulHash ),
+              reinterpret_cast< const void* >( aorSHA.vulHash ),
+              xuiLengthWords );
    }
 
    return( *this );
@@ -102,125 +84,139 @@ void TcSHA512::MInitialize( void )
            reinterpret_cast< const void* >( xulDefaultHash ),
            XuiLength );
 
-   // Clear the working block
-   memset( reinterpret_cast< void* >( this->vulBlock ), 0, xuiLengthBlock );
-
    // Reset the digested byte count and block count
    this->vuiDigested = 0;
-   this->vuiBlockSize = 0;
 }
 
 void TcSHA512::MProcess( const Tu8* aucpMessage, const Tu32 auiLength )
 {
-   Tu32 kuiRemaining = auiLength;
-   Tu32 kuiBytes;
-   Tu8* kucpBlock = reinterpret_cast< Tu8* >( this->vulBlock );
-   Tu8* kucpData = const_cast< Tu8* >( aucpMessage );
+   const Tu8* kucpBlock    = aucpMessage;
+   Tu32       kuiRemaining = auiLength;
+   Tu8        kucpBuffer[ xuiLengthBlock ];
 
-   kucpBlock += this->vuiBlockSize;
-
-   // Process the incoming data
-   while( kuiRemaining > 0 )
+   /// @par Process Design Language
+   /// -# Process Each Block
+   while( kuiRemaining >= xuiLengthBlock )
    {
-      // The buffer can hold at most 128 bytes
-      kuiBytes = xuiLengthBlock - vuiBlockSize;
-      if( kuiBytes > kuiRemaining )
+      this->mProcessBlock( kucpBlock );
+      kuiRemaining      -= xuiLengthBlock;   // Decrement remaining bytes
+      kucpBlock         += xuiLengthBlock;   // Increment block pointer
+      this->vuiDigested += xuiLengthBlock;   // Increment Digested count
+   }
+
+   /// -# If bytes remain
+   if( kuiRemaining > 0 )
+   {
+      memcpy( reinterpret_cast< void* >( kucpBuffer ),
+              reinterpret_cast< const void* >( kucpBlock ),
+              kuiRemaining );
+
+      this->vuiDigested += kuiRemaining;
+
+      kucpBuffer[ kuiRemaining++ ] = 0x80;
+      if( kuiRemaining <= xuiPadMax )
       {
-         kuiBytes = kuiRemaining;
+         memset( reinterpret_cast< void* >( &kucpBuffer[ kuiRemaining ] ), 0, xuiPadEnd - kuiRemaining );
+         kucpBuffer[ 123 ] = static_cast< Tu8 >( this->vuiDigested >> 29 );
+         kucpBuffer[ 124 ] = static_cast< Tu8 >( this->vuiDigested >> 21 );
+         kucpBuffer[ 125 ] = static_cast< Tu8 >( this->vuiDigested >> 13 );
+         kucpBuffer[ 126 ] = static_cast< Tu8 >( this->vuiDigested >>  5 );
+         kucpBuffer[ 127 ] = static_cast< Tu8 >( this->vuiDigested <<  3 );
+      }
+      else
+      {
+         memset( reinterpret_cast< void* >( &kucpBuffer[ kuiRemaining ] ), 0, xuiLengthBlock - kuiRemaining );
       }
 
-      // Copy the data to the buffer
-      memcpy( reinterpret_cast< void* >( kucpBlock ),
-              reinterpret_cast< const void* >( kucpData ),
-              kuiBytes );
-
-      // Update the SHA-512 context
-      this->vuiBlockSize += kuiBytes;
-      this->vuiDigested += kuiBytes;
-
-      // Advance the data pointer
-      kucpData += kuiBytes;
-
-      // Remaining bytes to process
-      kuiRemaining -= kuiBytes;
-
-      //Process message in 16-word blocks
-      if( this->vuiBlockSize == xuiLengthBlock )
-      {
-         // Transform the 16-word block
-         this->mProcessBlock( );
-
-         // Empty the buffer
-         this->vuiBlockSize = 0;
-      }
+      this->mProcessBlock( kucpBuffer );
    }
 }
 
 void TcSHA512::MFinalize( void )
 {
-   Tu32 kuiPadSize;
-   Tu32 kuiTotal;
-   
-   // Length of the original message (before padding)
-   kuiTotal = this->vuiDigested * sizeof( Tu64 );
-   
-   // Pad the message so that its length is congruent to 112 modulo 128
-   if( this->vuiBlockSize < 112 )
+   Tu8  kucpBuffer[ xuiLengthBlock ];
+   Tu32 kuiBytes;
+
+   kuiBytes = this->vuiDigested % xuiLengthBlock;
+
+   if( ( kuiBytes == 0 ) || ( kuiBytes >= xuiPadMax ) )
    {
-      kuiPadSize = 112 - this->vuiBlockSize;
+      memset( reinterpret_cast< void* >( kucpBuffer ), 0, xuiPadEnd );
+
+      if( kuiBytes == 0 )
+      {
+         kucpBuffer[ 0 ] = 0x80;
+      }
+
+      kucpBuffer[ 123 ] = static_cast< Tu8 >( this->vuiDigested >> 29 );
+      kucpBuffer[ 124 ] = static_cast< Tu8 >( this->vuiDigested >> 21 );
+      kucpBuffer[ 125 ] = static_cast< Tu8 >( this->vuiDigested >> 13 );
+      kucpBuffer[ 126 ] = static_cast< Tu8 >( this->vuiDigested >> 5 );
+      kucpBuffer[ 127 ] = static_cast< Tu8 >( this->vuiDigested << 3 );
+
+      this->mProcessBlock( kucpBuffer );
    }
-   else
-   {
-      kuiPadSize = ( 128 + 112 ) - this->vuiBlockSize;
-   }
-
-   // Append the length of the original message
-   this->vulBlock[ 14 ] = 0;
-   this->vulBlock[ 15 ] = MSwap( kuiTotal );
-
-   // Append padding
-   this->MProcess( xucPadding, kuiPadSize );
-
-   // Calculate the message digest
-   this->mProcessBlock( );
 }
 
-void TcSHA512::mProcessBlock( void )
+void TcSHA512::mProcessBlock( const Tu8* aucpBlock )
 {
    Tu32 kuiT;
    Tu64 kulTemp1;
    Tu64 kulTemp2;
+   Tu64 kulA;
+   Tu64 kulB;
+   Tu64 kulC;
+   Tu64 kulD;
+   Tu64 kulE;
+   Tu64 kulF;
+   Tu64 kulG;
+   Tu64 kulH;
+   Tu64 kulpW[ xuiConstCnt ];
 
-   // Initialize the 8 working registers
-   Tu64 kulA = this->vulHash[ 0 ];
-   Tu64 kulB = this->vulHash[ 1 ];
-   Tu64 kulC = this->vulHash[ 2 ];
-   Tu64 kulD = this->vulHash[ 3 ];
-   Tu64 kulE = this->vulHash[ 4 ];
-   Tu64 kulF = this->vulHash[ 5 ];
-   Tu64 kulG = this->vulHash[ 6 ];
-   Tu64 kulH = this->vulHash[ 7 ];
-
-   // Process message in 16-word blocks
-   Tu64* kulW = this->vulBlock;
-
-   // Convert from big-endian byte order to host byte order
-   for( kuiT = 0; kuiT < ( xuiLengthBlock / sizeof( Tu64 ) ); kuiT++ )
+   /// @par Process Design Language
+   /// -# Prepare message schedule
+   for( kuiT = 0; kuiT < 16; kuiT++ )
    {
-      kulW[ kuiT ] = MSwap( kulW[ kuiT ] );
+      kulA = static_cast< Tu64 >( *aucpBlock++ ) << 56;
+      kulB = static_cast< Tu64 >( *aucpBlock++ ) << 48;
+      kulC = static_cast< Tu64 >( *aucpBlock++ ) << 40;
+      kulD = static_cast< Tu64 >( *aucpBlock++ ) << 32;
+      kulE = static_cast< Tu64 >( *aucpBlock++ ) << 24;
+      kulF = static_cast< Tu64 >( *aucpBlock++ ) << 16;
+      kulG = static_cast< Tu64 >( *aucpBlock++ ) <<  8;
+      kulH = static_cast< Tu64 >( *aucpBlock++ );
+      kulpW[ kuiT ] = kulA + kulB + kulC + kulD + kulE + kulF + kulG + kulH;
    }
+
+   for( kuiT = 16; kuiT < xuiConstCnt; kuiT++ )
+   {
+      //kulpW[ kuiT ] = ( mROTR< Tu64 >( kulpW[ kuiT - 2 ], 19 ) ^
+      //                  mROTR< Tu64 >( kulpW[ kuiT - 2 ], 61 ) ^
+      //                  mSHR<  Tu64 >( kulpW[ kuiT - 2 ], 6 ) ) +
+      //                kulpW[ kuiT - 7 ] +
+      //                ( mROTR< Tu64 >( kulpW[ kuiT - 15 ], 1 ) ^
+      //                  mROTR< Tu64 >( kulpW[ kuiT - 15 ], 8 ) ^
+      //                  mSHR<  Tu64 >( kulpW[ kuiT - 15 ], 7 ) ) +
+      //                kulpW[ kuiT - 16 ];
+      kulpW[ kuiT ] = mSig4( kulpW[ kuiT -  2 ] ) + kulpW[ kuiT -  7 ] + 
+                      mSig3( kulpW[ kuiT - 15 ] ) + kulpW[ kuiT - 16 ];
+   }
+
+   /// -# Initialize working variables with previous digest
+   kulA = this->vulHash[ 0 ];
+   kulB = this->vulHash[ 1 ];
+   kulC = this->vulHash[ 2 ];
+   kulD = this->vulHash[ 3 ];
+   kulE = this->vulHash[ 4 ];
+   kulF = this->vulHash[ 5 ];
+   kulG = this->vulHash[ 6 ];
+   kulH = this->vulHash[ 7 ];
 
    // SHA-512 hash computation (alternate method)
    for( kuiT = 0; kuiT < xuiConstCnt; kuiT++ )
    {
-      // Prepare the message schedule
-      if( kuiT >= ( xuiLengthBlock / sizeof( Tu64 ) ) )
-      {
-         mW( kuiT ) += mSig4( mW( kuiT + 14 ) ) + mW( kuiT + 9 ) + mSig3( mW( kuiT + 1 ) );
-      }
-
       // Calculate Temp1 and Temp2
-      kulTemp1 = kulH + mSig2( kulE ) + mCh( kulE, kulF, kulG ) + xulConstant[ kuiT ] + mW( kuiT );
+      kulTemp1 = kulH + mSig2( kulE ) + mCh( kulE, kulF, kulG ) + xulConstant[ kuiT ] + kulpW[ kuiT ];
       kulTemp2 = mSig1( kulA ) + mMaj( kulA, kulB, kulC );
       
       // Update the working registers

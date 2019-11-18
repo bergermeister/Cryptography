@@ -30,6 +30,9 @@ namespace GNCrypto
 
       class TcSHA : public TcAlgorithm
       {
+      private:       // Private Attributes
+         static const Tu32 xuiBPB = 8; ///< Bits Per Byte
+
       public:        // Public Methods
          TcSHA( const Tu8* aucpDigest );
          TcSHA( const TcSHA& aorSHA );
@@ -41,6 +44,7 @@ namespace GNCrypto
          virtual void MFinalize( void ) = 0;
 
          using TcAlgorithm::MDigest;
+         using TcAlgorithm::MDigested;
 
       protected:     // Protected Methods
          /**
@@ -57,11 +61,11 @@ namespace GNCrypto
           *
           * @param aulrX   [in] W-bit word to be operated on
           * @param aulrN   [in] Integer with 0 <= N <= W 
-          * @param aulrW   [in] Size of a word in bits 
           */
-         inline Tu64 mROTL( const Tu64& aulrX, const Tu64& aulrN, const Tu64& aulrW )
+         template< class GTcType >
+         inline GTcType mROTL( const GTcType aoX, const GTcType aoN )
          {
-            return( ( aulrX << aulrN ) | ( aulrX >> ( aulrW - aulrN ) ) );
+            return( ( aoX << aoN ) | ( aoX >> ( ( sizeof( GTcType ) * xuiBPB ) - aoN ) ) );
          }
 
          /**
@@ -78,11 +82,11 @@ namespace GNCrypto
           *
           * @param aulrX   [in] W-bit word to be operated on
           * @param aulrN   [in] Integer with 0 <= N <= W
-          * @param aulrW   [in] Size of a word in bits
           */
-         inline Tu64 mROTR( const Tu64 aulX, const Tu64 aulN, const Tu64 aulW )
+         template< class GTcType >
+         inline GTcType mROTR( const GTcType aoX, const GTcType aoN )
          {
-            return( ( aulX >> aulN ) | ( aulX << ( aulW - aulN ) ) );
+            return( ( aoX >> aoN ) | ( aoX << ( ( sizeof( GTcType ) * xuiBPB ) - aoN ) ) );
          }
 
          /**
@@ -100,27 +104,30 @@ namespace GNCrypto
           * @param aulrX   [in] W-bit word to be operated on 
           * @param aulrN   [in] Integer with 0 <= N <= W 
           */
-         inline Tu64 mSHR( const Tu64& aulrX, const Tu64& aulrN )
+         template< class GTcType >
+         inline GTcType mSHR( const GTcType aoX, const GTcType aoN )
          {
-            return( aulrX >> aulrN );
+            return( aoX >> aoN );
          }
 
          /**
           * @brief
           * Choose Operation
           */
-         inline Tu64 mCh( const Tu64& aulrX, const Tu64& aulrY, const Tu64& aulrZ )
+         template< class GTcType >
+         inline GTcType mCh( const GTcType aoX, const GTcType aoY, const GTcType aoZ )
          {
-            return( ( aulrX & aulrY ) ^ ( ~aulrX & aulrZ ) );
+            return( ( aoX & aoY ) ^ ( ~aoX & aoZ ) );
          }
 
          /**
           * @brief
           * Majority Operation
           */
-         inline Tu64 mMaj( const Tu64& aulrX, const Tu64& aulrY, const Tu64& aulrZ )
+         template< class GTcType >
+         inline GTcType mMaj( const GTcType aoX, const GTcType aoY, const GTcType aoZ )
          {
-            return( ( aulrX & aulrY ) ^ ( aulrX & aulrZ ) ^ ( aulrY & aulrZ ) );
+            return( ( aoX & aoY ) ^ ( aoX & aoZ ) ^ ( aoY & aoZ ) );
          }
       };
    }

@@ -29,7 +29,10 @@ namespace GNCrypto
       class TcAlgorithm
       {
       private:       // Private Attributes
-         const Tu8* vucpDigest;
+         const Tu8* vucpDigest;  ///< Hash Digest
+
+      protected:     // Protected Attributes
+         Tu32 vuiDigested; ///< Number of bytes digested
 
       public:        // Public Methods
          TcAlgorithm( const Tu8* aucpDigest );
@@ -43,6 +46,7 @@ namespace GNCrypto
          virtual void MFinalize( void ) = 0;
 
          const Tu8* MDigest( void ) const;
+         const Tu32 MDigested( void ) const;
 
          inline Tu64 MSwap( const Tu64 aulVal )
          {
