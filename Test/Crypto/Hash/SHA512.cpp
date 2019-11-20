@@ -177,9 +177,9 @@ namespace CryptoTest
                0xde0ff244877ea60a, 0x4cb0432ce577c31b, 0xeb009c5c2c49aa2e, 0x4eadb217ad8cc09b
             };
 
-            const Tu8  xucpMsg[ ] = "abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmno";
-            const Tu32 xuiLen   = 64;
-            const Tu32 xuiCount = 16777216;
+            const Tu8  xucpMsg[ ] = "abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoabcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmno";
+            const Tu32 xuiLen   = 128;
+            const Tu32 xuiCount = 16777216 / 2;
 
             TcSHA512    koSHA;
             Tu32        kuiIdx;
