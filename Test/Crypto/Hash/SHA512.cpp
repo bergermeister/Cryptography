@@ -173,8 +173,8 @@ namespace CryptoTest
          {
             const Tu64 xulpExpected[ ] =
             {
-               0xe718483d0ce76964, 0x4e2e42c7bc15b463, 0x8e1f98b13b204428, 0x5632a803afa973eb,
-               0xde0ff244877ea60a, 0x4cb0432ce577c31b, 0xeb009c5c2c49aa2e, 0x4eadb217ad8cc09b
+               0xb47c933421ea2db1, 0x49ad6e10fce6c7f9, 0x3d0752380180ffd7, 0xf4629a712134831d,
+               0x77be6091b819ed35, 0x2c2967a2e2d4fa50, 0x50723c9630691f1a, 0x05a7281dbe6c1086
             };
 
             const Tu8  xucpMsg[ ] = "abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoabcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmno";
