@@ -33,6 +33,9 @@
     <ClCompile Include="..\..\..\Software\Crypto\Math\GaloisField.cpp">
       <Filter>Source\Math</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Software\Crypto\AES\Configuration.cpp">
+      <Filter>Source\AES</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Software\Crypto\Hash\SHA.h">
@@ -55,6 +58,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Software\Crypto\Math\GaloisField.h">
       <Filter>Source\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Software\Crypto\AES\Configuration.h">
+      <Filter>Source\AES</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
