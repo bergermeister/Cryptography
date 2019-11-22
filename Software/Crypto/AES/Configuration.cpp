@@ -45,7 +45,7 @@ const Tu8 TcConfiguration::XucpRijndaelIBox[ XuiSizeBox ] =
    0x17, 0x2B, 0x04, 0x7E, 0xBA, 0x77, 0xD6, 0x26, 0xE1, 0x69, 0x14, 0x63, 0x55, 0x21, 0x0C, 0x7D
 };
 
-const Tu8 TcConfiguration::XucMul2[ XuiSizeBox ] = 
+const Tu8 TcConfiguration::XucpMul2[ XuiSizeBox ] = 
 {
    0x00, 0x02, 0x04, 0x06, 0x08, 0x0a, 0x0c, 0x0e, 0x10, 0x12, 0x14, 0x16, 0x18, 0x1a, 0x1c, 0x1e,
    0x20, 0x22, 0x24, 0x26, 0x28, 0x2a, 0x2c, 0x2e, 0x30, 0x32, 0x34, 0x36, 0x38, 0x3a, 0x3c, 0x3e,
@@ -65,7 +65,7 @@ const Tu8 TcConfiguration::XucMul2[ XuiSizeBox ] =
    0xfb, 0xf9, 0xff, 0xfd, 0xf3, 0xf1, 0xf7, 0xf5, 0xeb, 0xe9, 0xef, 0xed, 0xe3, 0xe1, 0xe7, 0xe5
 };
 
-const Tu8 TcConfiguration::XucMul3[ XuiSizeBox ] = 
+const Tu8 TcConfiguration::XucpMul3[ XuiSizeBox ] = 
 {
    0x00, 0x03, 0x06, 0x05, 0x0c, 0x0f, 0x0a, 0x09, 0x18, 0x1b, 0x1e, 0x1d, 0x14, 0x17, 0x12, 0x11,
    0x30, 0x33, 0x36, 0x35, 0x3c, 0x3f, 0x3a, 0x39, 0x28, 0x2b, 0x2e, 0x2d, 0x24, 0x27, 0x22, 0x21,
@@ -86,7 +86,7 @@ const Tu8 TcConfiguration::XucMul3[ XuiSizeBox ] =
 };
 
 
-const Tu8 TcConfiguration::XucMul9[ XuiSizeBox ] =
+const Tu8 TcConfiguration::XucpMul9[ XuiSizeBox ] =
 {
    0x00, 0x09, 0x12, 0x1b, 0x24, 0x2d, 0x36, 0x3f, 0x48, 0x41, 0x5a, 0x53, 0x6c, 0x65, 0x7e, 0x77,
    0x90, 0x99, 0x82, 0x8b, 0xb4, 0xbd, 0xa6, 0xaf, 0xd8, 0xd1, 0xca, 0xc3, 0xfc, 0xf5, 0xee, 0xe7,
@@ -106,7 +106,7 @@ const Tu8 TcConfiguration::XucMul9[ XuiSizeBox ] =
    0x31, 0x38, 0x23, 0x2a, 0x15, 0x1c, 0x07, 0x0e, 0x79, 0x70, 0x6b, 0x62, 0x5d, 0x54, 0x4f, 0x46
 };
 
-const Tu8 TcConfiguration::XucMul11[ XuiSizeBox ] =
+const Tu8 TcConfiguration::XucpMul11[ XuiSizeBox ] =
 {
    0x00, 0x0b, 0x16, 0x1d, 0x2c, 0x27, 0x3a, 0x31, 0x58, 0x53, 0x4e, 0x45, 0x74, 0x7f, 0x62, 0x69,
    0xb0, 0xbb, 0xa6, 0xad, 0x9c, 0x97, 0x8a, 0x81, 0xe8, 0xe3, 0xfe, 0xf5, 0xc4, 0xcf, 0xd2, 0xd9,
@@ -126,7 +126,7 @@ const Tu8 TcConfiguration::XucMul11[ XuiSizeBox ] =
    0xca, 0xc1, 0xdc, 0xd7, 0xe6, 0xed, 0xf0, 0xfb, 0x92, 0x99, 0x84, 0x8f, 0xbe, 0xb5, 0xa8, 0xa3
 };
 
-const Tu8 TcConfiguration::XucMul13[ XuiSizeBox ] =
+const Tu8 TcConfiguration::XucpMul13[ XuiSizeBox ] =
 {
    0x00, 0x0d, 0x1a, 0x17, 0x34, 0x39, 0x2e, 0x23, 0x68, 0x65, 0x72, 0x7f, 0x5c, 0x51, 0x46, 0x4b,
    0xd0, 0xdd, 0xca, 0xc7, 0xe4, 0xe9, 0xfe, 0xf3, 0xb8, 0xb5, 0xa2, 0xaf, 0x8c, 0x81, 0x96, 0x9b,
@@ -146,7 +146,7 @@ const Tu8 TcConfiguration::XucMul13[ XuiSizeBox ] =
    0xdc, 0xd1, 0xc6, 0xcb, 0xe8, 0xe5, 0xf2, 0xff, 0xb4, 0xb9, 0xae, 0xa3, 0x80, 0x8d, 0x9a, 0x97
 };
 
-const Tu8 TcConfiguration::XucMul14[ XuiSizeBox ] =
+const Tu8 TcConfiguration::XucpMul14[ XuiSizeBox ] =
 {
    0x00, 0x0e, 0x1c, 0x12, 0x38, 0x36, 0x24, 0x2a, 0x70, 0x7e, 0x6c, 0x62, 0x48, 0x46, 0x54, 0x5a,
    0xe0, 0xee, 0xfc, 0xf2, 0xd8, 0xd6, 0xc4, 0xca, 0x90, 0x9e, 0x8c, 0x82, 0xa8, 0xa6, 0xb4, 0xba,
@@ -166,8 +166,7 @@ const Tu8 TcConfiguration::XucMul14[ XuiSizeBox ] =
    0xd7, 0xd9, 0xcb, 0xc5, 0xef, 0xe1, 0xf3, 0xfd, 0xa7, 0xa9, 0xbb, 0xb5, 0x9f, 0x91, 0x83, 0x8d
 };
 
-
-const Tu8 TcConfiguration::XucRCon[ XuiSizeBox ] =
+const Tu8 TcConfiguration::XucpRCon[ XuiSizeBox ] =
 {
    0x8d, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36, 0x6c, 0xd8, 0xab, 0x4d, 0x9a,
    0x2f, 0x5e, 0xbc, 0x63, 0xc6, 0x97, 0x35, 0x6a, 0xd4, 0xb3, 0x7d, 0xfa, 0xef, 0xc5, 0x91, 0x39,
@@ -191,14 +190,14 @@ TcConfiguration::TcConfiguration( void )
 {
    /// @par Process Design Langauge
    /// -# Initialize S-Box to Rijndael
-   std::memcpy( reinterpret_cast< void* >( this->vucSBox ),
+   std::memcpy( reinterpret_cast< void* >( this->vucpSBox ),
                 reinterpret_cast< const void* >( XucpRijndaelSBox ),
-                XuiRounds );
+                XuiSizeBox );
 
    /// -# Initialize I-Box to Rijndael
-   std::memcpy( reinterpret_cast< void* >( this->vucIBox ),
+   std::memcpy( reinterpret_cast< void* >( this->vucpIBox ),
                 reinterpret_cast< const void* >( XucpRijndaelIBox ),
-                XuiRounds );
+                XuiSizeBox );
 }
 
 TcConfiguration::TcConfiguration( const TcConfiguration& aorConfig )
@@ -219,13 +218,13 @@ TcConfiguration& TcConfiguration::operator=( const TcConfiguration& aorConfig )
    if( this != &aorConfig )
    {
          /// -# Copy S-Box from given Configuration
-         std::memcpy( reinterpret_cast< void* >( this->vucSBox ),
-                      reinterpret_cast< const void* >( aorConfig.vucSBox ),
+         std::memcpy( reinterpret_cast< void* >( this->vucpSBox ),
+                      reinterpret_cast< const void* >( aorConfig.vucpSBox ),
                       XuiRounds );
 
          /// -# Copy I-Box from given Configuration
-         std::memcpy( reinterpret_cast< void* >( this->vucIBox ),
-                      reinterpret_cast< const void* >( aorConfig.vucIBox ),
+         std::memcpy( reinterpret_cast< void* >( this->vucpIBox ),
+                      reinterpret_cast< const void* >( aorConfig.vucpIBox ),
                       XuiRounds );
    }
 
@@ -233,16 +232,17 @@ TcConfiguration& TcConfiguration::operator=( const TcConfiguration& aorConfig )
 }
 
 
-void TcConfiguration::MExpandKey( const Tu8 aucpInputKey[ XuiSizeKey ], Tu8 aucpExpandedKeys[ XuiSizeExpandedKey ] )
+void TcConfiguration::MExpandKey( const Tu8 aucpInputKey[ XuiSizeKey ] )
 {
    Tu32 kuiBytes = 0;
    Tu32 kuiIter = 1;
+   Tu32 kuiIdx;
    Tu32 kuiCore;
    Tu8* kucpCore = reinterpret_cast< Tu8* >( &kuiCore );
 
    /// @par Process Design Langauge
    /// -# Copy the Input Key to the first Expanded Key
-   std::memcpy( reinterpret_cast< void* >( aucpExpandedKeys ),
+   std::memcpy( reinterpret_cast< void* >( this->vucpEKey ),
                 reinterpret_cast< const void* >( aucpInputKey ),
                 XuiSizeKey );
 
@@ -252,22 +252,39 @@ void TcConfiguration::MExpandKey( const Tu8 aucpInputKey[ XuiSizeKey ], Tu8 aucp
    while( kuiBytes < XuiSizeExpandedKey )
    {
       /// -# Copy the previously generated 4 bytes
-      kuiCore = *reinterpret_cast< Tu32* >( &aucpExpandedKeys[ kuiBytes - sizeof( Tu32 ) ] );
+      kuiCore = *reinterpret_cast< Tu32* >( &this->vucpEKey[ kuiBytes - sizeof( Tu32 ) ] );
 
       /// -# Perform the core once for each 16 byte key
       if( ( kuiBytes % XuiSizeKey ) == 0 )
       {
-         kuiCore = ( ( kuiCore << 8 ) & 0xFFFFFF00 ) | ( ( kuiCore >> 24 ) & 0x000000FF );
-         kucpCore[ 0 ] = this->vucSBox[ kucpCore[ 0 ] ];
-         kucpCore[ 1 ] = this->vucSBox[ kucpCore[ 1 ] ];
-         kucpCore[ 2 ] = this->vucSBox[ kucpCore[ 2 ] ];
-         kucpCore[ 3 ] = this->vucSBox[ kucpCore[ 3 ] ];
-         kucpCore[ 0 ] ^= XucRCon[ kuiIter++ ];
+         kuiCore = ( ( kuiCore >> 8 ) & 0x00FFFFFF ) | ( ( kuiCore << 24 ) & 0xFF000000 );
+         kucpCore[ 0 ] = this->vucpSBox[ kucpCore[ 0 ] ];
+         kucpCore[ 1 ] = this->vucpSBox[ kucpCore[ 1 ] ];
+         kucpCore[ 2 ] = this->vucpSBox[ kucpCore[ 2 ] ];
+         kucpCore[ 3 ] = this->vucpSBox[ kucpCore[ 3 ] ];
+         kucpCore[ 0 ] ^= XucpRCon[ kuiIter++ ];
       }
 
       /// -# Expand key
-      *reinterpret_cast< Tu32* >( &aucpExpandedKeys[ kuiBytes ] ) = *reinterpret_cast< Tu32* >( &aucpExpandedKeys[ kuiBytes ] ) ^
-                                                                    *reinterpret_cast< Tu32* >( kuiCore );
-      kuiBytes += sizeof( Tu32 );
+      for( kuiIdx = 0; kuiIdx < sizeof( Tu32 ); kuiIdx++ )
+      {
+         this->vucpEKey[ kuiBytes ] = this->vucpEKey[ kuiBytes - XuiSizeKey ] ^ kucpCore[ kuiIdx ];
+         kuiBytes++;
+      }
    }
+}
+
+const Tu8* TcConfiguration::MExpandedKey( void ) const
+{
+   return( this->vucpEKey );
+}
+
+const Tu8* TcConfiguration::MSBox( void ) const
+{
+   return( this->vucpSBox );
+}
+
+const Tu8* TcConfiguration::MIBox( void ) const
+{
+   return( this->vucpIBox );
 }
