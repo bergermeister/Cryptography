@@ -1,4 +1,11 @@
-.vs
+*.vs
 
+# LaTex Files
+*.pdf
+*.aux
+*.synctex.gz
+*.log
+
+# Visual Studio FIles
 Debug
 Win32
