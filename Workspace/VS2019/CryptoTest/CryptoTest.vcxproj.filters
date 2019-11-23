@@ -11,6 +11,9 @@
     <Filter Include="Source\AES">
       <UniqueIdentifier>{b2e15177-556d-483c-a914-29f0e0ea2754}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Communication">
+      <UniqueIdentifier>{1a040f30-fc56-4cd0-b7ad-99b6174d47b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Test\Crypto\pch.cpp">
@@ -21,6 +24,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Test\Crypto\AES\Encryption.cpp">
       <Filter>Source\AES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Test\Crypto\Communication\Session.cpp">
+      <Filter>Source\Communication</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

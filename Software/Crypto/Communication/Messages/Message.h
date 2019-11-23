@@ -13,7 +13,7 @@
 #include <Types.h>
 #include <Hash/SHA512.h>
 
- /// Namespace containing Cryptograpic functionality
+/// Namespace containing Cryptograpic functionality
 namespace GNCrypto
 {
    /// Namespace containing encrypted communication functionality
@@ -34,7 +34,7 @@ namespace GNCrypto
          {
          private:    // Private attributes
             NHash::TcSHA512 voSHA;     ///< SHA-512 Digest of message
-            Tu32            vuiLength; ///< Length of pyalod in bytes, not including hash
+            Tu32            vuiLength; ///< Length of payload in bytes, not including hash
             Tu32            vuiID;     ///< Message Type identifier
 
          public:     // Public Methods

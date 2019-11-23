@@ -13,6 +13,15 @@
     <Filter Include="Source\Math">
       <UniqueIdentifier>{e966a0f7-636d-4131-942f-197e5d386d8e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Communication">
+      <UniqueIdentifier>{6ae85b44-2596-4e66-9437-53c10ba00ede}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Communication\Messages">
+      <UniqueIdentifier>{278658ec-980a-40d2-b361-f08ecad8bc19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\KeyExchange">
+      <UniqueIdentifier>{65a49290-6453-4770-8a40-93b0bbb6c4ec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Software\Crypto\Hash\SHA.cpp">
@@ -35,6 +44,21 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Software\Crypto\AES\Configuration.cpp">
       <Filter>Source\AES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Software\Crypto\Communication\Session.cpp">
+      <Filter>Source\Communication</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Software\Crypto\Communication\Messages\EstablishSession.cpp">
+      <Filter>Source\Communication\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Software\Crypto\Communication\Messages\Message.cpp">
+      <Filter>Source\Communication\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Software\Crypto\KeyExchange\PublicKey.cpp">
+      <Filter>Source\KeyExchange</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Software\Crypto\KeyExchange\DiffieHellman.cpp">
+      <Filter>Source\KeyExchange</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -61,6 +85,21 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Software\Crypto\AES\Configuration.h">
       <Filter>Source\AES</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Software\Crypto\Communication\Session.h">
+      <Filter>Source\Communication</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Software\Crypto\Communication\Messages\EstablishSession.h">
+      <Filter>Source\Communication\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Software\Crypto\Communication\Messages\Message.h">
+      <Filter>Source\Communication\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Software\Crypto\KeyExchange\PublicKey.h">
+      <Filter>Source\KeyExchange</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Software\Crypto\KeyExchange\DiffieHellman.h">
+      <Filter>Source\KeyExchange</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
