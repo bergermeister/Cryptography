@@ -47,7 +47,7 @@ namespace GNCrypto
          TcSession& operator=( const TcSession& aorSession );
 
          NMessages::TcEstablishSession MRequest( void );
-         NMessages::TcEstablishSession MEstablish( const NMessages::TcEstablishSession& aorRequest );
+         NMessages::TcEstablishSession MEstablish( const NMessages::TcEstablishSession& aorRequest, bool abDynamicSBox );
          void MEncrypt( const Tu8* aucpPlaintext,  Tu8* aucpCiphertext, const Tu32 auiBytes );
          void MDecrypt( const Tu8* aucpCiphertext, Tu8* aucpPlaintext,  const Tu32 auiBytes );
       };
