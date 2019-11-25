@@ -4,7 +4,6 @@
 #include <Communication/Session.h>
 #include <Communication/Messages/EstablishSession.h>
 
-
 namespace CryptoTest
 {
    namespace NCommunication
@@ -19,6 +18,7 @@ namespace CryptoTest
          TEST_METHOD( MEstablish )
          {
             const Tc8  xcpTestStr[ ] = "SENDER: Alice\r\nRECIPIENT: BOB\r\nSUBJECT: Test Message";
+            const Tu32 xuiTestLen    = 52;
             const Tu64 xulpPKeyAlice[ ] = { 4, 5, 6, 7, 8 };
             const Tu64 xulpPKeyBob[ ] = { 3, 4, 5, 6, 7 };
             Tc8        kcpCiphertext[ 64 ];
@@ -48,8 +48,10 @@ namespace CryptoTest
             ///   -# Creates her Shared Secret
             ( void )koAlice.MEstablish( koMsgBob );
 
-            koAlice.MEncrypt( reinterpret_cast< const Tu8* >( xcpTestStr ), reinterpret_cast< Tu8* >( kcpCiphertext ), 52 );
+            koAlice.MEncrypt( reinterpret_cast< const Tu8* >( xcpTestStr ), reinterpret_cast< Tu8* >( kcpCiphertext ), xuiTestLen );
             koBob.MDecrypt( reinterpret_cast< const Tu8* >( kcpCiphertext ), reinterpret_cast< Tu8* >( kcpPlaintext ), 64 );
+
+            Assert::AreEqual( xcpTestStr, kcpPlaintext, L"ERROR: Plaintext Mismatch" );
          }
       };
    }

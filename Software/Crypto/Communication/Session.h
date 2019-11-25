@@ -11,7 +11,6 @@
 #define Crypto_Communication_Session_h
 
 #include <Types.h>
-#include <Hash/SHA512.h>
 #include <AES/Configuration.h>
 #include <AES/Encryptor.h>
 #include <AES/Decryptor.h>
@@ -34,9 +33,9 @@ namespace GNCrypto
       class TcSession
       {
       private:    // Private Attributes
-         Tu64                     vulPrivateKey[ NMessages::TcEstablishSession::XuiCountKeys ];
-         Tu64                     vulSharedSecret[ NMessages::TcEstablishSession::XuiCountKeys ];
-         NHash::TcSHA512          voSHA;
+         Tu64                     vulpPrivateKey[ NMessages::TcEstablishSession::XuiCountKeys ];
+         Tu64                     vulpSharedSecret[ NMessages::TcEstablishSession::XuiCountKeys ];
+         Tu8                      vucpHash[ NMessages::TcEstablishSession::XuiCountKeys ][ NHash::TcSHA512::XuiLength ];
          NAES128::TcConfiguration voConfig;
          NAES128::TcEncryptor     voEncryptor;
          NAES128::TcDecryptor     voDecryptor;

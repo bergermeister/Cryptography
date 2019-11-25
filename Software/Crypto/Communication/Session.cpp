@@ -23,12 +23,15 @@ using namespace GNCrypto::NCommunication;
 TcSession::TcSession( const Tu64 aulpPrivateKey[ NMessages::TcEstablishSession::XuiCountKeys ] )
    : voEncryptor( voConfig ), voDecryptor( voConfig )
 {
-   std::memcpy( reinterpret_cast< void* >( this->vulPrivateKey ),
+   std::memcpy( reinterpret_cast< void* >( this->vulpPrivateKey ),
                 reinterpret_cast< const void* >( aulpPrivateKey ),
                 NMessages::TcEstablishSession::XuiCountKeys * sizeof( Tu64 ) );
 
-   std::memset( reinterpret_cast< void* >( this->vulSharedSecret ), 0, 
+   std::memset( reinterpret_cast< void* >( this->vulpSharedSecret ), 0, 
                 NMessages::TcEstablishSession::XuiCountKeys * sizeof( Tu64 ) );
+
+   std::memset( reinterpret_cast< void* >( this->vucpHash ), 0,
+                NMessages::TcEstablishSession::XuiCountKeys * NHash::TcSHA512::XuiLength );
 }
 
 TcSession::TcSession( const TcSession& aorSession )
@@ -46,6 +49,18 @@ TcSession& TcSession::operator=( const TcSession& aorSession )
 {
    if( this != &aorSession )
    {
+      std::memcpy( reinterpret_cast< void* >( this->vulpPrivateKey ),
+                   reinterpret_cast< const void* >( aorSession.vulpPrivateKey ),
+                   NMessages::TcEstablishSession::XuiCountKeys * sizeof( Tu64 ) );
+
+      std::memcpy( reinterpret_cast< void* >( this->vulpSharedSecret ),
+                   reinterpret_cast< const void* >( aorSession.vulpSharedSecret ),
+                   NMessages::TcEstablishSession::XuiCountKeys * sizeof( Tu64 ) );
+
+      std::memcpy( reinterpret_cast< void* >( this->vucpHash ),
+                   reinterpret_cast< const void* >( aorSession.vucpHash ),
+                   NMessages::TcEstablishSession::XuiCountKeys * NHash::TcSHA512::XuiLength );
+
       this->voConfig    = aorSession.voConfig;
       this->voEncryptor = aorSession.voEncryptor;
       this->voDecryptor = aorSession.voDecryptor;
@@ -61,7 +76,7 @@ NMessages::TcEstablishSession TcSession::MRequest( void )
 
    for( kuiIdx = 0; kuiIdx < NMessages::TcEstablishSession::XuiCountKeys; kuiIdx++ )
    {
-      koMsg.MSharedKey( kuiIdx ).MUpdate( 97, 92, this->vulPrivateKey[ kuiIdx ] );
+      koMsg.MSharedKey( kuiIdx ).MUpdate( 97, 92, this->vulpPrivateKey[ kuiIdx ] );
    }
 
    return( koMsg );
@@ -70,20 +85,33 @@ NMessages::TcEstablishSession TcSession::MRequest( void )
 NMessages::TcEstablishSession TcSession::MEstablish( const NMessages::TcEstablishSession& aorRequest )
 {
    NMessages::TcEstablishSession koMsg;
+   NHash::TcSHA512               koSHA;
    Tu32                          kuiIdx;
 
    for( kuiIdx = 0; kuiIdx < NMessages::TcEstablishSession::XuiCountKeys; kuiIdx++ )
    {
+      /// -# Obtain the Public Key
       const TcPublicKey& korPub = aorRequest.MSharedKey( kuiIdx );
-      koMsg.MSharedKey( kuiIdx ).MUpdate( korPub.MP( ), korPub.MG( ), this->vulPrivateKey[ kuiIdx ] );
-      this->vulSharedSecret[ kuiIdx ] = NDiffieHellman::MCalculate( korPub.MSharedKey( ), 
-                                                                    this->vulPrivateKey[ kuiIdx ], 
-                                                                    korPub.MP( ) );
-      
+
+      /// -# Calculate Shared Key
+      koMsg.MSharedKey( kuiIdx ).MUpdate( korPub.MP( ), korPub.MG( ), this->vulpPrivateKey[ kuiIdx ] );
+
+      /// -# Calculate Shared Secret
+      this->vulpSharedSecret[ kuiIdx ] = NDiffieHellman::MCalculate( korPub.MSharedKey( ), 
+                                                                     this->vulpPrivateKey[ kuiIdx ], 
+                                                                     korPub.MP( ) );
+
+      /// -# Calculate SHA-512 of Shared Secret
+      koSHA.MInitialize( );
+      koSHA.MProcess( reinterpret_cast< const Tu8* >( &this->vulpSharedSecret[ kuiIdx ] ), sizeof( Tu64 ) );
+      koSHA.MFinalize( );
+      std::memcpy( reinterpret_cast< void* >( this->vucpHash[ kuiIdx ] ), 
+                   reinterpret_cast< const void* >( koSHA.MDigest( ) ), 
+                   NHash::TcSHA512::XuiLength );
    }
 
-   // Configure AES Algorithm using the first 128-bits of SharedSecret[ 0 ] as the key
-   this->voConfig.MExpandKey( reinterpret_cast< const Tu8* >( &this->vulSharedSecret[ 0 ] ) );
+   /// -# Configure AES Algorithm using the first 128-bits of SharedSecret[ 0 ]'s Digest as the key
+   this->voConfig.MExpandKey( reinterpret_cast< const Tu8* >( this->vucpHash[ 0 ] ) );
 
    return( koMsg );
 }
