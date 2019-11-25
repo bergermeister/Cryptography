@@ -13,6 +13,7 @@ namespace CryptoTest
       using namespace Microsoft::VisualStudio::CppUnitTestFramework;
       using namespace GNCrypto;
       using namespace GNCrypto::NAES128;
+
       TEST_CLASS( TuEncryption )
       {
       public:

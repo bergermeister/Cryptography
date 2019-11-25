@@ -161,6 +161,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Test\Crypto\AES\Encryption.cpp" />
+    <ClCompile Include="..\..\..\Test\Crypto\Communication\Session.cpp" />
     <ClCompile Include="..\..\..\Test\Crypto\Hash\SHA512.cpp" />
     <ClCompile Include="..\..\..\Test\Crypto\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

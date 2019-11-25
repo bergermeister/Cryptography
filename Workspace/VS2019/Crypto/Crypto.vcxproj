@@ -147,18 +147,28 @@
     <ClCompile Include="..\..\..\Software\Crypto\AES\Decryptor.cpp" />
     <ClCompile Include="..\..\..\Software\Crypto\AES\Encryptor.cpp" />
     <ClCompile Include="..\..\..\Software\Crypto\AES\Configuration.cpp" />
+    <ClCompile Include="..\..\..\Software\Crypto\Communication\Messages\EstablishSession.cpp" />
+    <ClCompile Include="..\..\..\Software\Crypto\Communication\Messages\Message.cpp" />
+    <ClCompile Include="..\..\..\Software\Crypto\Communication\Session.cpp" />
     <ClCompile Include="..\..\..\Software\Crypto\Hash\Algorithm.cpp" />
     <ClCompile Include="..\..\..\Software\Crypto\Hash\SHA.cpp" />
     <ClCompile Include="..\..\..\Software\Crypto\Hash\SHA512.cpp" />
+    <ClCompile Include="..\..\..\Software\Crypto\KeyExchange\DiffieHellman.cpp" />
+    <ClCompile Include="..\..\..\Software\Crypto\KeyExchange\PublicKey.cpp" />
     <ClCompile Include="..\..\..\Software\Crypto\Math\GaloisField.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Software\Crypto\AES\Decryptor.h" />
     <ClInclude Include="..\..\..\Software\Crypto\AES\Encryptor.h" />
     <ClInclude Include="..\..\..\Software\Crypto\AES\Configuration.h" />
+    <ClInclude Include="..\..\..\Software\Crypto\Communication\Messages\EstablishSession.h" />
+    <ClInclude Include="..\..\..\Software\Crypto\Communication\Messages\Message.h" />
+    <ClInclude Include="..\..\..\Software\Crypto\Communication\Session.h" />
     <ClInclude Include="..\..\..\Software\Crypto\Hash\Algorithm.h" />
     <ClInclude Include="..\..\..\Software\Crypto\Hash\SHA.h" />
     <ClInclude Include="..\..\..\Software\Crypto\Hash\SHA512.h" />
+    <ClInclude Include="..\..\..\Software\Crypto\KeyExchange\DiffieHellman.h" />
+    <ClInclude Include="..\..\..\Software\Crypto\KeyExchange\PublicKey.h" />
     <ClInclude Include="..\..\..\Software\Crypto\Math\GaloisField.h" />
     <ClInclude Include="..\..\..\Software\Crypto\Types.h" />
   </ItemGroup>
