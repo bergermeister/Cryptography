@@ -59,8 +59,8 @@ namespace GNCrypto
           * @return 
           * This method returns the 64-bit word rotated left.
           *
-          * @param aulrX   [in] W-bit word to be operated on
-          * @param aulrN   [in] Integer with 0 <= N <= W 
+          * @param aoX     [in] W-bit word to be operated on
+          * @param aoN     [in] Integer with 0 <= N <= W 
           */
          template< class GTcType >
          inline GTcType mROTL( const GTcType aoX, const GTcType aoN )
@@ -80,8 +80,8 @@ namespace GNCrypto
           * @return  
           * This method returns the 64-bit word rotated right.
           *
-          * @param aulrX   [in] W-bit word to be operated on
-          * @param aulrN   [in] Integer with 0 <= N <= W
+          * @param aoX     [in] W-bit word to be operated on
+          * @param aoN     [in] Integer with 0 <= N <= W
           */
          template< class GTcType >
          inline GTcType mROTR( const GTcType aoX, const GTcType aoN )
@@ -101,8 +101,8 @@ namespace GNCrypto
           * @return  
           * This method returns the 64-bit word rotated left.
           *
-          * @param aulrX   [in] W-bit word to be operated on 
-          * @param aulrN   [in] Integer with 0 <= N <= W 
+          * @param aoX     [in] W-bit word to be operated on 
+          * @param aoN     [in] Integer with 0 <= N <= W 
           */
          template< class GTcType >
          inline GTcType mSHR( const GTcType aoX, const GTcType aoN )
