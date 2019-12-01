@@ -16,6 +16,7 @@ using namespace GNCrypto::NHash;
 TcAlgorithm::TcAlgorithm( const Tu8* kucpDigest )
 {
    this->vucpDigest = kucpDigest;
+   this->vuiDigested = 0;
 }
 
 TcAlgorithm::TcAlgorithm( const TcAlgorithm& aorHash )
