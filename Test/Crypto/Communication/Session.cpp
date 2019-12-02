@@ -100,7 +100,7 @@ namespace CryptoTest
                0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77,
                0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF
             };
-            const Tu32 xuiTestLen = 52;
+            const Tu32 xuiTestLen = 16;
             const Tu64 xulpPKeyAlice[ ] = { 4, 5, 6, 7, 8 };
             const Tu64 xulpPKeyBob[ ] = { 3, 4, 5, 6, 7 };
             Tc8        kcpCiphertext[ 16 ];
