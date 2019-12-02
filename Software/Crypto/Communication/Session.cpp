@@ -122,6 +122,11 @@ NMessages::TcEstablishSession TcSession::MEstablish( const NMessages::TcEstablis
    return( koMsg );
 }
 
+NAES128::TcConfiguration& TcSession::SConfiguration( void )
+{
+   return( this->voConfig );
+}
+
 void TcSession::MEncrypt( const Tu8* aucpPlaintext, Tu8* aucpCiphertext, const Tu32 auiBytes )
 {
    Tu8  kucpBuffer[ NAES128::TcConfiguration::XuiSizeKey ];

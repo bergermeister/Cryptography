@@ -95,6 +95,11 @@ namespace CryptoTest
 
          TEST_METHOD( MVector )
          {
+            const Tu8 xucpKey[ ] =
+            {
+               0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+               0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F
+            };
             const Tu8 xucpPlaintext[ ] =
             {
                0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77,
@@ -129,6 +134,10 @@ namespace CryptoTest
             ///   -# Process received Establish Session Acknowledge
             ///   -# Creates her Shared Secret
             ( void )koAlice.MEstablish( koMsgBob, true );
+
+            /// -# Override Alice and Bob's AES Configuration's Key with the AES Test Vector Key
+            koAlice.SConfiguration( ).MExpandKey( xucpKey );
+            koBob.SConfiguration( ).MExpandKey( xucpKey );
 
             koAlice.MEncrypt( xucpPlaintext, reinterpret_cast< Tu8* >( kcpCiphertext ), xuiTestLen );
             koBob.MDecrypt( reinterpret_cast< const Tu8* >( kcpCiphertext ), reinterpret_cast< Tu8* >( kcpPlaintext ), 16 );
