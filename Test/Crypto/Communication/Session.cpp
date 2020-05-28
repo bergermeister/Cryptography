@@ -56,12 +56,13 @@ namespace CryptoTest
 
          TEST_METHOD( MDynamicSBox )
          {
-            const Tc8  xcpTestStr[ ] = "SENDER: Alice\r\nRECIPIENT: BOB\r\nSUBJECT: Test Message";
-            const Tu32 xuiTestLen = 52;
+            const Tc8  xcpTestStr[ ] = "Edward John Eisenberger Jr.\n1164 Old Northfield Rd.\nThomaston, CT 06787\0\0\0\0\0\0\0\0";
+            const Tu32 xuiTestLen = 80;
+            const Tu32 xuiCiphLen = xuiTestLen + ( xuiTestLen % 16 );
             const Tu64 xulpPKeyAlice[ ] = { 4, 5, 6, 7, 8 };
             const Tu64 xulpPKeyBob[ ] = { 3, 4, 5, 6, 7 };
-            Tc8        kcpCiphertext[ 64 ];
-            Tc8        kcpPlaintext[ 64 ];
+            Tc8        kcpCiphertext[ xuiCiphLen ];
+            Tc8        kcpPlaintext[ xuiCiphLen ];
             TcSession  koAlice( xulpPKeyAlice );
             TcSession  koBob( xulpPKeyBob );
             NMessages::TcEstablishSession koMsgAlice;
@@ -79,16 +80,16 @@ namespace CryptoTest
             ///   -# Processes received Establish Session Request
             ///   -# Creates his Shared Secret
             ///   -# Generates Establish Session Acknowledge message
-            koMsgBob = koBob.MEstablish( koMsgAlice, true );
+            koMsgBob = koBob.MEstablish( koMsgAlice, false );
 
             /// -#  Bob sends Establish Session Acknowledge message to Alice
             /// -# Alice:
             ///   -# Process received Establish Session Acknowledge
             ///   -# Creates her Shared Secret
-            (void )koAlice.MEstablish( koMsgBob, true );
+            (void )koAlice.MEstablish( koMsgBob, false );
 
             koAlice.MEncrypt( reinterpret_cast< const Tu8* >( xcpTestStr ), reinterpret_cast< Tu8* >( kcpCiphertext ), xuiTestLen );
-            koBob.MDecrypt( reinterpret_cast< const Tu8* >( kcpCiphertext ), reinterpret_cast< Tu8* >( kcpPlaintext ), 64 );
+            koBob.MDecrypt( reinterpret_cast< const Tu8* >( kcpCiphertext ), reinterpret_cast< Tu8* >( kcpPlaintext ), xuiCiphLen );
 
             Assert::AreEqual( xcpTestStr, kcpPlaintext, L"ERROR: Plaintext Mismatch" );
          }

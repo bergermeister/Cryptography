@@ -19,6 +19,9 @@
     <Filter Include="Source\KeyExchange">
       <UniqueIdentifier>{65a49290-6453-4770-8a40-93b0bbb6c4ec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Math">
+      <UniqueIdentifier>{a37d578e-eecf-4fa7-b7b1-1230f72399d1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Software\Crypto\Hash\SHA.cpp">
@@ -53,6 +56,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Software\Crypto\KeyExchange\DiffieHellman.cpp">
       <Filter>Source\KeyExchange</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Software\Crypto\Math\GCD.cpp">
+      <Filter>Source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Software\Crypto\Math\Prime.cpp">
+      <Filter>Source\Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +100,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Software\Crypto\KeyExchange\DiffieHellman.h">
       <Filter>Source\KeyExchange</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Software\Crypto\Math\GCD.h">
+      <Filter>Source\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Software\Crypto\Math\Prime.h">
+      <Filter>Source\Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

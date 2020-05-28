@@ -14,6 +14,9 @@
     <Filter Include="Source\Communication">
       <UniqueIdentifier>{1a040f30-fc56-4cd0-b7ad-99b6174d47b0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Math">
+      <UniqueIdentifier>{0a64fcaa-d968-44d0-acbd-b7463a3588d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Test\Crypto\pch.cpp">
@@ -27,6 +30,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Test\Crypto\Communication\Session.cpp">
       <Filter>Source\Communication</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Test\Crypto\Math\Prime.cpp">
+      <Filter>Source\Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -136,6 +136,7 @@ void TcSHA512::MFinalize( void )
 {
    Tu8  kucpBuffer[ xuiLengthBlock ];
    Tu32 kuiBytes;
+   Tu32 kuiWord;
 
    kuiBytes = this->vuiDigested % xuiLengthBlock;
 
@@ -155,6 +156,19 @@ void TcSHA512::MFinalize( void )
       kucpBuffer[ 127 ] = static_cast< Tu8 >( this->vuiDigested << 3 );
 
       this->mProcessBlock( kucpBuffer );
+   }
+
+   // Endian swap final digest
+   for( kuiWord = 0; kuiWord < xuiLengthWords; kuiWord++ )
+   {
+      this->vulHash[ kuiWord ] = ( ( this->vulHash[ kuiWord ] >> 56 ) & 0x00000000000000FF ) |
+                                 ( ( this->vulHash[ kuiWord ] >> 40 ) & 0x000000000000FF00 ) |
+                                 ( ( this->vulHash[ kuiWord ] >> 24 ) & 0x0000000000FF0000 ) |
+                                 ( ( this->vulHash[ kuiWord ] >>  8 ) & 0x00000000FF000000 ) |
+                                 ( ( this->vulHash[ kuiWord ] <<  8 ) & 0x000000FF00000000 ) |
+                                 ( ( this->vulHash[ kuiWord ] << 24 ) & 0x0000FF0000000000 ) |
+                                 ( ( this->vulHash[ kuiWord ] << 40 ) & 0x00FF000000000000 ) |
+                                 ( ( this->vulHash[ kuiWord ] << 56 ) & 0xFF00000000000000 );
    }
 }
 
@@ -216,8 +230,8 @@ void TcSHA512::mProcessBlock( const Tu8* aucpBlock )
    for( kuiT = 0; kuiT < xuiConstCnt; kuiT++ )
    {
       // Calculate Temp1 and Temp2
-      kulTemp1 = kulH + mSig2( kulE ) + mCh( kulE, kulF, kulG ) + xulConstant[ kuiT ] + kulpW[ kuiT ];
-      kulTemp2 = mSig1( kulA ) + mMaj( kulA, kulB, kulC );
+      kulTemp1 = kulH + mSig2( kulE ) + MChoose( kulE, kulF, kulG ) + xulConstant[ kuiT ] + kulpW[ kuiT ];
+      kulTemp2 = mSig1( kulA ) + MMajority( kulA, kulB, kulC );
       
       // Update the working registers
       kulH = kulG;
