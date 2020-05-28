@@ -78,12 +78,12 @@ namespace CryptoTest
                kbIsPrime = GNCrypto::NMath::MIsPrime( kiValue );
                if( kbIsPrime )
                {
-                  Assert::AreEqual( xlPrimes[ kiIndex ], kiValue, L"ERROR: Expected Prime Value Mismatch" );
+                  Assert::IsTrue( xlPrimes[ kiIndex ] == kiValue, L"ERROR: Expected Prime Value Mismatch" );
                   kiIndex++;
                }
                else
                {
-                  Assert::AreNotEqual( xlPrimes[ kiIndex ], kiValue, L"ERROR: Found Prime Value when Expected Not Prime Value" );
+                  Assert::IsFalse( xlPrimes[ kiIndex ] == kiValue, L"ERROR: Found Prime Value when Expected Not Prime Value" );
                }
             }
          }

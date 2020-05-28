@@ -8,9 +8,10 @@ namespace GNCrypto
 {
    namespace NMath
    {
-      static Ti64 MGCD( Ti64 alA, Ti64 alB, Ti64& airInverse );
-      static std::vector< std::pair< Ti64, Ti64 > > MMultiplicativeInverses( Ti64 alN );
-      static Ti64 MMultiplicativeInverse( Ti64 alA, Ti64 alN );
+      Ti64 MGCD( Ti64 alA, Ti64 alB, Ti64& airInverse );
+      Ti64 MLCM( Ti64 alA, Ti64 alB );
+      std::vector< std::pair< Ti64, Ti64 > > MMultiplicativeInverses( Ti64 alN );
+      Ti64 MMultiplicativeInverse( Ti64 alA, Ti64 alN );
    }
 }
 

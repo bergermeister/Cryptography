@@ -37,6 +37,13 @@ Ti64 GNCrypto::NMath::MGCD( Ti64 alA, Ti64 alB, Ti64& airInverse )
    return( klR1 );
 }
 
+Ti64 GNCrypto::NMath::MLCM( Ti64 alA, Ti64 alB )
+{
+   Ti64 klT;
+   Ti64 klD = MGCD( alA, alB, klT );
+   return( ( alA * alB ) / klD );
+}
+
 std::vector< std::pair< Ti64, Ti64 > > GNCrypto::NMath::MMultiplicativeInverses( Ti64 alN )
 {
    std::vector< std::pair< Ti64, Ti64 > > koInverses;
