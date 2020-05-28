@@ -7,6 +7,16 @@
 #ifndef PCH_H
 #define PCH_H
 
-// add headers that you want to pre-compile here
+// Windows CPP Unit Test Framework
+#include <CppUnitTest.h>
+
+// Standard Libraries
+#include <vector>
+
+//Crpyto Library Includes
+#include <Types.h>
+#include <Math/GCD.h>
+#include <Cipher/Cipher.h>
+#include <Cipher/RSA.h>
 
 #endif //PCH_H

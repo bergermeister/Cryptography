@@ -59,8 +59,12 @@ std::vector< std::pair< Ti64, Ti64 > > GNCrypto::NMath::MMultiplicativeInverses(
       // If gcd is 1, then a has a multiplicative inverse
       if( klR == 1 )
       {
-         koInverse.first = klR;
+         koInverse.first = klA;
          koInverse.second = klT % alN;
+         while( koInverse.second < 0 )
+         {
+            koInverse.second += alN;
+         }
          koInverses.push_back( koInverse );
       }
    }
