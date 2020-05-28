@@ -30,7 +30,7 @@
 \ifCLASSINFOpdf
   \usepackage[pdftex]{graphicx}
   % declare the path(s) where your graphic files are
-  \graphicspath{{../eps/}{../png/}}
+  \graphicspath{{../Graphics/PDF/}{../Graphics/EPS/}}
   % and their extensions so you won't have to specify these with
   % every instance of \includegraphics
   % \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
@@ -67,13 +67,15 @@
 
 % *** MATH PACKAGES ***
 %
-%\usepackage{amsmath}
+\usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
 % A popular package from the American Mathematical Society that provides
 % many useful and powerful commands for dealing with mathematics.
 %
 % Note that the amsmath package sets \interdisplaylinepenalty to 10000
 % thus preventing page breaks from occurring within multiline equations. Use:
-%\interdisplaylinepenalty=2500
+\interdisplaylinepenalty=2500
 % after loading amsmath to restore such page breaks as IEEEtran.cls normally
 % does. amsmath.sty is already installed on most LaTeX systems. The latest
 % version and documentation can be obtained at:
@@ -354,11 +356,6 @@ using public key B and Bob is able to calculate the same Shared Secret, s, using
 learned p, g, A, and B but it would be computationally difficult to determine the Shared Secret, s. Alice 
 and Bob can use s to encrypt their data.
 
-While methods exist to exchange keys between endpoints, the S-Box generally remains static. This leaves AES
-open to potential exploitation. This paper proposes a method of utilizing Diffie-Hellman Key Exchange coupled
-with a Hashing algorithm to generate Shared Secrets which can be used to dynamically generate S-Boxes and 
-Inverse S-Boxes.
-
 \begin{figure}[!t]
 	\centering
 	\includegraphics[width=2.5in]{AESProcess}
@@ -385,15 +382,7 @@ The S-Box is initialized with values from 0 to 255. 256 random numbers are gener
 a hashing algorithm. The resultant hash is stored in a Key matrix. The values of the S-Box are swapped 
 based on the Key matrix resulting in a dynamic S-Box. 
 
-\section{Dynamic S-Box Generation and Exchange}
-In this design, illustrated in Figure ~\ref{Figure:DynamicSBoxExchange}, Diffie-Hellman Key Exchange is combined
-with Dynamic S-Box Generation to enhance 128-bit AES. Endpoints A and B generate 5 64-bit random numbers. 
-A and B perform Diffie-Hellman Key Exchange to generate 5 Shared Secrets. Both endpoints calculate and 
-store the SHA-512 hash of each Shared Secret. 4 of the Shared Secret Hashes are combined into a 256-Byte 
-Index box. 128 bits of the fifth Shared Secret Hash are used as the Secret Key. A and B initialize their
-respective S-Box to the Rijndael S-Box. The endpoints then iterate through each byte in the Index box and
-exchange values in the S-Box based on the value of the Index Box. This design will be implemented in a 
-Visual C++ static library.
+\cite{AESKeySBox} Kazys Kazlauskas and Jaunius Kazlauskas have proposed a method for generating S-Boxes dependent on the input key.
 
 \begin{figure}[!t]
 	\centering
@@ -402,113 +391,283 @@ Visual C++ static library.
 	\label{Figure:DynamicSBoxExchange}
 \end{figure}
 
-%Subsection text here.
+\section{Problem Statement}
+While methods exist to exchange keys between endpoints, the S-Box generally remains static. This leaves AES
+open to potential exploitation. This paper proposes a method of utilizing Diffie-Hellman Key Exchange coupled
+with a Hashing algorithm to generate Shared Secrets which can be used to dynamically generate S-Boxes and 
+Inverse S-Boxes.
 
-% needed in second column of first page if using \IEEEpubid
-%\IEEEpubidadjcol
+\section{Dynamic S-Box Generation and Exchange}
+In this design, illustrated in Figure ~\ref{Figure:DynamicSBoxExchange}, Diffie-Hellman Key Exchange is combined with Dynamic S-Box Generation to enhance 128-bit AES. Endpoints A and B generate 5 64-bit random numbers. A and B perform Diffie-Hellman Key Exchange to exchange 5 Shared Secrets. Both endpoints calculate and store the SHA-512 hash of each Shared Secret. 128 bits of the first Shared Secret Hash are used as the Secret Key. The remaining 4 Shared Secret Hashes are combined into a 256-Byte array. A and B use the 256-Byte array to dynamically generate the S-Box using the approach described in \cite{AESKeySBox}. This design is implemented in a Visual C++ static library and is illustrated in Figure ~\ref{Figure:CollaborationSession}. 
 
-%\subsubsection{Subsubsection Heading Here}
-%Subsubsection text here.
+\subsection{Design}
+The AES implementation consists of a Session Class which aggregates AES Configuration, Encryptor, and Decryptor objects. The Session Class opens a secure communication channel by sending an Establish Session Message to a remote endpoint. The message contains public variables p and g, as well as the host’s calculated Public Keys.  The remote endpoint’s Session object calculates the Shared Secrets upon receipt of the Establish Session Message, then responds to the host with a similar Establish Session Message, containing the remote endpoint’s Public Key. Upon receipt of the message, the host’s Session object calculates the same Shared Secrets as the remote endpoint. The host and remote endpoint’s Session objects calculate the SHA-512 digests of the Shared Secrets, then initialize the AES Configuration object with the Hash values. The first 128 bits of the first Shared Secret Hash value are used as the Key. The last 256 bytes of the Shared Secret Hash values are used to dynamically generate the S-Box and Inverse S-Box.
 
+\subsection{Session}
+The Session object maintains the private keys, Shared Secrets, and Shared Secret Hashes. This object provides the application with the ability to generate and process Establish Session messages. This object performs the necessary Diffie-Hellman operations to calculate the Shared Secrets from the given private keys and received public keys. 
 
-% An example of a floating figure using the graphicx package.
-% Note that \label must occur AFTER (or within) \caption.
-% For figures, \caption should occur after the \includegraphics.
-% Note that IEEEtran v1.7 and later has special internal code that
-% is designed to preserve the operation of \label within \caption
-% even when the captionsoff option is in effect. However, because
-% of issues like this, it may be the safest practice to put all your
-% \label just after \caption rather than within \caption{}.
-%
-% Reminder: the "draftcls" or "draftclsnofoot", not "draft", class
-% option should be used if it is desired that the figures are to be
-% displayed while in draft mode.
-%
-%\begin{figure}[!t]
-%\centering
-%\includegraphics[width=2.5in]{myfigure}
-% where an .eps filename suffix will be assumed under latex, 
-% and a .pdf suffix will be assumed for pdflatex; or what has been declared
-% via \DeclareGraphicsExtensions.
-%\caption{Simulation results for the network.}
-%\label{fig_sim}
-%\end{figure}
+\subsection{Establish Session Message}
+The Establish Session message contains public variables p and g, as well as the Public Key. This object also performs the necessary Diffie-Hellman operations to calculate the Public Key.
 
-% Note that the IEEE typically puts floats only at the top, even when this
-% results in a large percentage of a column being occupied by floats.
+\subsection{AES Configuration}
+The AES Configuration object maintains the S-Box, Inverse S-Box (I-Box), and the expanded key schedule. This object is capable of generating a Dynamic S-Box and corresponding I-Box from an array of 256 bytes. The Dynamic S-Box generation is based on the approach in \cite{AESKeySBox}. This object uses the 256-Byte array of hash values, instead of the input key, to generate the S-Box and I-Box:
+\begin{algorithm}
+	\caption{Dynamic S-Box Generation}\label{euclid}
+	\begin{algorithmic}[1]
+		\Procedure{Generate S-Box}{}
+		\State $i \gets 0$
+		\State $k \gets 1$
+		\State $l \gets 1$
+		\State $B \gets \textit{256-Byte Array Of Hashes}$
+		\State $S \gets \textit{256 Byte Array of Subtotals}$
+		\State $S[0] \gets (B[0]+B[1]) modulo 256$
+		\State $SBox[0] \gets S[0]$
+		\While{$k<256$}
+			\State $i \gets i + 1$
+			\State $m \gets 1 + (k+(i*l)) \textit{mod 256}$
+			\State $S[i] \gets (S[i-1]+B[m])$
+			\State $l \gets 0$
+			\For{$j=0;j<k;j \gets j + 1$}
+				\If{$\textit{S}[i]!=\textit{SBox}[j]$}
+					\State $l \gets l + 1$
+				\EndIf	
+			\EndFor
+			\If{$l==j$}
+				\State $SBox[k]=S[i]$
+				\State $k \gets k+1$
+			\EndIf	
+		\EndWhile
+		\For{$k=0;k<256;k++$}
+			\State $IBox[SBox[k]] \gets k$
+		\EndFor
+		\EndProcedure
+	\end{algorithmic}
+\end{algorithm} 
 
+\subsection{Encryptor}
+The Encryptor object provides the encryption operation using the given AES Configuration object's S-Box, I-Box, and Key Schedule.
 
-% An example of a double column floating figure using two subfigures.
-% (The subfig.sty package must be loaded for this to work.)
-% The subfigure \label commands are set within each subfloat command,
-% and the \label for the overall figure must come after \caption.
-% \hfil is used as a separator to get equal spacing.
-% Watch out that the combined width of all the subfigures on a 
-% line do not exceed the text width or a line break will occur.
-%
-%\begin{figure*}[!t]
-%\centering
-%\subfloat[Case I]{\includegraphics[width=2.5in]{box}%
-%\label{fig_first_case}}
-%\hfil
-%\subfloat[Case II]{\includegraphics[width=2.5in]{box}%
-%\label{fig_second_case}}
-%\caption{Simulation results for the network.}
-%\label{fig_sim}
-%\end{figure*}
-%
-% Note that often IEEE papers with subfigures do not employ subfigure
-% captions (using the optional argument to \subfloat[]), but instead will
-% reference/describe all of them (a), (b), etc., within the main caption.
-% Be aware that for subfig.sty to generate the (a), (b), etc., subfigure
-% labels, the optional argument to \subfloat must be present. If a
-% subcaption is not desired, just leave its contents blank,
-% e.g., \subfloat[].
+\subsection{Decryptor}
+The Decryptor object provides the decryption operation using the given AES Configuration object's S-Box, I-Box, and Key Schedule.
 
+\begin{figure}[!t]
+	\centering
+	\includegraphics[width=2.5in]{CollaborationSession}
+	\caption{Dynamic S-Box Generation and Exchange}
+	\label{Figure:CollaborationSession}
+\end{figure}
 
-% An example of a floating table. Note that, for IEEE style tables, the
-% \caption command should come BEFORE the table and, given that table
-% captions serve much like titles, are usually capitalized except for words
-% such as a, an, and, as, at, but, by, for, in, nor, of, on, or, the, to
-% and up, which are usually not capitalized unless they are the first or
-% last word of the caption. Table text will default to \footnotesize as
-% the IEEE normally uses this smaller font for tables.
-% The \label must come after \caption as always.
-%
-%\begin{table}[!t]
-%% increase table row spacing, adjust to taste
-%\renewcommand{\arraystretch}{1.3}
-% if using array.sty, it might be a good idea to tweak the value of
-% \extrarowheight as needed to properly center the text within the cells
-%\caption{An Example of a Table}
-%\label{table_example}
-%\centering
-%% Some packages, such as MDW tools, offer better commands for making tables
-%% than the plain LaTeX2e tabular which is used here.
-%\begin{tabular}{|c||c|}
-%\hline
-%One & Two\\
-%\hline
-%Three & Four\\
-%\hline
-%\end{tabular}
-%\end{table}
+\section{Simulation}
+Figure ~\ref{Figure:Sequence} illustrates the Dynamic S-Box Generation and Exchange sequence. Two endpoints are created, Alice and Bob. They each create 5 private keys (64-bit random numbers) then instantiate a Session object, providing the private keys for initialization. Alice chooses the values 97 and 92 as public variables p and g. Alice initiates a new secure session by creating an Establish Session Message via the Session object, then transmits the message to Bob. Bob's Session object receives the Establish Session Message, calculates 5 Shared Secrets, updates the AES Configuration object with the Shared Secrets, and creates an Establish Session Message containing Bob's Public Key. Bob transmits the Establish Session Message to Alice. Alice's Session object receives the Establish Session Message, calculates 5 Shared Secrets, and updates the AES Configuration object with the Shared Secrets. Alice and Bob can communicate securely using the Encryptor object to encrpt data and the corresponding Decryptor object to decrypt data.
 
+\begin{figure}[!t]
+	\centering
+	\includegraphics[width=2.5in]{Sequence}
+	\caption{Dynamic S-Box Sequence}
+	\label{Figure:Sequence}
+\end{figure}
 
-% Note that the IEEE does not put floats in the very first column
-% - or typically anywhere on the first page for that matter. Also,
-% in-text middle ("here") positioning is typically not used, but it
-% is allowed and encouraged for Computer Society conferences (but
-% not Computer Society journals). Most IEEE journals/conferences use
-% top floats exclusively. 
-% Note that, LaTeX2e, unlike IEEE journals/conferences, places
-% footnotes above bottom floats. This can be corrected via the
-% \fnbelowfloat command of the stfloats package.
+\section{Results Analysis and Discussion}
+Alice generates the following private keys:
+$$
+\begin{bmatrix} 
+4 & 5 & 6 & 7 & 8
+\end{bmatrix}
+$$
 
+Bob generates the following private keys:
+$$
+\begin{bmatrix} 
+3 & 4 & 5 & 6 & 7
+\end{bmatrix}
+$$
 
+Alice and Bob calculate the following Shared Secrets:
+$$
+\begin{bmatrix}
+40 & 5d & 4f & 0c & 5b
+\end{bmatrix}
+$$
 
+Alice and Bob calculate the following Hash value for Shared Secret 0x40:
+$$
+\begin{bmatrix}
+49 & 0d & 3f & 33 & e4 & e5 & 92 & a7 \\
+73 & 7d & 62 & 3d & 31 & cf & e7 & 38 \\
+21 & 3f & 82 & b8 & 2d & 35 & b4 & 7d \\
+22 & 2b & d2 & a3 & 28 & d2 & b8 & 9d \\
+73 & 97 & b2 & 0f & f9 & 1d & 50 & e7 \\
+e3 & 70 & f7 & d2 & 05 & aa & 03 & 12 \\
+1d & 0b & 68 & fd & 5b & 8a & 20 & 62 \\
+4b & cc & 28 & 93 & 1b & 36 & cf & 1a 
+\end{bmatrix}
+$$
+
+Alice and Bob's AES Configuration object calculates the following Key Schedule from the first 128-bits of the Hash value:
+$$
+\begin{bmatrix}
+49 & 0d & 3f & 33 & e4 & e5 & 92 & a7 & 73 & 7d \\
+62 & 3d & 31 & cf & e7 & 38 & c2 & 99 & 38 & f4 \\
+26 & 7c & aa & 53 & 55 & 01 & c8 & 6e & 64 & ce \\
+2f & 56 & 4b & 8c & 89 & b7 & 6d & f0 & 23 & e4 \\
+38 & f1 & eb & 8a & 5c & 3f & c4 & dc & 3a & 90 \\
+0f & fd & 57 & 60 & 2c & 19 & 6f & 91 & c7 & 93 \\
+33 & ae & 03 & 4f & d6 & eb & 8b & 3e & 81 & 8b \\
+a7 & 27 & ee & 1a & 60 & b4 & dd & b4 & 63 & fb \\
+4b & 10 & 84 & ff & ca & 9b & 23 & d8 & 24 & 81 \\
+43 & 6c & f9 & 35 & 20 & 97 & fd & a7 & 0c & 66 \\
+37 & 3c & 2f & be & 13 & bd & 6c & d2 & ea & 88 \\
+4c & 45 & 79 & 8e & 62 & e1 & 4e & b2 & 4d & 5f \\
+5d & 0f & 21 & 8d & b7 & 87 & 6d & c8 & ee & b2 \\
+8a & 48 & a0 & 00 & c7 & 17 & fd & 0f & e6 & 9a \\
+4a & 88 & 8b & 52 & 31 & 8f & 8a & 9e & 91 & 8f \\
+4d & 89 & 6c & 80 & ab & 13 & 26 & 08 & 20 & 41 \\
+37 & 38 & 09 & 69 & a6 & b7 & 44 & e0 & ca & 37 \\
+ef & f3 & ec & 3f & cf & b2
+\end{bmatrix}
+$$
+
+Alice and Bob calculate Hash values for Shared Secrets 0x5d, 0x4f, 0x0c, and 0x5b then combine them into the following 256-byte array:
+$$
+\begin{bmatrix}
+cd & 7b & 83 & 86 & af & b8 & 8b & 6d & fe & 0d \\
+5c & 99 & de & ba & 0d & 65 & 3c & 4c & 33 & cd \\
+d4 & 71 & 45 & 39 & 0c & b0 & df & aa & 09 & fa \\
+80 & b0 & 30 & 9f & c8 & 58 & 5a & fc & 98 & c5 \\
+a1 & 81 & d9 & 79 & 18 & 6c & a0 & 31 & 8c & 6b \\
+af & 97 & d0 & cb & d6 & 0a & 53 & ee & 57 & 85 \\
+b6 & 93 & 13 & ba & 2c & 48 & ac & dc & 4d & 11 \\
+f1 & 6f & 65 & 43 & c0 & 8a & d7 & cd & 2c & 0f \\
+42 & e7 & 71 & 25 & 39 & bb & 47 & ff & 53 & c3 \\
+cf & 27 & 36 & 37 & 24 & bc & f2 & 17 & 90 & 26 \\
+99 & 26 & 1e & 38 & 41 & 31 & 31 & 52 & 25 & 63 \\
+09 & f3 & 70 & d9 & 72 & 98 & da & 0b & 8a & 0e \\
+61 & d6 & 7e & 7b & 3f & 7b & 16 & 33 & 42 & 41 \\
+88 & 04 & 01 & 6a & 2b & 15 & d3 & 33 & be & 16 \\
+21 & bc & fd & e8 & df & ef & 2a & 2b & 5d & 98 \\
+8f & 26 & 58 & 95 & f9 & 3c & d7 & 73 & bc & 51 \\
+64 & 39 & bc & 14 & 41 & 5b & ff & ff & 9c & 93 \\
+f9 & b1 & c2 & 18 & ba & e1 & 13 & 52 & 70 & 73 \\
+9f & 6f & a5 & f3 & 32 & 80 & ba & 52 & 3a & 0a \\
+9d & ca & 35 & 03 & 55 & 3d & de & 94 & 9a & 2c \\
+7f & 35 & 1e & 65 & 67 & 5b & cf & 0d & e2 & 0d \\
+b2 & bc & 07 & 65 & 86 & 87 & c3 & 88 & 52 & 84 \\
+99 & e5 & 71 & ac & e9 & 1d & e1 & 8c & 30 & 88 \\
+67 & 36 & c3 & e0 & 03 & e6 & 0f & bb & 6f & b3 \\
+71 & 97 & 1a & 09 & f4 & 32 & 86 & d1 & ab & cb \\
+e6 & df & 0a & 5f & 71 & af
+\end{bmatrix}
+$$
+
+Alice and Bob pass the 256-Byte array into their AES Configuration objects. The AES Configuration object generates the following S-Box:
+$$
+\begin{bmatrix} 
+48 & ce & 86 & e2 & 2e & 0d & 09 & b8 & 00 & 71 \\
+97 & 15 & 04 & fd & 91 & 72 & ed & b5 & c6 & f7 \\
+e6 & a0 & 28 & 5b & a3 & d3 & 70 & 64 & 7c & 9a \\
+56 & 3f & 6f & ff & fe & 1a & 19 & d5 & 88 & 9b \\
+83 & c0 & b2 & e4 & 17 & 20 & 87 & 9f & 9c & b6 \\
+3c & b0 & 8f & af & c3 & 08 & 1e & a1 & 1c & a2 \\
+3a & 54 & ec & 42 & fc & a8 & 0f & 62 & c9 & 53 \\
+51 & aa & df & ae & 34 & 02 & 35 & 06 & da & 14 \\
+32 & 65 & 76 & 4a & 73 & 25 & 3b & 2c & 81 & 60 \\
+f9 & 5d & 7b & 1b & f1 & 33 & 75 & 3d & c2 & 41 \\
+cd & 45 & 6a & 40 & ea & 6d & 8c & b1 & 46 & 8a \\
+8d & dc & 7d & f2 & 78 & 03 & 49 & 2f & e7 & 5e \\
+ee & d8 & 94 & a4 & 98 & 07 & 43 & 13 & bd & c8 \\
+0c & f5 & cc & f8 & 23 & 58 & 66 & bb & 67 & 12 \\
+be & 99 & 1f & 84 & d4 & 5c & e0 & 29 & 47 & 31 \\
+10 & 44 & bf & 52 & 95 & a6 & 3e & 55 & a9 & 21 \\
+82 & de & 68 & b9 & 01 & 96 & 18 & 38 & f4 & b4 \\
+5f & fb & ca & d7 & 8e & 2a & 63 & 6e & d6 & 27 \\
+b3 & 24 & f3 & 57 & 8b & b7 & d9 & e8 & 61 & 7e \\
+7f & 89 & e5 & 79 & 74 & 92 & 93 & 4f & 90 & 37 \\
+39 & c7 & 80 & bc & 05 & d2 & f0 & e9 & 69 & 36 \\
+77 & d0 & 11 & 0e & a7 & 9e & c1 & 1d & 85 & 4d \\
+dd & a5 & cf & 22 & 2b & 59 & 0a & eb & f6 & 4c \\
+ab & 16 & 4b & db & d1 & e3 & fa & 6b & 50 & 7a \\
+ef & 9d & c5 & ba & 5a & 30 & 4e & cb & 26 & 0b \\
+c4 & ad & e1 & ac & 2d & 6c 
+\end{bmatrix}
+$$
+
+Alice and Bob's AES Configuration object generates the following Inverse S-Box:
+$$
+\begin{bmatrix} 
+08 & a4 & 4b & 73 & 0c & cc & 4d & 7d & 37 & 06 \\
+e2 & f9 & 82 & 05 & d5 & 42 & 96 & d4 & 8b & 7f \\
+4f & 0b & e7 & 2c & a6 & 24 & 23 & 5d & 3a & d9 \\
+38 & 8e & 2d & 9f & df & 86 & b5 & 55 & f8 & b3 \\
+16 & 93 & af & e0 & 57 & fe & 04 & 75 & f5 & 95 \\
+50 & 5f & 4a & 4c & d1 & c7 & a7 & c8 & 3c & 56 \\
+32 & 61 & 9c & 1f & 67 & 63 & 3f & 7e & 97 & 65 \\
+6c & 94 & 00 & 74 & 53 & e8 & e5 & db & f6 & c5 \\
+ee & 46 & 99 & 45 & 3d & 9d & 1e & b7 & 87 & e1 \\
+f4 & 17 & 91 & 5b & 77 & aa & 59 & bc & 43 & b0 \\
+1b & 51 & 88 & 8a & a2 & d0 & 66 & ed & ff & 69 \\
+b1 & 20 & 1a & 09 & 0f & 54 & c2 & 60 & 52 & d2 \\
+72 & c1 & ef & 5c & 1c & 70 & bd & be & ca & 58 \\
+a0 & 28 & 8f & da & 02 & 2e & 26 & bf & 6d & b8 \\
+6a & 6e & ae & 34 & c6 & 0e & c3 & c4 & 7a & 9a \\
+a5 & 0a & 7c & 8d & 1d & 27 & 30 & f1 & d7 & 2f \\
+15 & 39 & 3b & 18 & 7b & dd & 9b & d6 & 41 & 9e \\
+47 & e6 & fd & fb & 49 & 35 & 33 & 6b & 2a & b4 \\
+a9 & 11 & 31 & b9 & 07 & a3 & f3 & 89 & cb & 80 \\
+8c & 98 & 29 & d8 & 62 & 36 & fa & f2 & 12 & c9 \\
+81 & 44 & ac & f7 & 84 & 64 & 01 & de & d3 & ea \\
+cd & 19 & 90 & 25 & b2 & ad & 79 & ba & 4e & e9 \\
+6f & dc & a1 & 48 & 92 & fc & 03 & eb & 2b & c0 \\
+14 & 76 & bb & cf & 68 & e3 & 3e & 10 & 78 & f0 \\
+ce & 5e & 71 & b6 & a8 & 83 & e4 & 13 & 85 & 5a \\
+ec & ab & 40 & 0d & 22 & 21 
+\end{bmatrix}
+$$
+
+Alice encrypts and sends the test string to Bob ("SENDER: Alice $\backslash$r$\backslash$n RECIPIENT: BOB $\backslash$r$\backslash$nSUBJECT: Test Message"). Bob receives the encrypted message and decrypts it into matching plaintext. 
+
+\section{Results Comparison}
+A second simulation was created to compare against the Rijndael S-Box. This simulation consisted of creating two Session objects, Alice and Bob. Alice was given private keys 4, 5, 6, 7, and 8. 
+Bob was given private keys 3, 4, 5, 6, and 7. Public variables, p and g, were chosen as 97 and 92, respectively. After the Session was established, the AES Configuration Input key was overridden to use the Input Key defined in the AES-128 Test Vector. The following compares the results of the AES implementation with the Rijndael S-Box to the AES implementation with the Dynamically generated S-Box:
+
+Plaintext:
+$$
+\begin{bmatrix}
+00 & 11 & 22 & 33 & 44 & 55 & 66 & 77 \\
+88 & 99 & AA & BB & CC & DD & EE & FF
+\end{bmatrix}
+$$
+
+Input Key:
+$$
+\begin{bmatrix}
+00 & 01 & 02 & 03 & 04 & 05 & 06 & 07 \\
+08 & 09 & 0A & 0B & 0C & 0D & 0E & 0F
+\end{bmatrix}
+$$
+
+The resultant ciphertext using the Rijndael S-Box:
+$$
+\begin{bmatrix}
+69 & c4 & e0 & d8 & 6a & 7b & 04 & 30 \\
+d8 & cd & b7 & 80 & 70 & b4 & c5 & 5a
+\end{bmatrix}
+$$
+
+The resultant ciphertext using the Dynamic S-Box:
+$$
+\begin{bmatrix}
+91 & 20 & 9f & da & 8e & e6 & 39 & 61 \\
+3c & e1 & 1b & eb & cd & 43 & 6a & 57
+\end{bmatrix}
+$$
+
+The AES-128 algorithm using the Rijndael S-Box and the Dynamic S-Box both produce the original plaintext.
 
 \section{Conclusion}
+This design proposes a method of dynamically generating S-Boxes and Inverse S-Boxes based on public key exchanged shared secrets. The Dynamic S-Box Generation AES implementation requires additional configuration steps, but eliminates the potential for S-Box exploitation.
+
+\section{Future Work}
+This design can be extended to support both the 192-bit and 256-bit versions of AES. The public key exchange can be improved by using the Elliptic-Curve Diffie-Hellman Public Key Exchange. Additionally, this design suffers from man-in-the-middle attacks. This can be mitigated by incorporating public key certificates into the public key exchange.
 
 % if have a single appendix:
 %\appendix[Proof of the Zonklar Equations]
@@ -526,17 +685,8 @@ Visual C++ static library.
 
 
 \appendices
-%\section{Proof of the First Zonklar Equation}
-%Appendix one text goes here.
-
-% you can choose not to have a title for an appendix
-% if you want by leaving the argument blank
-%\section{}
-%Appendix two text goes here.
-
-
 % use section* for acknowledgment
-\section*{Acknowledgment}
+%\section*{Acknowledgment}
 
 
 % Can use something like this to put references on a page
@@ -555,18 +705,6 @@ Visual C++ static library.
 
 % references section
 
-% can use a bibliography generated by BibTeX as a .bbl file
-% BibTeX documentation can be easily obtained at:
-% http://mirror.ctan.org/biblio/bibtex/contrib/doc/
-% The IEEEtran BibTeX style support page is at:
-% http://www.michaelshell.org/tex/ieeetran/bibtex/
-%\bibliographystyle{IEEEtran}
-% argument is your BibTeX string definitions and bibliography database(s)
-%\bibliography{IEEEabrv,../bib/paper}
-%
-% <OR> manually copy in the resultant .bbl file
-% set second argument of \begin to the number of references
-% (used to reserve space for the reference number labels box)
 \begin{thebibliography}{1}
   
 \bibitem{AESDynamicKey}
@@ -581,12 +719,15 @@ Yusfrizal, Y., et al., \emph{Key Management Using Combination of Diffie–Hellma
 M, G. and H. S. M., \emph{Improved Dynamic S-Box generation using Hash function for AES and its Performance Analysis}.\hskip 1em plus
 0.5em minus 0.4em\relax Second International Conference on Green Computing and Internet of Things (ICGCIoT), 2018.
 
+\bibitem{AESKeySBox}
+Kazys Kazlauskas and Jaunius Kazlauskas, \emph{Key-Dependent S-Box Generation in AES Block Cipher System}.\hskip 1em plus 0.5em minus 0.4em\relax Informatica, Vol. 20, No. 1, 2009.
+
 \end{thebibliography}
 
 %\begin{IEEEbiographynophoto}{Edward Eisenberger}
-\begin{IEEEbiography}{Edward Eisenberger}
-Biography text here.
-\end{IEEEbiography}
+%\begin{IEEEbiography}{Edward Eisenberger}
+%Biography text here.
+%\end{IEEEbiography}
 
 
 \end{document}

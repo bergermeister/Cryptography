@@ -31,6 +31,85 @@ namespace GNCrypto
    static const Tu64 XulMask32 = 0x00000000FFFFFFFF;
    static const Tu64 XulMask16 = 0x000000000000FFFF;
    static const Tu64 XulShift32 = 32;
+   static const Tu32 XuiBPB = 8; ///< Bits Per Byte
+
+   /**
+    * @brief
+    * Rotate Left Operation
+    *
+    * @details
+    * @par
+    * This method performs the Rotate left (circular left shift) operation, where x is a w-bit word and n is an integer
+    * with 0 <= n < w, is defined by ROTL( x, n, w )=( x << n ) | ( x >> ( w - n ) ).
+    *
+    * @return
+    * This method returns the 64-bit word rotated left.
+    *
+    * @param aoX     [in] W-bit word to be operated on
+    * @param aoN     [in] Integer with 0 <= N <= W
+    */
+   template< class GTcType >inline GTcType MROTL( const GTcType aoX, const GTcType aoN )
+   {
+      return( ( aoX << aoN ) | ( aoX >> ( ( sizeof( GTcType ) * XuiBPB ) - aoN ) ) );
+   }
+
+   /**
+    * @brief
+    * Rotate Right Operation
+    *
+    * @details
+    * @par
+    * This method performs the Rotate right (circular right shift) operation, where x is a w-bit word and n is an integer
+    * with 0 <= n < w, is defined by ROTR( x, n, w )=( x >> n ) | ( x << ( w - n ) ).
+    *
+    * @return
+    * This method returns the 64-bit word rotated right.
+    *
+    * @param aoX     [in] W-bit word to be operated on
+    * @param aoN     [in] Integer with 0 <= N <= W
+    */
+   template< class GTcType > inline GTcType MROTR( const GTcType aoX, const GTcType aoN )
+   {
+      return( ( aoX >> aoN ) | ( aoX << ( ( sizeof( GTcType ) * XuiBPB ) - aoN ) ) );
+   }
+
+   /**
+    * @brief
+    * Right Shift Operation
+    *
+    * @details
+    * @par
+    * This method performs the Rotate shift operation, where x is a w-bit word and n is an integer with 0 <= n < w, is
+    * defined by ( x, n )=( x >> n ).
+    *
+    * @return
+    * This method returns the 64-bit word rotated left.
+    *
+    * @param aoX     [in] W-bit word to be operated on
+    * @param aoN     [in] Integer with 0 <= N <= W
+    */
+   template< class GTcType > inline GTcType MSHR( const GTcType aoX, const GTcType aoN )
+   {
+      return( aoX >> aoN );
+   }
+
+   /**
+    * @brief
+    * Choose Operation
+    */
+   template< class GTcType > inline GTcType MChoose( const GTcType aoX, const GTcType aoY, const GTcType aoZ )
+   {
+      return( ( aoX & aoY ) ^ ( ~aoX & aoZ ) );
+   }
+
+   /**
+    * @brief
+    * Majority Operation
+    */
+   template< class GTcType > inline GTcType MMajority( const GTcType aoX, const GTcType aoY, const GTcType aoZ )
+   {
+      return( ( aoX & aoY ) ^ ( aoX & aoZ ) ^ ( aoY & aoZ ) );
+   }
 }
 
 #endif

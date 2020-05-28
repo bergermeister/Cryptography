@@ -198,6 +198,9 @@ TcConfiguration::TcConfiguration( void )
    std::memcpy( reinterpret_cast< void* >( this->vucpIBox ),
                 reinterpret_cast< const void* >( XucpRijndaelIBox ),
                 XuiSizeBox );
+
+   /// -# Zero out Expanded Key/Key Schedule
+   std::memset( reinterpret_cast< void* >( this->vucpEKey ), 0, XuiSizeExpandedKey );
 }
 
 TcConfiguration::TcConfiguration( const TcConfiguration& aorConfig )
@@ -271,6 +274,65 @@ void TcConfiguration::MExpandKey( const Tu8 aucpInputKey[ XuiSizeKey ] )
          this->vucpEKey[ kuiBytes ] = this->vucpEKey[ kuiBytes - XuiSizeKey ] ^ kucpCore[ kuiIdx ];
          kuiBytes++;
       }
+   }
+}
+
+void TcConfiguration::MGenerateSBox( const Tu8 aucpInputKey[ XuiSizeBox ] )
+{
+   Tu32       kuiI;
+   Tu32       kuiK;
+   Tu32       kuiL;
+   Tu32       kuiM;
+   Tu32       kuiJ;
+   const Tu8* kucpB = reinterpret_cast< const Tu8* >( aucpInputKey );
+   Tu8        kucpS[ XuiSizeBox * 10 ];
+   
+   /// -# Initialization
+   ///   - I = 0
+   ///   - K = 1
+   ///   - L = 1
+   kuiI = 0;
+   kuiK = 1;
+   kuiL = 1;
+
+   /// -# Compute the frist subtotal modulo 256
+   ///   - S(0) = (B(0) + B(1)) mod 256
+   ///   - SBox(0) = S(1)
+   kucpS[ kuiI ] = static_cast< Tu8 >( kucpB[ kuiI ] + kucpB[ kuiI + 1 ] );
+   this->vucpSBox[ kuiI ] = kucpS[ kuiI ];
+
+   /// -# While K < 256
+   ///   - I = I + 1
+   ///   - M = 1 + (K + I * L) mod 256
+   ///   - S(i + 1) = (S(i) + B(M)) mod 256
+   ///   - L = 0
+   while( kuiK < XuiSizeBox )
+   {
+      kuiI = kuiI + 1;
+      kuiM = 1 + ( kuiK + ( kuiI * kuiL ) ) % XuiSizeBox;
+      kucpS[ kuiI ] = ( kucpS[ kuiI - 1 ] + kucpB[ kuiM ] );
+      kuiL = 0;
+      /// -# For J = 1 to K
+      ///   - Compare subtotal S(J) with the elements SBox(J) and count the number L
+      ///     of the S-Box elements which are not equal to S(I + 1)
+      for( kuiJ = 0; kuiJ < kuiK; kuiJ++ )
+      {
+         if( kucpS[ kuiI ] != this->vucpSBox[ kuiJ ] )
+         {
+            kuiL++;
+         }
+      }
+
+      if( kuiL == kuiJ )
+      {
+         this->vucpSBox[ kuiK ] = kucpS[ kuiI ];
+         kuiK++;
+      }
+   }
+
+   for( kuiK = 0; kuiK < XuiSizeBox; kuiK++ )
+   {
+      this->vucpIBox[ this->vucpSBox[ kuiK ] ] = static_cast< Tu8 >( kuiK );
    }
 }
 

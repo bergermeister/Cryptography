@@ -55,6 +55,8 @@ namespace GNCrypto
          TcConfiguration& operator=( const TcConfiguration& aorConfig );
 
          void MExpandKey( const Tu8 aucpInputKey[ XuiSizeKey ] );
+         void MGenerateSBox( const Tu8 aucpInputKey[ XuiSizeBox ] );
+
          const Tu8* MExpandedKey( void ) const;
          const Tu8* MSBox( void ) const;
          const Tu8* MIBox( void ) const;

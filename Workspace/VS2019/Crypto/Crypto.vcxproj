@@ -155,7 +155,8 @@
     <ClCompile Include="..\..\..\Software\Crypto\Hash\SHA512.cpp" />
     <ClCompile Include="..\..\..\Software\Crypto\KeyExchange\DiffieHellman.cpp" />
     <ClCompile Include="..\..\..\Software\Crypto\KeyExchange\PublicKey.cpp" />
-    <ClCompile Include="..\..\..\Software\Crypto\Math\GaloisField.cpp" />
+    <ClCompile Include="..\..\..\Software\Crypto\Math\GCD.cpp" />
+    <ClCompile Include="..\..\..\Software\Crypto\Math\Prime.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Software\Crypto\AES\Decryptor.h" />
@@ -169,8 +170,12 @@
     <ClInclude Include="..\..\..\Software\Crypto\Hash\SHA512.h" />
     <ClInclude Include="..\..\..\Software\Crypto\KeyExchange\DiffieHellman.h" />
     <ClInclude Include="..\..\..\Software\Crypto\KeyExchange\PublicKey.h" />
-    <ClInclude Include="..\..\..\Software\Crypto\Math\GaloisField.h" />
+    <ClInclude Include="..\..\..\Software\Crypto\Math\GCD.h" />
+    <ClInclude Include="..\..\..\Software\Crypto\Math\Prime.h" />
     <ClInclude Include="..\..\..\Software\Crypto\Types.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

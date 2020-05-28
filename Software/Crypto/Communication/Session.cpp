@@ -82,7 +82,7 @@ NMessages::TcEstablishSession TcSession::MRequest( void )
    return( koMsg );
 }
 
-NMessages::TcEstablishSession TcSession::MEstablish( const NMessages::TcEstablishSession& aorRequest )
+NMessages::TcEstablishSession TcSession::MEstablish( const NMessages::TcEstablishSession& aorRequest, bool abDynamicSBox )
 {
    NMessages::TcEstablishSession koMsg;
    NHash::TcSHA512               koSHA;
@@ -113,7 +113,18 @@ NMessages::TcEstablishSession TcSession::MEstablish( const NMessages::TcEstablis
    /// -# Configure AES Algorithm using the first 128-bits of SharedSecret[ 0 ]'s Digest as the key
    this->voConfig.MExpandKey( reinterpret_cast< const Tu8* >( this->vucpHash[ 0 ] ) );
 
+   /// -# Generation S-Box and Inverse S-Box using SharedSecret[ 1 - 4 ]'s Digest
+   if( abDynamicSBox )
+   {
+      this->voConfig.MGenerateSBox( reinterpret_cast< const Tu8* >( &this->vucpHash[ 1 ] ) );
+   }
+
    return( koMsg );
+}
+
+NAES128::TcConfiguration& TcSession::SConfiguration( void )
+{
+   return( this->voConfig );
 }
 
 void TcSession::MEncrypt( const Tu8* aucpPlaintext, Tu8* aucpCiphertext, const Tu32 auiBytes )
