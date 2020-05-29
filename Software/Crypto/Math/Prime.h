@@ -7,7 +7,8 @@ namespace GNCrypto
 {
    namespace NMath
    {
-      Tb8 MIsPrime( Ti64 klN );
+      Tb8 MIsPrime( Ti64 alN );
+      Tb8 MGenerateMersennePrime( Ti64 alP );
    }
 }
 

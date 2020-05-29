@@ -1,5 +1,6 @@
 #include <Types.h>
 #include <Math/GCD.h>
+#include <Math/Prime.h>
 #include <vector>
 
 using namespace GNCrypto;
@@ -74,25 +75,42 @@ std::vector< std::pair< Ti64, Ti64 > > GNCrypto::NMath::MMultiplicativeInverses(
 
 Ti64 GNCrypto::NMath::MMultiplicativeInverse( Ti64 alA, Ti64 alN )
 {
-   std::vector< std::pair< Ti64, Ti64 > > koInverses = MMultiplicativeInverses( alN );
+   std::vector< std::pair< Ti64, Ti64 > > koInverses;
    std::pair< Ti64, Ti64 >* kopPair;
    Ti32 kiIndex;
-   Ti64 kiInv = 0;
+   Ti64 klInv = 0;
 
-   for( kiIndex = 0; kiIndex < koInverses.size( ); kiIndex++ )
+   if( NMath::MIsPrime( alN ) )
    {
-      kopPair = &koInverses[ kiIndex ];
-      if( alA == kopPair->first )
+      // Fermat's Theorem
+      // If alN is a prime and alA is an integer such that alN does not divide alA, 
+      // then alA^-1 mod alN = alA^(alN-2) mod alN
+      klInv = 1;
+      for( kiIndex = 0; kiIndex < ( alN - 2 ); kiIndex++ )
       {
-         kiInv = kopPair->second;
-         break;
+         klInv *= alA;
+         klInv %= alN;
       }
-      else if( alA == kopPair->second )
+   }
+   else
+   {
+      koInverses = MMultiplicativeInverses( alN );
+
+      for( kiIndex = 0; kiIndex < koInverses.size( ); kiIndex++ )
       {
-         kiInv = kopPair->first;
-         break;
+         kopPair = &koInverses[ kiIndex ];
+         if( alA == kopPair->first )
+         {
+            klInv = kopPair->second;
+            break;
+         }
+         else if( alA == kopPair->second )
+         {
+            klInv = kopPair->first;
+            break;
+         }
       }
    }
 
-   return( kiInv );
+   return( klInv );
 }

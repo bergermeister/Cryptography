@@ -1,6 +1,7 @@
 #include <pch.h>
 #include <CppUnitTest.h>
 #include <Types.h>
+#include <Math/GCD.h>
 #include <Math/Prime.h>
 
 namespace CryptoTest
@@ -86,6 +87,20 @@ namespace CryptoTest
                   Assert::IsFalse( xlPrimes[ kiIndex ] == kiValue, L"ERROR: Found Prime Value when Expected Not Prime Value" );
                }
             }
+         }
+      
+         TEST_METHOD( MMultiplicativeInverse )
+         {
+            Ti64 klInv;
+
+            klInv = GNCrypto::NMath::MMultiplicativeInverse( 8, 17 );
+            Assert::IsTrue( klInv == 15, L"ERROR: Incorrect Inverse for 8 mod 17" );
+            klInv = GNCrypto::NMath::MMultiplicativeInverse( 5, 23 );
+            Assert::IsTrue( klInv == 14, L"ERROR: Incorrect Inverse for 5 mod 23" );
+            klInv = GNCrypto::NMath::MMultiplicativeInverse( 60, 101 );
+            Assert::IsTrue( klInv == 32, L"ERROR: Incorrect Inverse for 60 mod 101" );
+            klInv = GNCrypto::NMath::MMultiplicativeInverse( 22, 211 );
+            Assert::IsTrue( klInv == 48, L"ERROR: Incorrect Inverse for 22 mod 211" );
          }
       };
    }
