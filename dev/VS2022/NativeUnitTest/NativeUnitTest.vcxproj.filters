@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{e5dce265-bc84-4dab-9329-837d6521f8d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\AES">
+      <UniqueIdentifier>{82d80729-e94c-49b2-837f-4242959478dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Communication">
+      <UniqueIdentifier>{3a572b03-5b6b-4d4d-ab02-204d28d6d49a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Hash">
+      <UniqueIdentifier>{a36c5f75-bef2-49b5-82f4-a530532a2994}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Math">
+      <UniqueIdentifier>{603f2a77-24a1-4d8f-826c-f86b1cb6b2b2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\tst\Crypto\CryptoTest.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\tst\Crypto\pch.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\tst\Crypto\Math\Prime.cpp">
+      <Filter>src\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\tst\Crypto\Hash\SHA512.cpp">
+      <Filter>src\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\tst\Crypto\Communication\RSA.cpp">
+      <Filter>src\Communication</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\tst\Crypto\Communication\Session.cpp">
+      <Filter>src\Communication</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\tst\Crypto\AES\Encryption.cpp">
+      <Filter>src\AES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\tst\Crypto\Math\galois.cpp">
+      <Filter>src\Math</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\tst\Crypto\pch.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\tst\Crypto\Math\galois.h">
+      <Filter>src\Math</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

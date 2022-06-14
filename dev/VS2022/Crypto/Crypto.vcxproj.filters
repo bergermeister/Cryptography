@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{de436eb4-6f4b-4e9a-8c7b-0d593e271610}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\AES">
+      <UniqueIdentifier>{74c37dee-3390-41d4-9b7c-ec46a799bc2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Cipher">
+      <UniqueIdentifier>{c2d7a69a-978b-424a-9863-9c1d14ef4fa3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Communication">
+      <UniqueIdentifier>{0936669d-6be6-437d-a99c-cd2d6e03e708}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\KeyExchange">
+      <UniqueIdentifier>{9fa479aa-a719-41ab-9f4a-69c1de1b4c43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Math">
+      <UniqueIdentifier>{09b4a739-5f99-4be1-88fb-7d2ff4f03712}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Hash">
+      <UniqueIdentifier>{3bc40115-da93-4495-a4c5-b1cc5d12ba60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Communication\Messages">
+      <UniqueIdentifier>{ec133276-e723-4b79-915c-1f63061b4ce2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\Crypto\Types.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Crypto\Math\GCD.h">
+      <Filter>src\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Crypto\Math\Prime.h">
+      <Filter>src\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Crypto\KeyExchange\DiffieHellman.h">
+      <Filter>src\KeyExchange</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Crypto\KeyExchange\PublicKey.h">
+      <Filter>src\KeyExchange</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Crypto\Hash\Algorithm.h">
+      <Filter>src\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Crypto\Hash\SHA.h">
+      <Filter>src\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Crypto\Hash\SHA512.h">
+      <Filter>src\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Crypto\Communication\Session.h">
+      <Filter>src\Communication</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Crypto\Communication\Messages\EstablishSession.h">
+      <Filter>src\Communication\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Crypto\Communication\Messages\Message.h">
+      <Filter>src\Communication\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Crypto\Cipher\ICipher.h">
+      <Filter>src\Cipher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Crypto\Cipher\RSA.h">
+      <Filter>src\Cipher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Crypto\AES\Configuration.h">
+      <Filter>src\AES</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Crypto\AES\Decryptor.h">
+      <Filter>src\AES</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Crypto\AES\Encryptor.h">
+      <Filter>src\AES</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\Crypto\Math\GCD.cpp">
+      <Filter>src\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Crypto\Math\Prime.cpp">
+      <Filter>src\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Crypto\KeyExchange\DiffieHellman.cpp">
+      <Filter>src\KeyExchange</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Crypto\KeyExchange\PublicKey.cpp">
+      <Filter>src\KeyExchange</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Crypto\Hash\Algorithm.cpp">
+      <Filter>src\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Crypto\Hash\SHA.cpp">
+      <Filter>src\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Crypto\Hash\SHA512.cpp">
+      <Filter>src\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Crypto\Communication\Session.cpp">
+      <Filter>src\Communication</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Crypto\Communication\Messages\EstablishSession.cpp">
+      <Filter>src\Communication\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Crypto\Communication\Messages\Message.cpp">
+      <Filter>src\Communication\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Crypto\Cipher\RSA.cpp">
+      <Filter>src\Cipher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Crypto\AES\Configuration.cpp">
+      <Filter>src\AES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Crypto\AES\Decryptor.cpp">
+      <Filter>src\AES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Crypto\AES\Encryptor.cpp">
+      <Filter>src\AES</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
