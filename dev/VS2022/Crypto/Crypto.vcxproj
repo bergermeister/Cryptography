@@ -143,6 +143,7 @@
     <ClInclude Include="..\..\..\src\Crypto\KeyExchange\PublicKey.h" />
     <ClInclude Include="..\..\..\src\Crypto\Math\GCD.h" />
     <ClInclude Include="..\..\..\src\Crypto\Math\Prime.h" />
+    <ClInclude Include="..\..\..\src\Crypto\UInt.h" />
     <ClInclude Include="..\..\..\src\Crypto\Types.h" />
   </ItemGroup>
   <ItemGroup>

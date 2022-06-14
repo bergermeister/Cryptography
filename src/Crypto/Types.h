@@ -38,7 +38,7 @@ namespace Crypto
    static const Tu64 XulMask32 = 0x00000000FFFFFFFF;
    static const Tu64 XulMask16 = 0x000000000000FFFF;
    static const Tu64 XulShift32 = 32;
-   static const Tu32 XuiBPB = 8; ///< Bits Per Byte
+   static const size_t BitsPerByte = 8; ///< Bits Per Byte
 
    /**
     * @brief
@@ -57,7 +57,7 @@ namespace Crypto
     */
    template< class GTcType >inline GTcType MROTL( const GTcType aoX, const GTcType aoN )
    {
-      return( ( aoX << aoN ) | ( aoX >> ( ( sizeof( GTcType ) * XuiBPB ) - aoN ) ) );
+      return( ( aoX << aoN ) | ( aoX >> ( ( sizeof( GTcType ) * BitsPerByte ) - aoN ) ) );
    }
 
    /**
@@ -77,7 +77,7 @@ namespace Crypto
     */
    template< class GTcType > inline GTcType MROTR( const GTcType aoX, const GTcType aoN )
    {
-      return( ( aoX >> aoN ) | ( aoX << ( ( sizeof( GTcType ) * XuiBPB ) - aoN ) ) );
+      return( ( aoX >> aoN ) | ( aoX << ( ( sizeof( GTcType ) * BitsPerByte ) - aoN ) ) );
    }
 
    /**

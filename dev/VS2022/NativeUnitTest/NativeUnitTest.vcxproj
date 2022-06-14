@@ -29,6 +29,7 @@
     <ClCompile Include="..\..\..\tst\Crypto\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\..\..\tst\Crypto\UInt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\tst\Crypto\Math\galois.h" />

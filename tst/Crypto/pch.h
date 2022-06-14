@@ -18,6 +18,7 @@
 
 //Crpyto Library Includes
 #include <Crypto/Types.h>
+#include <Crypto/UInt.h>
 #include <Crypto/Math/GCD.h>
 #include <Crypto/Math/Prime.h>
 #include <Crypto/Hash/SHA512.h>

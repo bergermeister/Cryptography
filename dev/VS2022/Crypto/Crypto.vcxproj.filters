@@ -75,6 +75,9 @@
     <ClInclude Include="..\..\..\src\Crypto\AES\Encryptor.h">
       <Filter>src\AES</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\Crypto\UInt.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\Crypto\Math\GCD.cpp">

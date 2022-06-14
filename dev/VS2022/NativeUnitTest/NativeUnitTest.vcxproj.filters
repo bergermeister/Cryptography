@@ -42,6 +42,9 @@
     <ClCompile Include="..\..\..\tst\Crypto\Math\galois.cpp">
       <Filter>src\Math</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\tst\Crypto\UInt.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\tst\Crypto\pch.h">
