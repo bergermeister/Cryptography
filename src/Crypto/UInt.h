@@ -17,7 +17,7 @@ namespace Crypto
    public:     // Public Methods
       Number( void ) = default;
 
-      const uint8_t* const Bytes( void ) const
+      uint8_t* const Bytes( void ) const
       {
          return( this->data );
       }
@@ -25,25 +25,32 @@ namespace Crypto
       Number operator+( const Number& B )
       {
          size_t byte;
-         int16_t result = 0;
+         uint16_t result = 0;
          Number C;
 
          for( byte = 0; byte < ByteCount; byte++ )
          {
-            result = this->data[ byte ] + B.data[ byte ] + static_cast< int8_t >( result );
-            C.data[ byte ] = static_cast< int8_t >( result );
-            result = ( result >> BitsPerByte ) & 0x00FF;
+            result = static< uint16_t >( this->data[ byte ] + B.data[ byte ] + static_cast< uint8_t >( result ) );
+            C.data[ byte ] = static_cast< uint8_t >( result );
+            result = ( result >> static_cast< uint16_t >( BitsPerByte ) ) & 0x00FF;
          }
       }
 
       Number operator-( const Number& B )
       {
          size_t byte;
-         int16_t result = 0;
+         uint16_t result = 0;
          for( byte = 0; byte < ByteCount; byte++ )
          {
-
+            if( this->data[ byte ] < B.data[ byte ] )
+            {
+               result = 256;
+            }
+            result = ( result + static< uint16_t >( this->data[ byte ] ) ) - static_cast< uint16_t >( B.data[ byte ] );
+            C.data[ byte ] = static_cast< uint8_t >( result & 0x00FF );
+            result = ( result >> static_cast< uint16_t >( BitsPerByte ) ) & 0x00FF;
          }
+
       }
 
       Number operator*( const Number& B )
