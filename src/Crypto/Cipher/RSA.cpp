@@ -33,7 +33,7 @@ namespace Crypto
 
          /// -# Choose any number 1 < e < Y that is coprime to 780
          Inverses = Crypto::NMath::MMultiplicativeInverses( y );
-         if( I >= Inverses.size( ) )
+         if( I >= static_cast< int64_t >( Inverses.size( ) ) )
          {
             I = Inverses.size( ) / 2;
          }
