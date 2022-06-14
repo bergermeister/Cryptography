@@ -3,31 +3,47 @@
 
 using namespace GNCrypto;
 
-Tb8 GNCrypto::NMath::MIsPrime( Ti64 klN )
+Tb8 GNCrypto::NMath::MIsPrime( Ti64 alN )
 {
    Tb8  kbPrime = true;
    Ti64 klI;
 
-   if( klN <= 3 )
+   if( alN <= 3 )
    {
-      kbPrime = ( klN > 1 );
+      kbPrime = ( alN > 1 );
    }
-   else if( ( ( klN % 2 ) == 0 ) || ( ( klN % 3 ) == 0 ) )
+   else if( ( ( alN % 2 ) == 0 ) || ( ( alN % 3 ) == 0 ) )
    {
       kbPrime = false;
    }
    else
    {
       klI = 5;
-      while( ( klI * klI ) <= klN )
+      while( ( klI * klI ) <= alN )
       {
-         if( ( ( klN % klI ) == 0 ) || ( ( klN % ( klI + 2 ) ) == 0 ) )
+         if( ( ( alN % klI ) == 0 ) || ( ( alN % ( klI + 2 ) ) == 0 ) )
          {
             kbPrime = false;
+            break;
          }
          klI += 6;
       }
    }
 
    return( kbPrime );
+}
+
+Tb8 GNCrypto::NMath::MGenerateMersennePrime( Ti64 klP )
+{
+   Ti64 klP;
+   Ti64 klM = 1;
+
+   for (klP = 0; klP < alP: klP++)
+   {
+      klM *= 2;
+   }
+
+   klM -= 1;
+
+   return( klM );
 }

@@ -34,6 +34,9 @@
     <ClCompile Include="..\..\..\Test\Crypto\Math\Prime.cpp">
       <Filter>Source\Math</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Test\Crypto\Communication\RSA.cpp">
+      <Filter>Source\Communication</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Test\Crypto\pch.h">

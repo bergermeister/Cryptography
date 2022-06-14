@@ -147,6 +147,7 @@
     <ClCompile Include="..\..\..\Software\Crypto\AES\Decryptor.cpp" />
     <ClCompile Include="..\..\..\Software\Crypto\AES\Encryptor.cpp" />
     <ClCompile Include="..\..\..\Software\Crypto\AES\Configuration.cpp" />
+    <ClCompile Include="..\..\..\Software\Crypto\Cipher\RSA.cpp" />
     <ClCompile Include="..\..\..\Software\Crypto\Communication\Messages\EstablishSession.cpp" />
     <ClCompile Include="..\..\..\Software\Crypto\Communication\Messages\Message.cpp" />
     <ClCompile Include="..\..\..\Software\Crypto\Communication\Session.cpp" />
@@ -162,6 +163,8 @@
     <ClInclude Include="..\..\..\Software\Crypto\AES\Decryptor.h" />
     <ClInclude Include="..\..\..\Software\Crypto\AES\Encryptor.h" />
     <ClInclude Include="..\..\..\Software\Crypto\AES\Configuration.h" />
+    <ClInclude Include="..\..\..\Software\Crypto\Cipher\Cipher.h" />
+    <ClInclude Include="..\..\..\Software\Crypto\Cipher\RSA.h" />
     <ClInclude Include="..\..\..\Software\Crypto\Communication\Messages\EstablishSession.h" />
     <ClInclude Include="..\..\..\Software\Crypto\Communication\Messages\Message.h" />
     <ClInclude Include="..\..\..\Software\Crypto\Communication\Session.h" />
