@@ -178,14 +178,6 @@ namespace Crypto
             this->data[ byte ] = static_cast< uint8_t >( difference & 0x00FF );
          }
 
-         if( carry != 0 )
-         {
-            for( byte = 0; byte < ByteCount; byte++ )
-            {
-               this->data[ byte ] = ~this->data[ byte ];
-            }
-         }
-
          return( *this );
       }
 
