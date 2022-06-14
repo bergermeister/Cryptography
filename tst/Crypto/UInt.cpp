@@ -50,5 +50,22 @@ namespace CryptoTest
          Assert::AreEqual( static_cast< const uint32_t >( 0xFFFFFFFF ),
                            *reinterpret_cast< const uint32_t* >( value.Bytes( ) ) );
       }
+
+      TEST_METHOD( Multiplication )
+      {
+         using UInt256 = Crypto::UInt< 256 >;
+         static constexpr uint32_t valueA = 0x000000FF; //      255
+         static constexpr uint32_t valueB = 0x0000FFFF; //    65535
+         static constexpr uint32_t valueE = 0x00FEFF01; // 16711425
+         UInt256 value;
+
+         value = valueA;
+         value *= valueB;
+         Assert::AreEqual( valueE, *reinterpret_cast< uint32_t* >( value.Bytes( ) ) );
+
+         value = valueB;
+         value *= valueA;
+         Assert::AreEqual( valueE, *reinterpret_cast< uint32_t* >( value.Bytes( ) ) );
+      }
    };
 }
