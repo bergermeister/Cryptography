@@ -39,6 +39,106 @@ namespace Crypto
          return( this->data );
       }
 
+      template< class T > bool operator==( const T& B )
+      {
+         bool equal = true;
+         size_t byte;
+         const uint8_t* b = reinterpret_cast< const uint8_t* >( &B );
+
+         for( byte = ByteCount; byte > sizeof( T ); byte-- )
+         {
+            if( this->data[ byte - 1 ] > 0 )
+            {
+               equal = false;
+               break;
+            }
+         }
+
+         if( equal )
+         {
+            for( byte = sizeof( T ); byte > 0; byte-- )
+            {
+               if( this->data[ byte - 1 ] != b[ byte - 1 ] )
+               {
+                  equal = false;
+                  break;
+               }
+            }
+         }
+
+         return( equal );
+      }
+
+      template< class T > bool operator>( const T& B )
+      {
+         bool greaterThan = false;
+         size_t byte;
+         const uint8_t* b = reinterpret_cast< const uint8_t* >( &B );
+
+         for( byte = ByteCount; byte > sizeof( T ); byte-- )
+         {
+            if( this->data[ byte - 1 ] > 0 )
+            {
+               greaterThan = true;
+               break;
+            }
+         }
+
+         if( !greaterThan )
+         {
+            for( byte = sizeof( T ); byte > 0; byte-- )
+            {
+               if( this->data[ byte - 1 ] > b[ byte - 1 ] )
+               {
+                  greaterThan = true;
+                  break;
+               }
+               else if( this->data[ byte - 1 ] < b[ byte - 1 ] )
+               {
+                  greaterThan = false;
+                  break;
+               }
+            }
+         }
+
+         return( greaterThan );
+      }
+
+      template< class T > bool operator<( const T& B )
+      {
+         bool lessThan = true;
+         size_t byte;
+         const uint8_t* b = reinterpret_cast< const uint8_t* >( &B );
+
+         for( byte = ByteCount; byte > sizeof( T ); byte-- )
+         {
+            if( this->data[ byte - 1 ] > 0 )
+            {
+               lessThan = false;
+               break;
+            }
+         }
+
+         if( lessThan )
+         {
+            for( byte = sizeof( T ); byte > 0; byte-- )
+            {
+               if( this->data[ byte - 1 ] > b[ byte - 1 ] )
+               {
+                  lessThan = false;
+                  break;
+               }
+               else if( this->data[ byte - 1 ] < b[ byte - 1 ] )
+               {
+                  lessThan = true;
+                  break;
+               }
+            }
+         }
+
+         return( lessThan );
+      }
+
       /**
        * 
        * @return 
@@ -180,7 +280,7 @@ namespace Crypto
        * @tparam[in] T 
        * @param[in]  B 
        */
-      template< class T > UInt operator-=( const T& B )
+      template< class T > UInt& operator-=( const T& B )
       {
          size_t byte;
          uint16_t difference;
@@ -223,7 +323,7 @@ namespace Crypto
          return( *this );
       }
 
-      template< class T > UInt operator*=( const T& B )
+      template< class T > UInt& operator*=( const T& B )
       {
          size_t byteA;
          size_t byteB;
@@ -249,14 +349,26 @@ namespace Crypto
          return( *this );
       }
 
-      UInt operator/( const UInt& B )
+      template< class T > UInt& operator/=( const T& B )
       {
+         UInt C;
+         C = 0;
+         
+         while( !( *this < B ) )
+         {
+            C += 1;
+            *this -= B;            
+         }
 
+         *this = C;
+
+         return( *this );
       }
 
-      UInt operator%( const UInt& B )
+      template< class T > UInt& operator%=( const T& B )
       {
-
+         *this /= B;
+         *this = B - *this;;
       }
    };
 }

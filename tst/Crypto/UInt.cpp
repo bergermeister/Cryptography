@@ -67,5 +67,23 @@ namespace CryptoTest
          value *= valueA;
          Assert::AreEqual( valueE, *reinterpret_cast< uint32_t* >( value.Bytes( ) ) );
       }
+
+      TEST_METHOD( Division )
+      {
+         using UInt256 = Crypto::UInt< 256 >;
+         static constexpr uint64_t valueA = 0x0123456789ABCDEF;
+         static constexpr uint64_t valueB = 0x0000000000001234; //    65535
+         static constexpr uint64_t valueE = 0x000010004C016906;
+
+         UInt256 value;
+
+         value = valueA;
+         value /= valueB;
+         Assert::AreEqual( valueE, *reinterpret_cast< uint64_t* >( value.Bytes( ) ) );
+
+         value = valueB;
+         value *= valueA;
+         Assert::AreEqual( static_cast< uint64_t >( 0 ), *reinterpret_cast< uint64_t* >( value.Bytes( ) ) );
+      }
    };
 }
