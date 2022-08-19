@@ -1,4 +1,5 @@
-*.vs
+# Development Workspaces
+dev
 
 # LaTex Files
 *.pdf
@@ -6,6 +7,15 @@
 *.synctex.gz
 *.log
 
-# Visual Studio FIles
+# Visual Studio Files
 Debug
 Win32
+*.vs
+
+# Doxygen Generated Files/Folders
+docbook
+html
+latex
+man
+rtf
+xml
