@@ -27,7 +27,7 @@ namespace Crypto
       {
       private:       // Private Attriutes
          const TcConfiguration& vorCfg;   ///< Algorithm Configuration (S-Box, I-Box, Key Schedule)
-         Tu8 vucpState[ TcConfiguration::XuiSizeKey ];
+         uint8_t vucpState[ TcConfiguration::XuiSizeKey ];
 
       public:        // Public Methods
          TcEncryptor( const TcConfiguration& aorConfiguration );
@@ -35,11 +35,11 @@ namespace Crypto
          ~TcEncryptor( void );
          TcEncryptor& operator=( const TcEncryptor& aorEncryptor );
 
-         void MEncrypt( const Tu8 aucpPlaintext[ TcConfiguration::XuiSizeKey ], 
-                        Tu8 aucpCiphertext[ TcConfiguration::XuiSizeKey ] );
+         void MEncrypt( const uint8_t aucpPlaintext[ TcConfiguration::XuiSizeKey ], 
+                        uint8_t aucpCiphertext[ TcConfiguration::XuiSizeKey ] );
 
       private:       // Private Methods
-         void mAddRoundKey( const Tu8* aucpRoundKey );
+         void mAddRoundKey( const uint8_t* aucpRoundKey );
          void mSubstitute( void );
          void mShiftRows( void );
          void mMixColumns( void );

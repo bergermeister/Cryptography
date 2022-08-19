@@ -25,24 +25,24 @@ namespace Crypto
       class TcConfiguration
       {
       public:        // Public Attributes
-         static const Tu32 XuiRounds  = 10;                                      ///< Number of rounds
-         static const Tu32 XuiSizeKey = 16;                                      ///< Number of bytes in Key
-         static const Tu32 XuiSizeExpandedKey = XuiSizeKey * ( XuiRounds + 1 );  ///< Number of bytes in Expanded Key set
-         static const Tu32 XuiSizeBox = 256;                                     ///< Number of bytes in S-Box and Galois Look-up Tables
-         static const Tu8  XucpRijndaelSBox[ XuiSizeBox ];                       ///< Rijndael S-Box
-         static const Tu8  XucpRijndaelIBox[ XuiSizeBox ];                       ///< Rijndael Inverse S-Box
-         static const Tu8  XucpRCon[ XuiSizeBox ];                                ///< Round Constants
-         static const Tu8  XucpMul2[ XuiSizeBox ];                                ///< Galois Multiplication Look-up Table
-         static const Tu8  XucpMul3[ XuiSizeBox ];                                ///< Galois Multiplication Look-up Table
-         static const Tu8  XucpMul9[ XuiSizeBox ];                                ///< Galois Multiplication Look-up Table
-         static const Tu8  XucpMul11[ XuiSizeBox ];                               ///< Galois Multiplication Look-up Table
-         static const Tu8  XucpMul13[ XuiSizeBox ];                               ///< Galois Multiplication Look-up Table
-         static const Tu8  XucpMul14[ XuiSizeBox ];                               ///< Galois Multiplication Look-up Table
+         static const uint32_t XuiRounds  = 10;                                      ///< Number of rounds
+         static const uint32_t XuiSizeKey = 16;                                      ///< Number of bytes in Key
+         static const uint32_t XuiSizeExpandedKey = XuiSizeKey * ( XuiRounds + 1 );  ///< Number of bytes in Expanded Key set
+         static const uint32_t XuiSizeBox = 256;                                     ///< Number of bytes in S-Box and Galois Look-up Tables
+         static const uint8_t  XucpRijndaelSBox[ XuiSizeBox ];                       ///< Rijndael S-Box
+         static const uint8_t  XucpRijndaelIBox[ XuiSizeBox ];                       ///< Rijndael Inverse S-Box
+         static const uint8_t  XucpRCon[ XuiSizeBox ];                                ///< Round Constants
+         static const uint8_t  XucpMul2[ XuiSizeBox ];                                ///< Galois Multiplication Look-up Table
+         static const uint8_t  XucpMul3[ XuiSizeBox ];                                ///< Galois Multiplication Look-up Table
+         static const uint8_t  XucpMul9[ XuiSizeBox ];                                ///< Galois Multiplication Look-up Table
+         static const uint8_t  XucpMul11[ XuiSizeBox ];                               ///< Galois Multiplication Look-up Table
+         static const uint8_t  XucpMul13[ XuiSizeBox ];                               ///< Galois Multiplication Look-up Table
+         static const uint8_t  XucpMul14[ XuiSizeBox ];                               ///< Galois Multiplication Look-up Table
 
       private:       // Private attributes
-         Tu8 vucpSBox[ XuiSizeBox ];             ///< Substitution Box
-         Tu8 vucpIBox[ XuiSizeBox ];             ///< Inverse Substitution Box
-         Tu8 vucpEKey[ XuiSizeExpandedKey ];     ///< Expanded Key
+         uint8_t vucpSBox[ XuiSizeBox ];             ///< Substitution Box
+         uint8_t vucpIBox[ XuiSizeBox ];             ///< Inverse Substitution Box
+         uint8_t vucpEKey[ XuiSizeExpandedKey ];     ///< Expanded Key
 
       public:        // Public Methods
          TcConfiguration( void );
@@ -50,12 +50,12 @@ namespace Crypto
          ~TcConfiguration( void );
          TcConfiguration& operator=( const TcConfiguration& aorConfig );
 
-         void MExpandKey( const Tu8 aucpInputKey[ XuiSizeKey ] );
-         void MGenerateSBox( const Tu8 aucpInputKey[ XuiSizeBox ] );
+         void MExpandKey( const uint8_t aucpInputKey[ XuiSizeKey ] );
+         void MGenerateSBox( const uint8_t aucpInputKey[ XuiSizeBox ] );
 
-         const Tu8* MExpandedKey( void ) const;
-         const Tu8* MSBox( void ) const;
-         const Tu8* MIBox( void ) const;
+         const uint8_t* MExpandedKey( void ) const;
+         const uint8_t* MSBox( void ) const;
+         const uint8_t* MIBox( void ) const;
       };
    }
 }

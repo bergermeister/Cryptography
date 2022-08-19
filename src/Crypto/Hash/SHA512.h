@@ -58,22 +58,22 @@ namespace Crypto
 
          inline Tu64 mSig1( const Tu64 aulX )
          {
-            return( MROTR< Tu64 >( aulX, 28 ) ^ MROTR< Tu64 >( aulX, 34 ) ^ MROTR< Tu64 >( aulX, 39 ) );
+            return( ROTR< Tu64 >( aulX, 28 ) ^ ROTR< Tu64 >( aulX, 34 ) ^ ROTR< Tu64 >( aulX, 39 ) );
          }
 
          inline Tu64 mSig2( const Tu64 aulX )
          {
-            return( MROTR< Tu64 >( aulX, 14 ) ^ MROTR< Tu64 >( aulX, 18 ) ^ MROTR< Tu64 >( aulX, 41 ) );
+            return( ROTR< Tu64 >( aulX, 14 ) ^ ROTR< Tu64 >( aulX, 18 ) ^ ROTR< Tu64 >( aulX, 41 ) );
          }
 
          inline Tu64 mSig3( const Tu64 aulX )
          {
-            return( MROTR< Tu64 >( aulX, 1 ) ^ MROTR< Tu64 >( aulX, 8 ) ^ MSHR< Tu64 >( aulX, 7 ) );
+            return( ROTR< Tu64 >( aulX, 1 ) ^ ROTR< Tu64 >( aulX, 8 ) ^ SHR< Tu64 >( aulX, 7 ) );
          }
 
          inline Tu64 mSig4( const Tu64 aulX )
          {
-            return( MROTR< Tu64 >( aulX, 19 ) ^ MROTR< Tu64 >( aulX, 61 ) ^ MSHR< Tu64 >( aulX, 6 ) );
+            return( ROTR< Tu64 >( aulX, 19 ) ^ ROTR< Tu64 >( aulX, 61 ) ^ SHR< Tu64 >( aulX, 6 ) );
          }
       };
    }

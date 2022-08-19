@@ -104,7 +104,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\..\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\src;</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -161,6 +162,12 @@
     <ClCompile Include="..\..\..\src\Crypto\KeyExchange\PublicKey.cpp" />
     <ClCompile Include="..\..\..\src\Crypto\Math\GCD.cpp" />
     <ClCompile Include="..\..\..\src\Crypto\Math\Prime.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\CMakeLists.txt" />
+    <Text Include="..\..\..\src\CMakeLists.txt" />
+    <Text Include="..\..\..\src\Crypto\AES\CMakeLists.txt" />
+    <Text Include="..\..\..\src\Crypto\CMakeLists.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

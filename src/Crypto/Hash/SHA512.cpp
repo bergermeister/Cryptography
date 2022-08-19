@@ -221,8 +221,8 @@ void TcSHA512::mProcessBlock( const Tu8* aucpBlock )
    for( kuiT = 0; kuiT < xuiConstCnt; kuiT++ )
    {
       // Calculate Temp1 and Temp2
-      kulTemp1 = kulH + mSig2( kulE ) + MChoose( kulE, kulF, kulG ) + xulConstant[ kuiT ] + kulpW[ kuiT ];
-      kulTemp2 = mSig1( kulA ) + MMajority( kulA, kulB, kulC );
+      kulTemp1 = kulH + mSig2( kulE ) + Choose( kulE, kulF, kulG ) + xulConstant[ kuiT ] + kulpW[ kuiT ];
+      kulTemp2 = mSig1( kulA ) + Majority( kulA, kulB, kulC );
       
       // Update the working registers
       kulH = kulG;

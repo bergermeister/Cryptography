@@ -16,18 +16,13 @@ namespace Crypto
    namespace NAES128
    {
       /**
-       * @brief
-       *
-       *
-       * @details
-       * @par
        *
        */
       class TcDecryptor
       {
       private:    // Private Attributes
          const TcConfiguration& vorCfg;   ///< Algorithm Configuration (S-Box, I-Box, Key Schedule)
-         Tu8 vucpState[ TcConfiguration::XuiSizeKey ];
+         uint8_t vucpState[ TcConfiguration::XuiSizeKey ];
 
       public:     // Public Methods
          TcDecryptor( const TcConfiguration& aorConfiguration );
@@ -35,11 +30,11 @@ namespace Crypto
          ~TcDecryptor( void );
          TcDecryptor& operator=( const TcDecryptor& aorDecryptor );
 
-         void MDecrypt( const Tu8 aucpCiphertext[ TcConfiguration::XuiSizeKey ],
-                        Tu8 aucpPlaintext[ TcConfiguration::XuiSizeKey ] );
+         void MDecrypt( const uint8_t aucpCiphertext[ TcConfiguration::XuiSizeKey ],
+                        uint8_t aucpPlaintext[ TcConfiguration::XuiSizeKey ] );
 
       private:    // Private Methods
-         void mAddRoundKey( const Tu8* aucpRoundKey );
+         void mAddRoundKey( const uint8_t* aucpRoundKey );
          void mSubstitute( void );
          void mShiftRows( void );
          void mMixColumns( void );

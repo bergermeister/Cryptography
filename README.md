@@ -1,11 +1,27 @@
-Dynamic AES S-Box Generation with Diffie-Hellman Exchange
+# Dynamic AES S-Box Generation with Diffie-Hellman Exchange
 
-Compilation Instructions:
+## Tools
+<table>
+	<tr><th> Tool <th> Source
+	<tr><td> MSYS2 <td>
+	<tr><td> MinGW <td>
+</table>
+
+## Compilation Instructions:
+
+### CMake
+    cmake -G "Unix Makefiles" -Bbuild -DBUILD_TESTING=ON
+    cmake --build build
+    cd build/tst && ctest
+    lcov --capture --directory build/src --output-file doc/coverage.info 
+    genhtml doc/coverage.info --output-directory doc/coverage
+
+### Visual Studio 
 1. Open Workspace\VS2019\VS2019.sln with Visual Studio 2019 Community Edition or later
 2. From the Menu bar, select Build > Rebuild Solution
 3. Wait for the build to complete (2 successful builds)
 
-Execution Instructions:
+## Execution Instructions:
 1. From the Menu bar, select View > Test Explorer
 2. In the Test Explorer window, expand:
 	a. CryptoTest > CryptoTest::NCommunication > TuSession
