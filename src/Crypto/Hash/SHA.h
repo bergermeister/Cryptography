@@ -27,16 +27,16 @@ namespace Crypto
       class TcSHA : public TcAlgorithm
       {
       private:       // Private Attributes
-         static const Tu32 xuiBPB = 8; ///< Bits Per Byte
+         static const uint32_t xuiBPB = 8; ///< Bits Per Byte
 
       public:        // Public Methods
-         TcSHA( const Tu8* aucpDigest );
+         TcSHA( const uint8_t* aucpDigest );
          TcSHA( const TcSHA& aorSHA );
          virtual ~TcSHA( void );
          TcSHA& operator=( const TcSHA& aorSHA );
 
          virtual void MInitialize( void ) = 0;
-         virtual void MProcess( const Tu8* aucpData, const Tu32 auiBytes ) = 0;
+         virtual void MProcess( const uint8_t* aucpData, const size_t auiBytes ) = 0;
          virtual void MFinalize( void ) = 0;
 
          using TcAlgorithm::MDigest;

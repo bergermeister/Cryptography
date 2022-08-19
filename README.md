@@ -12,7 +12,7 @@
 ### CMake
     cmake -G "Unix Makefiles" -Bbuild -DBUILD_TESTING=ON
     cmake --build build
-    cd build/tst && ctest
+    cd build/tst && ctest && cd ../..
     lcov --capture --directory build/src --output-file doc/coverage.info 
     genhtml doc/coverage.info --output-directory doc/coverage
 

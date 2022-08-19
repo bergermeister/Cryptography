@@ -9,17 +9,17 @@ using namespace Crypto::NCommunication::NMessages;
 void TcMessage::MPrepare( void )
 {
    this->voSHA.MInitialize( );
-   this->voSHA.MProcess( reinterpret_cast< const Tu8* >( &this->vuiID ), this->vuiLength );
+   this->voSHA.MProcess( reinterpret_cast< const uint8_t* >( &this->vuiID ), this->vuiLength );
    this->voSHA.MFinalize( );
 }
 
-Tb8 TcMessage::MValid( void ) const
+bool TcMessage::MValid( void ) const
 {
    NHash::TcSHA512 koSHA;
-   Ti32            kiResult;
+   int32_t            kiResult;
 
    koSHA.MInitialize( );
-   koSHA.MProcess( reinterpret_cast< const Tu8* >( &this->vuiID ), this->vuiLength );
+   koSHA.MProcess( reinterpret_cast< const uint8_t* >( &this->vuiID ), this->vuiLength );
    koSHA.MFinalize( );
 
    kiResult = std::memcmp( reinterpret_cast< const void* >( this->voSHA.MDigest( ) ),
@@ -29,7 +29,7 @@ Tb8 TcMessage::MValid( void ) const
    return( kiResult == 0 );
 }
 
-TcMessage::TcMessage( const Tu32 auiLength, const Tu32 auiID )
+TcMessage::TcMessage( const uint32_t auiLength, const uint32_t auiID )
 {
    this->vuiLength = auiLength;
    this->vuiID     = auiID;

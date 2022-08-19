@@ -29,8 +29,8 @@ namespace Crypto
          class TcEstablishSession : public TcMessage
          {
          public:     // Public Attributes
-            static const Tu32 XuiType      = 1; ///< Message Type Identifier
-            static const Tu32 XuiCountKeys = 5; ///< Number of Shared Keys
+            static const uint32_t XuiType      = 1; ///< Message Type Identifier
+            static const uint32_t XuiCountKeys = 5; ///< Number of Shared Keys
 
          private:    // Private Attributes
             NKeyExchange::TcPublicKey voSharedKey[ XuiCountKeys ];
@@ -41,8 +41,8 @@ namespace Crypto
             ~TcEstablishSession( void );
             TcEstablishSession& operator=( const TcEstablishSession& aorRequest );
 
-            NKeyExchange::TcPublicKey& MSharedKey( const Tu32 auiIndex );
-            const NKeyExchange::TcPublicKey& MSharedKey( const Tu32 auiIndex ) const;
+            NKeyExchange::TcPublicKey& MSharedKey( const uint32_t auiIndex );
+            const NKeyExchange::TcPublicKey& MSharedKey( const uint32_t auiIndex ) const;
          };
       }
    }

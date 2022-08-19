@@ -8,7 +8,7 @@
 using namespace Crypto;
 using namespace Crypto::NKeyExchange;
 
-Tu64 NDiffieHellman::MCalculate( const Tu64 adA, const Tu64 adB, const Tu64 adP )
+uint64_t NDiffieHellman::MCalculate( const uint64_t adA, const uint64_t adB, const uint64_t adP )
 {
-   return( static_cast< Tu64 >( pow( static_cast< Tf64 >( adA ), static_cast< Tf64 >( adB ) ) ) % adP );
+   return( static_cast< uint64_t >( pow( static_cast< double >( adA ), static_cast< double >( adB ) ) ) % adP );
 }

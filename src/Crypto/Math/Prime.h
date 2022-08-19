@@ -8,8 +8,8 @@ namespace Crypto
 {
    namespace NMath
    {
-      Tb8 MIsPrime( Ti64 alN );
-      Tb8 MGenerateMersennePrime( Ti64 alP );
+      bool MIsPrime( int64_t alN );
+      bool MGenerateMersennePrime( int64_t alP );
    }
 }
 

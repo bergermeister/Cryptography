@@ -1,1 +1,6 @@
 add_subdirectory( AES )
+add_subdirectory( Cipher )
+add_subdirectory( Communication )
+add_subdirectory( Hash )
+add_subdirectory( KeyExchange )
+add_subdirectory( Math )

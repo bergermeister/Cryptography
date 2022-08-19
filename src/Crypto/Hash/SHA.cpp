@@ -6,7 +6,7 @@
 using namespace Crypto;
 using namespace Crypto::NHash;
 
-TcSHA::TcSHA( const Tu8* aucpDigest ) : TcAlgorithm( aucpDigest )
+TcSHA::TcSHA( const uint8_t* aucpDigest ) : TcAlgorithm( aucpDigest )
 {
    // Nothing to construct
 }

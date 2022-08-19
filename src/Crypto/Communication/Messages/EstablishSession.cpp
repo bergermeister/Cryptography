@@ -8,12 +8,12 @@ using namespace Crypto;
 using namespace Crypto::NCommunication::NMessages;
 
 TcEstablishSession::TcEstablishSession( void ) 
-   : TcMessage( XuiCountKeys * sizeof( NKeyExchange::TcPublicKey ) + sizeof( Tu32 ), XuiType )
+   : TcMessage( XuiCountKeys * sizeof( NKeyExchange::TcPublicKey ) + sizeof( uint32_t ), XuiType )
 {
    // Nothing to construct
 }
 TcEstablishSession::TcEstablishSession( const TcEstablishSession& aorEstablish )
-   : TcMessage( XuiCountKeys * sizeof( NKeyExchange::TcPublicKey ) + sizeof( Tu32 ), XuiType )
+   : TcMessage( XuiCountKeys * sizeof( NKeyExchange::TcPublicKey ) + sizeof( uint32_t ), XuiType )
 {
    // Call assignment operator
    *this = aorEstablish;
@@ -26,7 +26,7 @@ TcEstablishSession::~TcEstablishSession( void )
 
 TcEstablishSession& TcEstablishSession::operator=( const TcEstablishSession& aorEstablish )
 {
-   Tu32 kuiIdx;
+   uint32_t kuiIdx;
 
    if( this != &aorEstablish )
    {
@@ -42,12 +42,12 @@ TcEstablishSession& TcEstablishSession::operator=( const TcEstablishSession& aor
    return( *this );
 }
 
-NKeyExchange::TcPublicKey& TcEstablishSession::MSharedKey( const Tu32 auiIndex )
+NKeyExchange::TcPublicKey& TcEstablishSession::MSharedKey( const uint32_t auiIndex )
 {
    return( this->voSharedKey[ auiIndex ] );
 }
 
-const NKeyExchange::TcPublicKey& TcEstablishSession::MSharedKey( const Tu32 auiIndex ) const
+const NKeyExchange::TcPublicKey& TcEstablishSession::MSharedKey( const uint32_t auiIndex ) const
 {
    return( this->voSharedKey[ auiIndex ] );
 }

@@ -27,18 +27,18 @@ namespace Crypto
       class TcSHA512 : public TcSHA
       {
       public:        // Public Attributes
-         static const Tu32 XuiLength = 64;   ///< Length of Hash in bytes
+         static const size_t XuiLength = 64;   ///< Length of Hash in bytes
 
       private:       // Private Attributes
-         static const Tu32 xuiConstCnt    = 80;                            ///< 
-         static const Tu32 xuiLengthBlock = 128;                           ///< Block size in bytes 
-         static const Tu32 xuiLengthWords = XuiLength / sizeof( Tu64 );    ///< Length of digest in 64-bit words
-         static const Tu32 xuiPadMax      = 112;
-         static const Tu32 xuiPadEnd      = 123;
-         static const Tu64 xulConstant[ xuiConstCnt ];                     ///< 
-         static const Tu64 xulDefaultHash[ xuiLengthWords ];               ///< 
+         static const uint32_t xuiConstCnt    = 80;                            ///< 
+         static const uint32_t xuiLengthBlock = 128;                           ///< Block size in bytes 
+         static const uint32_t xuiLengthWords = XuiLength / sizeof( uint64_t );    ///< Length of digest in 64-bit words
+         static const uint32_t xuiPadMax      = 112;
+         static const uint32_t xuiPadEnd      = 123;
+         static const uint64_t xulConstant[ xuiConstCnt ];                     ///< 
+         static const uint64_t xulDefaultHash[ xuiLengthWords ];               ///< 
 
-         Tu64 vulHash[ xuiLengthWords ];                                   ///< Calculated Hash 
+         uint64_t vulHash[ xuiLengthWords ];                                   ///< Calculated Hash 
 
       public:        // Public Methods
          TcSHA512( void );
@@ -47,33 +47,33 @@ namespace Crypto
          TcSHA512& operator=( const TcSHA512& aorSHA );
 
          void MInitialize( void );
-         void MProcess( const Tu8* aucpData, const Tu32 auiLength );
+         void MProcess( const uint8_t* aucpData, const size_t auiLength );
          void MFinalize( void );
 
          using TcAlgorithm::MDigest;
          using TcAlgorithm::MDigested;
 
       private:       // Private Methods
-         void mProcessBlock( const Tu8* aucpBlock );
+         void mProcessBlock( const uint8_t* aucpBlock );
 
-         inline Tu64 mSig1( const Tu64 aulX )
+         inline uint64_t mSig1( const uint64_t aulX )
          {
-            return( ROTR< Tu64 >( aulX, 28 ) ^ ROTR< Tu64 >( aulX, 34 ) ^ ROTR< Tu64 >( aulX, 39 ) );
+            return( ROTR< uint64_t >( aulX, 28 ) ^ ROTR< uint64_t >( aulX, 34 ) ^ ROTR< uint64_t >( aulX, 39 ) );
          }
 
-         inline Tu64 mSig2( const Tu64 aulX )
+         inline uint64_t mSig2( const uint64_t aulX )
          {
-            return( ROTR< Tu64 >( aulX, 14 ) ^ ROTR< Tu64 >( aulX, 18 ) ^ ROTR< Tu64 >( aulX, 41 ) );
+            return( ROTR< uint64_t >( aulX, 14 ) ^ ROTR< uint64_t >( aulX, 18 ) ^ ROTR< uint64_t >( aulX, 41 ) );
          }
 
-         inline Tu64 mSig3( const Tu64 aulX )
+         inline uint64_t mSig3( const uint64_t aulX )
          {
-            return( ROTR< Tu64 >( aulX, 1 ) ^ ROTR< Tu64 >( aulX, 8 ) ^ SHR< Tu64 >( aulX, 7 ) );
+            return( ROTR< uint64_t >( aulX, 1 ) ^ ROTR< uint64_t >( aulX, 8 ) ^ SHR< uint64_t >( aulX, 7 ) );
          }
 
-         inline Tu64 mSig4( const Tu64 aulX )
+         inline uint64_t mSig4( const uint64_t aulX )
          {
-            return( ROTR< Tu64 >( aulX, 19 ) ^ ROTR< Tu64 >( aulX, 61 ) ^ SHR< Tu64 >( aulX, 6 ) );
+            return( ROTR< uint64_t >( aulX, 19 ) ^ ROTR< uint64_t >( aulX, 61 ) ^ SHR< uint64_t >( aulX, 6 ) );
          }
       };
    }

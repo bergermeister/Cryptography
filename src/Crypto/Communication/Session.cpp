@@ -11,15 +11,15 @@ using namespace Crypto;
 using namespace Crypto::NKeyExchange;
 using namespace Crypto::NCommunication;
 
-TcSession::TcSession( const Tu64 aulpPrivateKey[ NMessages::TcEstablishSession::XuiCountKeys ] )
+TcSession::TcSession( const uint64_t aulpPrivateKey[ NMessages::TcEstablishSession::XuiCountKeys ] )
    : voEncryptor( voConfig ), voDecryptor( voConfig )
 {
    std::memcpy( reinterpret_cast< void* >( this->vulpPrivateKey ),
                 reinterpret_cast< const void* >( aulpPrivateKey ),
-                NMessages::TcEstablishSession::XuiCountKeys * sizeof( Tu64 ) );
+                NMessages::TcEstablishSession::XuiCountKeys * sizeof( uint64_t ) );
 
    std::memset( reinterpret_cast< void* >( this->vulpSharedSecret ), 0, 
-                NMessages::TcEstablishSession::XuiCountKeys * sizeof( Tu64 ) );
+                NMessages::TcEstablishSession::XuiCountKeys * sizeof( uint64_t ) );
 
    std::memset( reinterpret_cast< void* >( this->vucpHash ), 0,
                 NMessages::TcEstablishSession::XuiCountKeys * NHash::TcSHA512::XuiLength );
@@ -42,11 +42,11 @@ TcSession& TcSession::operator=( const TcSession& aorSession )
    {
       std::memcpy( reinterpret_cast< void* >( this->vulpPrivateKey ),
                    reinterpret_cast< const void* >( aorSession.vulpPrivateKey ),
-                   NMessages::TcEstablishSession::XuiCountKeys * sizeof( Tu64 ) );
+                   NMessages::TcEstablishSession::XuiCountKeys * sizeof( uint64_t ) );
 
       std::memcpy( reinterpret_cast< void* >( this->vulpSharedSecret ),
                    reinterpret_cast< const void* >( aorSession.vulpSharedSecret ),
-                   NMessages::TcEstablishSession::XuiCountKeys * sizeof( Tu64 ) );
+                   NMessages::TcEstablishSession::XuiCountKeys * sizeof( uint64_t ) );
 
       std::memcpy( reinterpret_cast< void* >( this->vucpHash ),
                    reinterpret_cast< const void* >( aorSession.vucpHash ),
@@ -63,7 +63,7 @@ TcSession& TcSession::operator=( const TcSession& aorSession )
 NMessages::TcEstablishSession TcSession::MRequest( void )
 {
    NMessages::TcEstablishSession koMsg;
-   Tu32                          kuiIdx;
+   uint32_t                          kuiIdx;
 
    for( kuiIdx = 0; kuiIdx < NMessages::TcEstablishSession::XuiCountKeys; kuiIdx++ )
    {
@@ -77,7 +77,7 @@ NMessages::TcEstablishSession TcSession::MEstablish( const NMessages::TcEstablis
 {
    NMessages::TcEstablishSession koMsg;
    NHash::TcSHA512               koSHA;
-   Tu32                          kuiIdx;
+   uint32_t                          kuiIdx;
 
    for( kuiIdx = 0; kuiIdx < NMessages::TcEstablishSession::XuiCountKeys; kuiIdx++ )
    {
@@ -94,7 +94,7 @@ NMessages::TcEstablishSession TcSession::MEstablish( const NMessages::TcEstablis
 
       /// -# Calculate SHA-512 of Shared Secret
       koSHA.MInitialize( );
-      koSHA.MProcess( reinterpret_cast< const Tu8* >( &this->vulpSharedSecret[ kuiIdx ] ), sizeof( Tu64 ) );
+      koSHA.MProcess( reinterpret_cast< const uint8_t* >( &this->vulpSharedSecret[ kuiIdx ] ), sizeof( uint64_t ) );
       koSHA.MFinalize( );
       std::memcpy( reinterpret_cast< void* >( this->vucpHash[ kuiIdx ] ), 
                    reinterpret_cast< const void* >( koSHA.MDigest( ) ), 
@@ -102,12 +102,12 @@ NMessages::TcEstablishSession TcSession::MEstablish( const NMessages::TcEstablis
    }
 
    /// -# Configure AES Algorithm using the first 128-bits of SharedSecret[ 0 ]'s Digest as the key
-   this->voConfig.MExpandKey( reinterpret_cast< const Tu8* >( this->vucpHash[ 0 ] ) );
+   this->voConfig.MExpandKey( reinterpret_cast< const uint8_t* >( this->vucpHash[ 0 ] ) );
 
    /// -# Generation S-Box and Inverse S-Box using SharedSecret[ 1 - 4 ]'s Digest
    if( abDynamicSBox )
    {
-      this->voConfig.MGenerateSBox( reinterpret_cast< const Tu8* >( &this->vucpHash[ 1 ] ) );
+      this->voConfig.MGenerateSBox( reinterpret_cast< const uint8_t* >( &this->vucpHash[ 1 ] ) );
    }
 
    return( koMsg );
@@ -118,11 +118,11 @@ NAES128::TcConfiguration& TcSession::SConfiguration( void )
    return( this->voConfig );
 }
 
-void TcSession::MEncrypt( const Tu8* aucpPlaintext, Tu8* aucpCiphertext, const Tu32 auiBytes )
+void TcSession::MEncrypt( const uint8_t* aucpPlaintext, uint8_t* aucpCiphertext, const size_t auiBytes )
 {
-   Tu8  kucpBuffer[ NAES128::TcConfiguration::XuiSizeKey ];
-   Tu32 kuiRemaining = auiBytes;
-   Tu32 kuiOffset    = 0;
+   uint8_t  kucpBuffer[ NAES128::TcConfiguration::XuiSizeKey ];
+   size_t kuiRemaining = auiBytes;
+   size_t kuiOffset    = 0;
 
    while( kuiRemaining >= NAES128::TcConfiguration::XuiSizeKey )
    {
@@ -141,10 +141,10 @@ void TcSession::MEncrypt( const Tu8* aucpPlaintext, Tu8* aucpCiphertext, const T
    }
 }
 
-void TcSession::MDecrypt( const Tu8* aucpCiphertext, Tu8* aucpPlaintext, const Tu32 auiBytes )
+void TcSession::MDecrypt( const uint8_t* aucpCiphertext, uint8_t* aucpPlaintext, const size_t auiBytes )
 {
-   Tu32 kuiRemaining = auiBytes;
-   Tu32 kuiOffset = 0;
+   size_t kuiRemaining = auiBytes;
+   size_t kuiOffset = 0;
 
    while( kuiRemaining >= NAES128::TcConfiguration::XuiSizeKey )
    {

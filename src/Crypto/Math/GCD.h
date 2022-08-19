@@ -11,10 +11,10 @@ namespace Crypto
 {
    namespace NMath
    {
-      Ti64 MGCD( Ti64 alA, Ti64 alB, Ti64& airInverse );
-      Ti64 MLCM( Ti64 alA, Ti64 alB );
-      std::vector< std::pair< Ti64, Ti64 > > MMultiplicativeInverses( Ti64 alN );
-      Ti64 MMultiplicativeInverse( Ti64 alA, Ti64 alN );
+      int64_t MGCD( int64_t alA, int64_t alB, int64_t& airInverse );
+      int64_t MLCM( int64_t alA, int64_t alB );
+      std::vector< std::pair< int64_t, int64_t > > MMultiplicativeInverses( int64_t alN );
+      int64_t MMultiplicativeInverse( int64_t alA, int64_t alN );
    }
 }
 

@@ -20,26 +20,26 @@ namespace Crypto
       class TcAlgorithm
       {
       private:       // Private Attributes
-         const Tu8* vucpDigest;  ///< Hash Digest
+         const uint8_t* vucpDigest;  ///< Hash Digest
 
       protected:     // Protected Attributes
-         Tu32 vuiDigested; ///< Number of bytes digested
+         uint32_t vuiDigested; ///< Number of bytes digested
 
       public:        // Public Methods
-         TcAlgorithm( const Tu8* aucpDigest );
+         TcAlgorithm( const uint8_t* aucpDigest );
          TcAlgorithm( const TcAlgorithm& aorHash );
          virtual ~TcAlgorithm( void );
 
          TcAlgorithm& operator=( const TcAlgorithm& aorHash );
          
          virtual void MInitialize( void ) = 0;
-         virtual void MProcess( const Tu8* aucpData, const Tu32 auiBytes ) = 0;
+         virtual void MProcess( const uint8_t* aucpData, const size_t auiBytes ) = 0;
          virtual void MFinalize( void ) = 0;
 
-         const Tu8* MDigest( void ) const;
-         const Tu32 MDigested( void ) const;
+         const uint8_t* MDigest( void ) const;
+         const uint32_t MDigested( void ) const;
 
-         inline Tu64 MSwap( const Tu64 aulVal )
+         inline uint64_t MSwap( const uint64_t aulVal )
          {
             return( ( ( aulVal & 0x00000000000000FF ) << 56 ) |
                     ( ( aulVal & 0x000000000000FF00 ) << 40 ) |

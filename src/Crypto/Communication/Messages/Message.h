@@ -30,15 +30,15 @@ namespace Crypto
          {
          private:    // Private attributes
             NHash::TcSHA512 voSHA;     ///< SHA-512 Digest of message
-            Tu32            vuiLength; ///< Length of payload in bytes, not including hash
-            Tu32            vuiID;     ///< Message Type identifier
+            uint32_t            vuiLength; ///< Length of payload in bytes, not including hash
+            uint32_t            vuiID;     ///< Message Type identifier
 
          public:     // Public Methods
             void MPrepare( void );
-            Tb8  MValid( void ) const;
+            bool  MValid( void ) const;
 
          protected:  // Protected Methods
-            TcMessage( const Tu32 auiLength, const Tu32 auiID );
+            TcMessage( const uint32_t auiLength, const uint32_t auiID );
             TcMessage( const TcMessage& aorMsg );
             ~TcMessage( void );
             TcMessage& operator=( const TcMessage& aorMsg );

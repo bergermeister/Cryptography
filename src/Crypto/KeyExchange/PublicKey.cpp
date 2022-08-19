@@ -33,24 +33,24 @@ TcPublicKey& TcPublicKey::operator=( const TcPublicKey& aorPublicKey )
    return( *this );
 }
 
-void TcPublicKey::MUpdate( const Tu64 aulP, const Tu64 aulG, const Tu64 aulPrivateKey )
+void TcPublicKey::MUpdate( const uint64_t aulP, const uint64_t aulG, const uint64_t aulPrivateKey )
 {
    this->vulP         = aulP;
    this->vulG         = aulG;
    this->vulSharedKey = NDiffieHellman::MCalculate( this->vulG, aulPrivateKey, this->vulP );
 }
 
-const Tu64 TcPublicKey::MP( void ) const
+const uint64_t TcPublicKey::MP( void ) const
 {
    return( this->vulP );
 }
 
-const Tu64 TcPublicKey::MG( void ) const
+const uint64_t TcPublicKey::MG( void ) const
 {
    return( this->vulG );
 }
 
-const Tu64 TcPublicKey::MSharedKey( void ) const
+const uint64_t TcPublicKey::MSharedKey( void ) const
 {
    return( this->vulSharedKey );
 }

@@ -6,11 +6,6 @@
 using namespace Crypto;
 
 /**
- * @brief
- * Greatest Common Divisor
- *
- * @details
- * @par
  * This method calculates the greatest common divisor between A and B.
  *
  * @return
@@ -39,18 +34,18 @@ using namespace Crypto;
  * @LOC{ klT2 } Local Variable T2
  * }
  */
-Ti64 Crypto::NMath::MGCD( Ti64 alA, Ti64 alB, Ti64& airInverse )
+int64_t Crypto::NMath::MGCD( int64_t alA, int64_t alB, int64_t& airInverse )
 {
-   Ti64 klQ;
-   Ti64 klR;
-   Ti64 klR1;
-   Ti64 klR2;
-   Ti64 klS;
-   Ti64 klS1;
-   Ti64 klS2;
-   Ti64 klT;
-   Ti64 klT1;
-   Ti64 klT2;
+   int64_t klQ;
+   int64_t klR;
+   int64_t klR1;
+   int64_t klR2;
+   int64_t klS;
+   int64_t klS1;
+   int64_t klS2;
+   int64_t klT;
+   int64_t klT1;
+   int64_t klT2;
    
    /// @par Process Design Language
    klR1 = alA;    /// -# R1 = Input A
@@ -84,20 +79,20 @@ Ti64 Crypto::NMath::MGCD( Ti64 alA, Ti64 alB, Ti64& airInverse )
    return( klR1 );
 }
 
-Ti64 Crypto::NMath::MLCM( Ti64 alA, Ti64 alB )
+int64_t Crypto::NMath::MLCM( int64_t alA, int64_t alB )
 {
-   Ti64 klT;
-   Ti64 klD = MGCD( alA, alB, klT );
+   int64_t klT;
+   int64_t klD = MGCD( alA, alB, klT );
    return( ( alA * alB ) / klD );
 }
 
-std::vector< std::pair< Ti64, Ti64 > > Crypto::NMath::MMultiplicativeInverses( Ti64 alN )
+std::vector< std::pair< int64_t, int64_t > > Crypto::NMath::MMultiplicativeInverses( int64_t alN )
 {
-   std::vector< std::pair< Ti64, Ti64 > > koInverses;
-   std::pair< Ti64, Ti64 > koInverse;
-   Ti64 klA;
-   Ti64 klR;
-   Ti64 klT;
+   std::vector< std::pair< int64_t, int64_t > > koInverses;
+   std::pair< int64_t, int64_t > koInverse;
+   int64_t klA;
+   int64_t klR;
+   int64_t klT;
 
    for( klA = 1; klA < alN; klA++ )
    {
@@ -119,12 +114,12 @@ std::vector< std::pair< Ti64, Ti64 > > Crypto::NMath::MMultiplicativeInverses( T
    return( koInverses );
 }
 
-Ti64 Crypto::NMath::MMultiplicativeInverse( Ti64 alA, Ti64 alN )
+int64_t Crypto::NMath::MMultiplicativeInverse( int64_t alA, int64_t alN )
 {
-   std::vector< std::pair< Ti64, Ti64 > > koInverses;
-   std::pair< Ti64, Ti64 >* kopPair;
-   Ti32 kiIndex;
-   Ti64 klInv = 0;
+   std::vector< std::pair< int64_t, int64_t > > koInverses;
+   std::pair< int64_t, int64_t >* kopPair;
+   int32_t kiIndex;
+   int64_t klInv = 0;
 
    if( NMath::MIsPrime( alN ) )
    {

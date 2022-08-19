@@ -6,9 +6,9 @@ namespace Crypto
 {
    namespace NMath
    {
-      Tb8 MIsPrime( int64_t alN )
+      bool MIsPrime( int64_t alN )
       {
-         Tb8  kbPrime = true;
+         bool  kbPrime = true;
          int64_t klI;
 
          if( alN <= 3 )
@@ -36,7 +36,7 @@ namespace Crypto
          return( kbPrime );
       }
 
-      Tb8 MGenerateMersennePrime( int64_t alP )
+      bool MGenerateMersennePrime( int64_t alP )
       {
          int64_t klP;
          int64_t klM = 1;

@@ -16,7 +16,7 @@ namespace Crypto
    {
       namespace NDiffieHellman
       {
-         Tu64 MCalculate( const Tu64 adA, const Tu64 adB, const Tu64 adP );
+         uint64_t MCalculate( const uint64_t adA, const uint64_t adB, const uint64_t adP );
       }
    }
 }

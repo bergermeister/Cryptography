@@ -13,11 +13,10 @@ namespace Crypto
    {
       /**
        * 
-       * @return This method returns nothing.
-       * 
        * @param[in] P 
        * @param[in] Q 
        * @param[in] I 
+       * @return This method returns nothing.
        */
       void RSA::Initialize( const int64_t P, const int64_t Q, int64_t I )
       {

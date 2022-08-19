@@ -1,5 +1,7 @@
-# Development Workspaces
+# Directories
+build
 dev
+doc
 
 # LaTex Files
 *.pdf

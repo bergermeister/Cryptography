@@ -34,15 +34,15 @@ namespace Crypto
       class TcSession
       {
       private:    // Private Attributes
-         Tu64                     vulpPrivateKey[ NMessages::TcEstablishSession::XuiCountKeys ];
-         Tu64                     vulpSharedSecret[ NMessages::TcEstablishSession::XuiCountKeys ];
-         Tu8                      vucpHash[ NMessages::TcEstablishSession::XuiCountKeys ][ NHash::TcSHA512::XuiLength ];
+         uint64_t                     vulpPrivateKey[ NMessages::TcEstablishSession::XuiCountKeys ];
+         uint64_t                     vulpSharedSecret[ NMessages::TcEstablishSession::XuiCountKeys ];
+         uint8_t                      vucpHash[ NMessages::TcEstablishSession::XuiCountKeys ][ NHash::TcSHA512::XuiLength ];
          NAES128::TcConfiguration voConfig;
          NAES128::TcEncryptor     voEncryptor;
          NAES128::TcDecryptor     voDecryptor;
 
       public:     // Public Methods
-         TcSession( const Tu64 aulpPrivateKey[ NMessages::TcEstablishSession::XuiCountKeys ] );
+         TcSession( const uint64_t aulpPrivateKey[ NMessages::TcEstablishSession::XuiCountKeys ] );
          TcSession( const TcSession& aorSession );
          ~TcSession( void );
          TcSession& operator=( const TcSession& aorSession );
@@ -52,8 +52,8 @@ namespace Crypto
 
          NAES128::TcConfiguration& SConfiguration( void );
 
-         void MEncrypt( const Tu8* aucpPlaintext,  Tu8* aucpCiphertext, const Tu32 auiBytes );
-         void MDecrypt( const Tu8* aucpCiphertext, Tu8* aucpPlaintext,  const Tu32 auiBytes );
+         void MEncrypt( const uint8_t* aucpPlaintext,  uint8_t* aucpCiphertext, const size_t auiBytes );
+         void MDecrypt( const uint8_t* aucpCiphertext, uint8_t* aucpPlaintext,  const size_t auiBytes );
       };
    }
 }

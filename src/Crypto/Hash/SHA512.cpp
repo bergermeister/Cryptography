@@ -6,7 +6,7 @@
 using namespace Crypto;
 using namespace Crypto::NHash;
 
-const Tu64 TcSHA512::xulConstant[ xuiConstCnt ] =
+const uint64_t TcSHA512::xulConstant[ xuiConstCnt ] =
 {
    0x428a2f98d728ae22, 0x7137449123ef65cd, 0xb5c0fbcfec4d3b2f, 0xe9b5dba58189dbbc,
    0x3956c25bf348b538, 0x59f111f1b605d019, 0x923f82a4af194f9b, 0xab1c5ed5da6d8118,
@@ -30,13 +30,13 @@ const Tu64 TcSHA512::xulConstant[ xuiConstCnt ] =
    0x4cc5d4becb3e42b6, 0x597f299cfc657e2a, 0x5fcb6fab3ad6faec, 0x6c44198c4a475817
 };
 
-const Tu64 TcSHA512::xulDefaultHash[ xuiLengthWords ] =
+const uint64_t TcSHA512::xulDefaultHash[ xuiLengthWords ] =
 {
    0x6A09E667F3BCC908, 0xBB67AE8584CAA73B, 0x3C6EF372FE94F82B, 0xA54FF53A5F1D36F1,
    0x510E527FADE682D1, 0x9B05688C2B3E6C1F, 0x1F83D9ABFB41BD6B, 0x5BE0CD19137E2179
 };
 
-TcSHA512::TcSHA512( void ) : TcSHA( reinterpret_cast< const Tu8* >( this->vulHash ) )
+TcSHA512::TcSHA512( void ) : TcSHA( reinterpret_cast< const uint8_t* >( this->vulHash ) )
 {
    // Initialize Algorithm
    this->MInitialize( );
@@ -79,11 +79,11 @@ void TcSHA512::MInitialize( void )
    this->vuiDigested = 0;
 }
 
-void TcSHA512::MProcess( const Tu8* aucpMessage, const Tu32 auiLength )
+void TcSHA512::MProcess( const uint8_t* aucpMessage, const size_t auiLength )
 {
-   const Tu8* kucpBlock    = aucpMessage;
-   Tu32       kuiRemaining = auiLength;
-   Tu8        kucpBuffer[ xuiLengthBlock ];
+   const uint8_t* kucpBlock    = aucpMessage;
+   size_t       kuiRemaining = auiLength;
+   uint8_t        kucpBuffer[ xuiLengthBlock ];
 
    /// @par Process Design Language
    /// -# Process Each Block
@@ -108,11 +108,11 @@ void TcSHA512::MProcess( const Tu8* aucpMessage, const Tu32 auiLength )
       if( kuiRemaining <= xuiPadMax )
       {
          memset( reinterpret_cast< void* >( &kucpBuffer[ kuiRemaining ] ), 0, xuiPadEnd - kuiRemaining );
-         kucpBuffer[ 123 ] = static_cast< Tu8 >( this->vuiDigested >> 29 );
-         kucpBuffer[ 124 ] = static_cast< Tu8 >( this->vuiDigested >> 21 );
-         kucpBuffer[ 125 ] = static_cast< Tu8 >( this->vuiDigested >> 13 );
-         kucpBuffer[ 126 ] = static_cast< Tu8 >( this->vuiDigested >>  5 );
-         kucpBuffer[ 127 ] = static_cast< Tu8 >( this->vuiDigested <<  3 );
+         kucpBuffer[ 123 ] = static_cast< uint8_t >( this->vuiDigested >> 29 );
+         kucpBuffer[ 124 ] = static_cast< uint8_t >( this->vuiDigested >> 21 );
+         kucpBuffer[ 125 ] = static_cast< uint8_t >( this->vuiDigested >> 13 );
+         kucpBuffer[ 126 ] = static_cast< uint8_t >( this->vuiDigested >>  5 );
+         kucpBuffer[ 127 ] = static_cast< uint8_t >( this->vuiDigested <<  3 );
       }
       else
       {
@@ -125,9 +125,9 @@ void TcSHA512::MProcess( const Tu8* aucpMessage, const Tu32 auiLength )
 
 void TcSHA512::MFinalize( void )
 {
-   Tu8  kucpBuffer[ xuiLengthBlock ];
-   Tu32 kuiBytes;
-   Tu32 kuiWord;
+   uint8_t  kucpBuffer[ xuiLengthBlock ];
+   uint32_t kuiBytes;
+   uint32_t kuiWord;
 
    kuiBytes = this->vuiDigested % xuiLengthBlock;
 
@@ -140,11 +140,11 @@ void TcSHA512::MFinalize( void )
          kucpBuffer[ 0 ] = 0x80;
       }
 
-      kucpBuffer[ 123 ] = static_cast< Tu8 >( this->vuiDigested >> 29 );
-      kucpBuffer[ 124 ] = static_cast< Tu8 >( this->vuiDigested >> 21 );
-      kucpBuffer[ 125 ] = static_cast< Tu8 >( this->vuiDigested >> 13 );
-      kucpBuffer[ 126 ] = static_cast< Tu8 >( this->vuiDigested >> 5 );
-      kucpBuffer[ 127 ] = static_cast< Tu8 >( this->vuiDigested << 3 );
+      kucpBuffer[ 123 ] = static_cast< uint8_t >( this->vuiDigested >> 29 );
+      kucpBuffer[ 124 ] = static_cast< uint8_t >( this->vuiDigested >> 21 );
+      kucpBuffer[ 125 ] = static_cast< uint8_t >( this->vuiDigested >> 13 );
+      kucpBuffer[ 126 ] = static_cast< uint8_t >( this->vuiDigested >> 5 );
+      kucpBuffer[ 127 ] = static_cast< uint8_t >( this->vuiDigested << 3 );
 
       this->mProcessBlock( kucpBuffer );
    }
@@ -163,45 +163,45 @@ void TcSHA512::MFinalize( void )
    }
 }
 
-void TcSHA512::mProcessBlock( const Tu8* aucpBlock )
+void TcSHA512::mProcessBlock( const uint8_t* aucpBlock )
 {
-   Tu32 kuiT;
-   Tu64 kulTemp1;
-   Tu64 kulTemp2;
-   Tu64 kulA;
-   Tu64 kulB;
-   Tu64 kulC;
-   Tu64 kulD;
-   Tu64 kulE;
-   Tu64 kulF;
-   Tu64 kulG;
-   Tu64 kulH;
-   Tu64 kulpW[ xuiConstCnt ];
+   uint32_t kuiT;
+   uint64_t kulTemp1;
+   uint64_t kulTemp2;
+   uint64_t kulA;
+   uint64_t kulB;
+   uint64_t kulC;
+   uint64_t kulD;
+   uint64_t kulE;
+   uint64_t kulF;
+   uint64_t kulG;
+   uint64_t kulH;
+   uint64_t kulpW[ xuiConstCnt ];
 
    /// @par Process Design Language
    /// -# Prepare message schedule
    for( kuiT = 0; kuiT < 16; kuiT++ )
    {
-      kulA = static_cast< Tu64 >( *aucpBlock++ ) << 56;
-      kulB = static_cast< Tu64 >( *aucpBlock++ ) << 48;
-      kulC = static_cast< Tu64 >( *aucpBlock++ ) << 40;
-      kulD = static_cast< Tu64 >( *aucpBlock++ ) << 32;
-      kulE = static_cast< Tu64 >( *aucpBlock++ ) << 24;
-      kulF = static_cast< Tu64 >( *aucpBlock++ ) << 16;
-      kulG = static_cast< Tu64 >( *aucpBlock++ ) <<  8;
-      kulH = static_cast< Tu64 >( *aucpBlock++ );
+      kulA = static_cast< uint64_t >( *aucpBlock++ ) << 56;
+      kulB = static_cast< uint64_t >( *aucpBlock++ ) << 48;
+      kulC = static_cast< uint64_t >( *aucpBlock++ ) << 40;
+      kulD = static_cast< uint64_t >( *aucpBlock++ ) << 32;
+      kulE = static_cast< uint64_t >( *aucpBlock++ ) << 24;
+      kulF = static_cast< uint64_t >( *aucpBlock++ ) << 16;
+      kulG = static_cast< uint64_t >( *aucpBlock++ ) <<  8;
+      kulH = static_cast< uint64_t >( *aucpBlock++ );
       kulpW[ kuiT ] = kulA + kulB + kulC + kulD + kulE + kulF + kulG + kulH;
    }
 
    for( kuiT = 16; kuiT < xuiConstCnt; kuiT++ )
    {
-      //kulpW[ kuiT ] = ( mROTR< Tu64 >( kulpW[ kuiT - 2 ], 19 ) ^
-      //                  mROTR< Tu64 >( kulpW[ kuiT - 2 ], 61 ) ^
-      //                  mSHR<  Tu64 >( kulpW[ kuiT - 2 ], 6 ) ) +
+      //kulpW[ kuiT ] = ( mROTR< uint64_t >( kulpW[ kuiT - 2 ], 19 ) ^
+      //                  mROTR< uint64_t >( kulpW[ kuiT - 2 ], 61 ) ^
+      //                  mSHR<  uint64_t >( kulpW[ kuiT - 2 ], 6 ) ) +
       //                kulpW[ kuiT - 7 ] +
-      //                ( mROTR< Tu64 >( kulpW[ kuiT - 15 ], 1 ) ^
-      //                  mROTR< Tu64 >( kulpW[ kuiT - 15 ], 8 ) ^
-      //                  mSHR<  Tu64 >( kulpW[ kuiT - 15 ], 7 ) ) +
+      //                ( mROTR< uint64_t >( kulpW[ kuiT - 15 ], 1 ) ^
+      //                  mROTR< uint64_t >( kulpW[ kuiT - 15 ], 8 ) ^
+      //                  mSHR<  uint64_t >( kulpW[ kuiT - 15 ], 7 ) ) +
       //                kulpW[ kuiT - 16 ];
       kulpW[ kuiT ] = mSig4( kulpW[ kuiT -  2 ] ) + kulpW[ kuiT -  7 ] + 
                       mSig3( kulpW[ kuiT - 15 ] ) + kulpW[ kuiT - 16 ];
