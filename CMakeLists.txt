@@ -8,7 +8,7 @@ add_compile_options( -std=c++14 -Wall )
 if( BUILD_TESTING )
    # -pg    enable profiling
    add_compile_options( -fprofile-arcs -ftest-coverage -pg --no-pie -no-pie -fno-pie )
-   add_link_options( -fprofile-arcs --coverage -pg )
+   add_link_options( -fprofile-arcs --coverage -pg --no-pie -no-pie -fno-pie )
 endif( )
 
 add_subdirectory( src )
