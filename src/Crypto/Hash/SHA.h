@@ -13,34 +13,28 @@
 namespace Crypto
 {
    /// Namespace containing Hashing algorithms
-   namespace NHash
+   namespace Hash
    {
       /** 
-       * @brief 
        * Secure Hash Algorithm (SHA) Base Class
-       *
-       * @details
-       * @par
-       * 
        */
-
-      class TcSHA : public TcAlgorithm
+      class SHA : public Algorithm
       {
       private:       // Private Attributes
          static const uint32_t xuiBPB = 8; ///< Bits Per Byte
 
       public:        // Public Methods
-         TcSHA( const uint8_t* aucpDigest );
-         TcSHA( const TcSHA& aorSHA );
-         virtual ~TcSHA( void );
-         TcSHA& operator=( const TcSHA& aorSHA );
+         SHA( const uint8_t* aucpDigest );
+         SHA( const SHA& aorSHA );
+         virtual ~SHA( void );
+         SHA& operator=( const SHA& aorSHA );
 
-         virtual void MInitialize( void ) = 0;
-         virtual void MProcess( const uint8_t* aucpData, const size_t auiBytes ) = 0;
-         virtual void MFinalize( void ) = 0;
+         virtual void Initialize( void ) = 0;
+         virtual void Process( const uint8_t* aucpData, const size_t auiBytes ) = 0;
+         virtual void Finalize( void ) = 0;
 
-         using TcAlgorithm::MDigest;
-         using TcAlgorithm::MDigested;
+         using Algorithm::Digest;
+         using Algorithm::BytesDigested;
       };
    }
 }

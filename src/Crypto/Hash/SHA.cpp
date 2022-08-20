@@ -4,25 +4,25 @@
 #include <Crypto/Hash/SHA.h>
 
 using namespace Crypto;
-using namespace Crypto::NHash;
+using namespace Crypto::Hash;
 
-TcSHA::TcSHA( const uint8_t* aucpDigest ) : TcAlgorithm( aucpDigest )
+SHA::SHA( const uint8_t* aucpDigest ) : Algorithm( aucpDigest )
 {
    // Nothing to construct
 }
 
-TcSHA::TcSHA( const TcSHA& aorSHA ) : TcAlgorithm( aorSHA )
+SHA::SHA( const SHA& aorSHA ) : Algorithm( aorSHA )
 {
    // Call assignment operator
    *this = aorSHA;
 }
 
-TcSHA::~TcSHA( void )
+SHA::~SHA( void )
 {
    // Nothing to destruct
 }
 
-TcSHA& TcSHA::operator=( const TcSHA& aorSHA )
+SHA& SHA::operator=( const SHA& aorSHA )
 {
    // Prevent self-assignment
    if( this != &aorSHA )

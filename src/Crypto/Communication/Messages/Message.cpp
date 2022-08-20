@@ -8,22 +8,22 @@ using namespace Crypto::NCommunication::NMessages;
 
 void TcMessage::MPrepare( void )
 {
-   this->voSHA.MInitialize( );
-   this->voSHA.MProcess( reinterpret_cast< const uint8_t* >( &this->vuiID ), this->vuiLength );
-   this->voSHA.MFinalize( );
+   this->voSHA.Initialize( );
+   this->voSHA.Process( reinterpret_cast< const uint8_t* >( &this->vuiID ), this->vuiLength );
+   this->voSHA.Finalize( );
 }
 
 bool TcMessage::MValid( void ) const
 {
-   NHash::TcSHA512 koSHA;
+   Hash::SHA512 koSHA;
    int32_t            kiResult;
 
-   koSHA.MInitialize( );
-   koSHA.MProcess( reinterpret_cast< const uint8_t* >( &this->vuiID ), this->vuiLength );
-   koSHA.MFinalize( );
+   koSHA.Initialize( );
+   koSHA.Process( reinterpret_cast< const uint8_t* >( &this->vuiID ), this->vuiLength );
+   koSHA.Finalize( );
 
-   kiResult = std::memcmp( reinterpret_cast< const void* >( this->voSHA.MDigest( ) ),
-                           reinterpret_cast< const void* >( koSHA.MDigest( ) ),
+   kiResult = std::memcmp( reinterpret_cast< const void* >( this->voSHA.Digest( ) ),
+                           reinterpret_cast< const void* >( koSHA.Digest( ) ),
                            this->vuiLength );
 
    return( kiResult == 0 );

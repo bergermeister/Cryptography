@@ -10,11 +10,12 @@
 ## Compilation Instructions:
 
 ### CMake
-    cmake -G "Unix Makefiles" -Bbuild -DBUILD_TESTING=ON
+    cmake -G "Unix Makefiles" -Bbuild -DCMAKE_VERBOSE_MAKEFILE=ON -DBUILD_TESTING=ON
     cmake --build build
     cd build/tst && ctest && cd ../..
     lcov --capture --directory build/src --output-file doc/coverage.info 
     genhtml doc/coverage.info --output-directory doc/coverage
+    gprof build/tst/GTestCrypto.exe build/tst/gmon.out > doc/profiling.txt
 
 ### Visual Studio 
 1. Open Workspace\VS2019\VS2019.sln with Visual Studio 2019 Community Edition or later

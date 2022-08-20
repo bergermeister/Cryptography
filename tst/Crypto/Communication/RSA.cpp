@@ -21,7 +21,7 @@ namespace CryptoTest
             Crypto::Cipher::RSA*     kopRSA = static_cast< Crypto::Cipher::RSA* >( kopCipher );           
 
             /// -# Choose two distinct prime numbers
-            //kopRSA->MInitialize( 7919, 6691, 15 );
+            //kopRSA->Initialize( 7919, 6691, 15 );
             kopRSA->Initialize( 61, 53, 3 );
 
             /// -# Encryption funcition c(m)=m^e mod n

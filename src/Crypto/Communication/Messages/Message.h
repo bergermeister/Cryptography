@@ -29,7 +29,7 @@ namespace Crypto
          class TcMessage
          {
          private:    // Private attributes
-            NHash::TcSHA512 voSHA;     ///< SHA-512 Digest of message
+            Hash::SHA512 voSHA;     ///< SHA-512 Digest of message
             uint32_t            vuiLength; ///< Length of payload in bytes, not including hash
             uint32_t            vuiID;     ///< Message Type identifier
 

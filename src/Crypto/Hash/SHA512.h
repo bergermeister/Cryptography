@@ -14,64 +14,59 @@
 namespace Crypto
 {
    /// Namespace containing Hashing algorithms
-   namespace NHash
+   namespace Hash
    {
       /** 
-       * @brief 
        * 512-bit Secure Hashing Algorithm (SHA-512)
-       *
-       * @details
-       * @par
-       *
        */
-      class TcSHA512 : public TcSHA
+      class SHA512 : public SHA
       {
       public:        // Public Attributes
-         static const size_t XuiLength = 64;   ///< Length of Hash in bytes
+         static const size_t Length = 64;   ///< Length of Hash in bytes
 
       private:       // Private Attributes
-         static const uint32_t xuiConstCnt    = 80;                            ///< 
-         static const uint32_t xuiLengthBlock = 128;                           ///< Block size in bytes 
-         static const uint32_t xuiLengthWords = XuiLength / sizeof( uint64_t );    ///< Length of digest in 64-bit words
-         static const uint32_t xuiPadMax      = 112;
-         static const uint32_t xuiPadEnd      = 123;
-         static const uint64_t xulConstant[ xuiConstCnt ];                     ///< 
-         static const uint64_t xulDefaultHash[ xuiLengthWords ];               ///< 
+         static const uint32_t constantCount    = 80;                         ///< 
+         static const uint32_t blockSize = 128;                               ///< Block size in bytes 
+         static const uint32_t lengthInWords = Length / sizeof( uint64_t );   ///< Length of digest in 64-bit words
+         static const uint32_t padMax      = 112;
+         static const uint32_t padEnd      = 123;
+         static const uint64_t constant[ constantCount ];                     ///< 
+         static const uint64_t defaultHash[ lengthInWords ];                  ///< 
 
-         uint64_t vulHash[ xuiLengthWords ];                                   ///< Calculated Hash 
+         uint64_t hash[ lengthInWords ];                                   ///< Calculated Hash 
 
       public:        // Public Methods
-         TcSHA512( void );
-         TcSHA512( const TcSHA512& aorSHA );
-         ~TcSHA512( void );
-         TcSHA512& operator=( const TcSHA512& aorSHA );
+         SHA512( void );
+         SHA512( const SHA512& aorSHA );
+         ~SHA512( void );
+         SHA512& operator=( const SHA512& aorSHA );
 
-         void MInitialize( void );
-         void MProcess( const uint8_t* aucpData, const size_t auiLength );
-         void MFinalize( void );
+         void Initialize( void );
+         void Process( const uint8_t* aucpData, const size_t auiLength );
+         void Finalize( void );
 
-         using TcAlgorithm::MDigest;
-         using TcAlgorithm::MDigested;
+         using Algorithm::Digest;
+         using Algorithm::BytesDigested;
 
       private:       // Private Methods
-         void mProcessBlock( const uint8_t* aucpBlock );
+         void processBlock( const uint8_t* aucpBlock );
 
-         inline uint64_t mSig1( const uint64_t aulX )
+         inline uint64_t sig1( const uint64_t aulX )
          {
             return( ROTR< uint64_t >( aulX, 28 ) ^ ROTR< uint64_t >( aulX, 34 ) ^ ROTR< uint64_t >( aulX, 39 ) );
          }
 
-         inline uint64_t mSig2( const uint64_t aulX )
+         inline uint64_t sig2( const uint64_t aulX )
          {
             return( ROTR< uint64_t >( aulX, 14 ) ^ ROTR< uint64_t >( aulX, 18 ) ^ ROTR< uint64_t >( aulX, 41 ) );
          }
 
-         inline uint64_t mSig3( const uint64_t aulX )
+         inline uint64_t sig3( const uint64_t aulX )
          {
             return( ROTR< uint64_t >( aulX, 1 ) ^ ROTR< uint64_t >( aulX, 8 ) ^ SHR< uint64_t >( aulX, 7 ) );
          }
 
-         inline uint64_t mSig4( const uint64_t aulX )
+         inline uint64_t sig4( const uint64_t aulX )
          {
             return( ROTR< uint64_t >( aulX, 19 ) ^ ROTR< uint64_t >( aulX, 61 ) ^ SHR< uint64_t >( aulX, 6 ) );
          }

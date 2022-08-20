@@ -36,7 +36,7 @@ namespace Crypto
       private:    // Private Attributes
          uint64_t                     vulpPrivateKey[ NMessages::TcEstablishSession::XuiCountKeys ];
          uint64_t                     vulpSharedSecret[ NMessages::TcEstablishSession::XuiCountKeys ];
-         uint8_t                      vucpHash[ NMessages::TcEstablishSession::XuiCountKeys ][ NHash::TcSHA512::XuiLength ];
+         uint8_t                      vucpHash[ NMessages::TcEstablishSession::XuiCountKeys ][ Hash::SHA512::Length ];
          NAES128::TcConfiguration voConfig;
          NAES128::TcEncryptor     voEncryptor;
          NAES128::TcDecryptor     voDecryptor;

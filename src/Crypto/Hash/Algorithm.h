@@ -12,34 +12,34 @@
 namespace Crypto
 {
    /// Namespace containing Hashing algorithms
-   namespace NHash
+   namespace Hash
    {
       /**
        *
        */
-      class TcAlgorithm
+      class Algorithm
       {
       private:       // Private Attributes
-         const uint8_t* vucpDigest;  ///< Hash Digest
+         const uint8_t* digest;  ///< Hash Digest
 
       protected:     // Protected Attributes
-         uint32_t vuiDigested; ///< Number of bytes digested
+         size_t bytesDigested; ///< Number of bytes digested
 
       public:        // Public Methods
-         TcAlgorithm( const uint8_t* aucpDigest );
-         TcAlgorithm( const TcAlgorithm& aorHash );
-         virtual ~TcAlgorithm( void );
+         Algorithm( const uint8_t* aucpDigest );
+         Algorithm( const Algorithm& aorHash );
+         virtual ~Algorithm( void );
 
-         TcAlgorithm& operator=( const TcAlgorithm& aorHash );
+         Algorithm& operator=( const Algorithm& aorHash );
          
-         virtual void MInitialize( void ) = 0;
-         virtual void MProcess( const uint8_t* aucpData, const size_t auiBytes ) = 0;
-         virtual void MFinalize( void ) = 0;
+         virtual void Initialize( void ) = 0;
+         virtual void Process( const uint8_t* aucpData, const size_t auiBytes ) = 0;
+         virtual void Finalize( void ) = 0;
 
-         const uint8_t* MDigest( void ) const;
-         const uint32_t MDigested( void ) const;
+         const uint8_t* Digest( void ) const;
+         const size_t BytesDigested( void ) const;
 
-         inline uint64_t MSwap( const uint64_t aulVal )
+         inline uint64_t Swap( const uint64_t aulVal )
          {
             return( ( ( aulVal & 0x00000000000000FF ) << 56 ) |
                     ( ( aulVal & 0x000000000000FF00 ) << 40 ) |

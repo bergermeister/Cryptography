@@ -22,7 +22,7 @@ TcSession::TcSession( const uint64_t aulpPrivateKey[ NMessages::TcEstablishSessi
                 NMessages::TcEstablishSession::XuiCountKeys * sizeof( uint64_t ) );
 
    std::memset( reinterpret_cast< void* >( this->vucpHash ), 0,
-                NMessages::TcEstablishSession::XuiCountKeys * NHash::TcSHA512::XuiLength );
+                NMessages::TcEstablishSession::XuiCountKeys * Hash::SHA512::Length );
 }
 
 TcSession::TcSession( const TcSession& aorSession )
@@ -50,7 +50,7 @@ TcSession& TcSession::operator=( const TcSession& aorSession )
 
       std::memcpy( reinterpret_cast< void* >( this->vucpHash ),
                    reinterpret_cast< const void* >( aorSession.vucpHash ),
-                   NMessages::TcEstablishSession::XuiCountKeys * NHash::TcSHA512::XuiLength );
+                   NMessages::TcEstablishSession::XuiCountKeys * Hash::SHA512::Length );
 
       this->voConfig    = aorSession.voConfig;
       this->voEncryptor = aorSession.voEncryptor;
@@ -76,7 +76,7 @@ NMessages::TcEstablishSession TcSession::MRequest( void )
 NMessages::TcEstablishSession TcSession::MEstablish( const NMessages::TcEstablishSession& aorRequest, bool abDynamicSBox )
 {
    NMessages::TcEstablishSession koMsg;
-   NHash::TcSHA512               koSHA;
+   Hash::SHA512               koSHA;
    uint32_t                          kuiIdx;
 
    for( kuiIdx = 0; kuiIdx < NMessages::TcEstablishSession::XuiCountKeys; kuiIdx++ )
@@ -93,12 +93,12 @@ NMessages::TcEstablishSession TcSession::MEstablish( const NMessages::TcEstablis
                                                                      korPub.MP( ) );
 
       /// -# Calculate SHA-512 of Shared Secret
-      koSHA.MInitialize( );
-      koSHA.MProcess( reinterpret_cast< const uint8_t* >( &this->vulpSharedSecret[ kuiIdx ] ), sizeof( uint64_t ) );
-      koSHA.MFinalize( );
+      koSHA.Initialize( );
+      koSHA.Process( reinterpret_cast< const uint8_t* >( &this->vulpSharedSecret[ kuiIdx ] ), sizeof( uint64_t ) );
+      koSHA.Finalize( );
       std::memcpy( reinterpret_cast< void* >( this->vucpHash[ kuiIdx ] ), 
-                   reinterpret_cast< const void* >( koSHA.MDigest( ) ), 
-                   NHash::TcSHA512::XuiLength );
+                   reinterpret_cast< const void* >( koSHA.Digest( ) ), 
+                   Hash::SHA512::Length );
    }
 
    /// -# Configure AES Algorithm using the first 128-bits of SharedSecret[ 0 ]'s Digest as the key

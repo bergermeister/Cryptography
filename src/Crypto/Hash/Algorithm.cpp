@@ -3,44 +3,44 @@
 
 namespace Crypto
 {
-   namespace NHash
+   namespace Hash
    {
-      TcAlgorithm::TcAlgorithm( const uint8_t* kucpDigest )
+      Algorithm::Algorithm( const uint8_t* kucpDigest )
       {
-         this->vucpDigest = kucpDigest;
-         this->vuiDigested = 0;
+         this->digest = kucpDigest;
+         this->bytesDigested = 0;
       }
 
-      TcAlgorithm::TcAlgorithm( const TcAlgorithm& aorHash )
+      Algorithm::Algorithm( const Algorithm& aorHash )
       {
          // Call assignment operator
          *this = aorHash;
       }
 
-      TcAlgorithm::~TcAlgorithm( void )
+      Algorithm::~Algorithm( void )
       {
          // Nothing to destruct
       }
 
-      TcAlgorithm& TcAlgorithm::operator=( const TcAlgorithm& aorHash )
+      Algorithm& Algorithm::operator=( const Algorithm& aorHash )
       {
          // Prevent self-assignment
          if( this != &aorHash )
          {
-            this->vuiDigested = aorHash.vuiDigested;
+            this->bytesDigested = aorHash.bytesDigested;
          }
 
          return( *this );
       }
 
-      const uint8_t* TcAlgorithm::MDigest( void ) const
+      const uint8_t* Algorithm::Digest( void ) const
       {
-         return( this->vucpDigest );
+         return( this->digest );
       }
 
-      const uint32_t TcAlgorithm::MDigested( void ) const
+      const size_t Algorithm::BytesDigested( void ) const
       {
-         return( this->vuiDigested );
+         return( this->bytesDigested );
       }
    }
 }
