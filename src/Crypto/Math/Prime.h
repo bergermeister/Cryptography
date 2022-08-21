@@ -1,3 +1,6 @@
+/**
+ * @file 
+ */
 #ifndef Crypto_Math_Prime_h
 #define Crypto_Math_Prime_h
 
@@ -6,10 +9,10 @@
 
 namespace Crypto
 {
-   namespace NMath
+   namespace Math
    {
-      bool MIsPrime( int64_t alN );
-      bool MGenerateMersennePrime( int64_t alP );
+      bool IsPrime( int64_t alN );
+      bool GenerateMersennePrime( int64_t alP );
    }
 }
 

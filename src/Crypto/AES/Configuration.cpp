@@ -1,12 +1,11 @@
 // Crypto Includes
-#include <Crypto/Types.h>
 #include <Crypto/AES/Configuration.h>
 
 namespace Crypto
 {
-   namespace NAES128
+   namespace AES128
    {
-      const uint8_t TcConfiguration::XucpRijndaelSBox[ XuiSizeBox ] =
+      const uint8_t Configuration::RijndaelSBox[ BoxSize ] =
       {
          0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5, 0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76,
          0xca, 0x82, 0xc9, 0x7d, 0xfa, 0x59, 0x47, 0xf0, 0xad, 0xd4, 0xa2, 0xaf, 0x9c, 0xa4, 0x72, 0xc0,
@@ -26,7 +25,7 @@ namespace Crypto
          0x8c, 0xa1, 0x89, 0x0d, 0xbf, 0xe6, 0x42, 0x68, 0x41, 0x99, 0x2d, 0x0f, 0xb0, 0x54, 0xbb, 0x16
       };
 
-      const uint8_t TcConfiguration::XucpRijndaelIBox[ XuiSizeBox ] =
+      const uint8_t Configuration::RijndaelIBox[ BoxSize ] =
       {
          0x52, 0x09, 0x6A, 0xD5, 0x30, 0x36, 0xA5, 0x38, 0xBF, 0x40, 0xA3, 0x9E, 0x81, 0xF3, 0xD7, 0xFB,
          0x7C, 0xE3, 0x39, 0x82, 0x9B, 0x2F, 0xFF, 0x87, 0x34, 0x8E, 0x43, 0x44, 0xC4, 0xDE, 0xE9, 0xCB,
@@ -46,7 +45,7 @@ namespace Crypto
          0x17, 0x2B, 0x04, 0x7E, 0xBA, 0x77, 0xD6, 0x26, 0xE1, 0x69, 0x14, 0x63, 0x55, 0x21, 0x0C, 0x7D
       };
 
-      const uint8_t TcConfiguration::XucpMul2[ XuiSizeBox ] = 
+      const uint8_t Configuration::Mul2[ BoxSize ] = 
       {
          0x00, 0x02, 0x04, 0x06, 0x08, 0x0a, 0x0c, 0x0e, 0x10, 0x12, 0x14, 0x16, 0x18, 0x1a, 0x1c, 0x1e,
          0x20, 0x22, 0x24, 0x26, 0x28, 0x2a, 0x2c, 0x2e, 0x30, 0x32, 0x34, 0x36, 0x38, 0x3a, 0x3c, 0x3e,
@@ -66,7 +65,7 @@ namespace Crypto
          0xfb, 0xf9, 0xff, 0xfd, 0xf3, 0xf1, 0xf7, 0xf5, 0xeb, 0xe9, 0xef, 0xed, 0xe3, 0xe1, 0xe7, 0xe5
       };
 
-      const uint8_t TcConfiguration::XucpMul3[ XuiSizeBox ] = 
+      const uint8_t Configuration::Mul3[ BoxSize ] = 
       {
          0x00, 0x03, 0x06, 0x05, 0x0c, 0x0f, 0x0a, 0x09, 0x18, 0x1b, 0x1e, 0x1d, 0x14, 0x17, 0x12, 0x11,
          0x30, 0x33, 0x36, 0x35, 0x3c, 0x3f, 0x3a, 0x39, 0x28, 0x2b, 0x2e, 0x2d, 0x24, 0x27, 0x22, 0x21,
@@ -87,7 +86,7 @@ namespace Crypto
       };
 
 
-      const uint8_t TcConfiguration::XucpMul9[ XuiSizeBox ] =
+      const uint8_t Configuration::Mul9[ BoxSize ] =
       {
          0x00, 0x09, 0x12, 0x1b, 0x24, 0x2d, 0x36, 0x3f, 0x48, 0x41, 0x5a, 0x53, 0x6c, 0x65, 0x7e, 0x77,
          0x90, 0x99, 0x82, 0x8b, 0xb4, 0xbd, 0xa6, 0xaf, 0xd8, 0xd1, 0xca, 0xc3, 0xfc, 0xf5, 0xee, 0xe7,
@@ -107,7 +106,7 @@ namespace Crypto
          0x31, 0x38, 0x23, 0x2a, 0x15, 0x1c, 0x07, 0x0e, 0x79, 0x70, 0x6b, 0x62, 0x5d, 0x54, 0x4f, 0x46
       };
 
-      const uint8_t TcConfiguration::XucpMul11[ XuiSizeBox ] =
+      const uint8_t Configuration::Mul11[ BoxSize ] =
       {
          0x00, 0x0b, 0x16, 0x1d, 0x2c, 0x27, 0x3a, 0x31, 0x58, 0x53, 0x4e, 0x45, 0x74, 0x7f, 0x62, 0x69,
          0xb0, 0xbb, 0xa6, 0xad, 0x9c, 0x97, 0x8a, 0x81, 0xe8, 0xe3, 0xfe, 0xf5, 0xc4, 0xcf, 0xd2, 0xd9,
@@ -127,7 +126,7 @@ namespace Crypto
          0xca, 0xc1, 0xdc, 0xd7, 0xe6, 0xed, 0xf0, 0xfb, 0x92, 0x99, 0x84, 0x8f, 0xbe, 0xb5, 0xa8, 0xa3
       };
 
-      const uint8_t TcConfiguration::XucpMul13[ XuiSizeBox ] =
+      const uint8_t Configuration::Mul13[ BoxSize ] =
       {
          0x00, 0x0d, 0x1a, 0x17, 0x34, 0x39, 0x2e, 0x23, 0x68, 0x65, 0x72, 0x7f, 0x5c, 0x51, 0x46, 0x4b,
          0xd0, 0xdd, 0xca, 0xc7, 0xe4, 0xe9, 0xfe, 0xf3, 0xb8, 0xb5, 0xa2, 0xaf, 0x8c, 0x81, 0x96, 0x9b,
@@ -147,7 +146,7 @@ namespace Crypto
          0xdc, 0xd1, 0xc6, 0xcb, 0xe8, 0xe5, 0xf2, 0xff, 0xb4, 0xb9, 0xae, 0xa3, 0x80, 0x8d, 0x9a, 0x97
       };
 
-      const uint8_t TcConfiguration::XucpMul14[ XuiSizeBox ] =
+      const uint8_t Configuration::Mul14[ BoxSize ] =
       {
          0x00, 0x0e, 0x1c, 0x12, 0x38, 0x36, 0x24, 0x2a, 0x70, 0x7e, 0x6c, 0x62, 0x48, 0x46, 0x54, 0x5a,
          0xe0, 0xee, 0xfc, 0xf2, 0xd8, 0xd6, 0xc4, 0xca, 0x90, 0x9e, 0x8c, 0x82, 0xa8, 0xa6, 0xb4, 0xba,
@@ -167,7 +166,7 @@ namespace Crypto
          0xd7, 0xd9, 0xcb, 0xc5, 0xef, 0xe1, 0xf3, 0xfd, 0xa7, 0xa9, 0xbb, 0xb5, 0x9f, 0x91, 0x83, 0x8d
       };
 
-      const uint8_t TcConfiguration::XucpRCon[ XuiSizeBox ] =
+      const uint8_t Configuration::RoundConstant[ BoxSize ] =
       {
          0x8d, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36, 0x6c, 0xd8, 0xab, 0x4d, 0x9a,
          0x2f, 0x5e, 0xbc, 0x63, 0xc6, 0x97, 0x35, 0x6a, 0xd4, 0xb3, 0x7d, 0xfa, 0xef, 0xc5, 0x91, 0x39,
@@ -187,56 +186,56 @@ namespace Crypto
          0x61, 0xc2, 0x9f, 0x25, 0x4a, 0x94, 0x33, 0x66, 0xcc, 0x83, 0x1d, 0x3a, 0x74, 0xe8, 0xcb, 0x8d
       };
 
-      TcConfiguration::TcConfiguration( void )
+      Configuration::Configuration( void )
       {
          /// @par Process Design Langauge
          /// -# Initialize S-Box to Rijndael
-         std::memcpy( reinterpret_cast< void* >( this->vucpSBox ),
-                     reinterpret_cast< const void* >( XucpRijndaelSBox ),
-                     XuiSizeBox );
+         std::memcpy( reinterpret_cast< void* >( this->sBox ),
+                     reinterpret_cast< const void* >( RijndaelSBox ),
+                     BoxSize );
 
          /// -# Initialize I-Box to Rijndael
-         std::memcpy( reinterpret_cast< void* >( this->vucpIBox ),
-                     reinterpret_cast< const void* >( XucpRijndaelIBox ),
-                     XuiSizeBox );
+         std::memcpy( reinterpret_cast< void* >( this->iBox ),
+                     reinterpret_cast< const void* >( RijndaelIBox ),
+                     BoxSize );
 
          /// -# Zero out Expanded Key/Key Schedule
-         std::memset( reinterpret_cast< void* >( this->vucpEKey ), 0, XuiSizeExpandedKey );
+         std::memset( reinterpret_cast< void* >( this->eKey ), 0, ExpandedKeySize );
       }
 
-      TcConfiguration::TcConfiguration( const TcConfiguration& aorConfig )
+      Configuration::Configuration( const Configuration& aorConfig )
       {
          // Call assignment operator
          *this = aorConfig;
       }
 
-      TcConfiguration::~TcConfiguration( void )
+      Configuration::~Configuration( void )
       {
          // Nothing to destruct
       }
 
-      TcConfiguration& TcConfiguration::operator=( const TcConfiguration& aorConfig )
+      Configuration& Configuration::operator=( const Configuration& aorConfig )
       {
          /// @par Process Design Language
          /// -# Prevent self assignment
          if( this != &aorConfig )
          {
                /// -# Copy S-Box from given Configuration
-               std::memcpy( reinterpret_cast< void* >( this->vucpSBox ),
-                           reinterpret_cast< const void* >( aorConfig.vucpSBox ),
-                           XuiRounds );
+               std::memcpy( reinterpret_cast< void* >( this->sBox ),
+                           reinterpret_cast< const void* >( aorConfig.sBox ),
+                           Rounds );
 
                /// -# Copy I-Box from given Configuration
-               std::memcpy( reinterpret_cast< void* >( this->vucpIBox ),
-                           reinterpret_cast< const void* >( aorConfig.vucpIBox ),
-                           XuiRounds );
+               std::memcpy( reinterpret_cast< void* >( this->iBox ),
+                           reinterpret_cast< const void* >( aorConfig.iBox ),
+                           Rounds );
          }
 
          return( *this );
       }
 
 
-      void TcConfiguration::MExpandKey( const uint8_t aucpInputKey[ XuiSizeKey ] )
+      void Configuration::ExpandKey( const uint8_t aucpInputKey[ KeySize ] )
       {
          uint32_t kuiBytes = 0;
          uint32_t kuiIter = 1;
@@ -246,39 +245,39 @@ namespace Crypto
 
          /// @par Process Design Langauge
          /// -# Copy the Input Key to the first Expanded Key
-         std::memcpy( reinterpret_cast< void* >( this->vucpEKey ),
+         std::memcpy( reinterpret_cast< void* >( this->eKey ),
                      reinterpret_cast< const void* >( aucpInputKey ),
-                     XuiSizeKey );
+                     KeySize );
 
          /// -# Increment the number of bytes generated by the size of key
-         kuiBytes += XuiSizeKey;
+         kuiBytes += KeySize;
 
-         while( kuiBytes < XuiSizeExpandedKey )
+         while( kuiBytes < ExpandedKeySize )
          {
             /// -# Copy the previously generated 4 bytes
-            kuiCore = *reinterpret_cast< uint32_t* >( &this->vucpEKey[ kuiBytes - sizeof( uint32_t ) ] );
+            kuiCore = *reinterpret_cast< uint32_t* >( &this->eKey[ kuiBytes - sizeof( uint32_t ) ] );
 
             /// -# Perform the core once for each 16 byte key
-            if( ( kuiBytes % XuiSizeKey ) == 0 )
+            if( ( kuiBytes % KeySize ) == 0 )
             {
                kuiCore = ( ( kuiCore >> 8 ) & 0x00FFFFFF ) | ( ( kuiCore << 24 ) & 0xFF000000 );
-               kucpCore[ 0 ] = this->vucpSBox[ kucpCore[ 0 ] ];
-               kucpCore[ 1 ] = this->vucpSBox[ kucpCore[ 1 ] ];
-               kucpCore[ 2 ] = this->vucpSBox[ kucpCore[ 2 ] ];
-               kucpCore[ 3 ] = this->vucpSBox[ kucpCore[ 3 ] ];
-               kucpCore[ 0 ] ^= XucpRCon[ kuiIter++ ];
+               kucpCore[ 0 ] = this->sBox[ kucpCore[ 0 ] ];
+               kucpCore[ 1 ] = this->sBox[ kucpCore[ 1 ] ];
+               kucpCore[ 2 ] = this->sBox[ kucpCore[ 2 ] ];
+               kucpCore[ 3 ] = this->sBox[ kucpCore[ 3 ] ];
+               kucpCore[ 0 ] ^= RoundConstant[ kuiIter++ ];
             }
 
             /// -# Expand key
             for( kuiIdx = 0; kuiIdx < sizeof( uint32_t ); kuiIdx++ )
             {
-               this->vucpEKey[ kuiBytes ] = this->vucpEKey[ kuiBytes - XuiSizeKey ] ^ kucpCore[ kuiIdx ];
+               this->eKey[ kuiBytes ] = this->eKey[ kuiBytes - KeySize ] ^ kucpCore[ kuiIdx ];
                kuiBytes++;
             }
          }
       }
 
-      void TcConfiguration::MGenerateSBox( const uint8_t aucpInputKey[ XuiSizeBox ] )
+      void Configuration::GenerateSBox( const uint8_t aucpInputKey[ BoxSize ] )
       {
          uint32_t       kuiI;
          uint32_t       kuiK;
@@ -286,7 +285,7 @@ namespace Crypto
          uint32_t       kuiM;
          uint32_t       kuiJ;
          const uint8_t* kucpB = reinterpret_cast< const uint8_t* >( aucpInputKey );
-         uint8_t        kucpS[ XuiSizeBox * 10 ];
+         uint8_t        kucpS[ BoxSize * 10 ];
          
          /// -# Initialization
          ///   - I = 0
@@ -300,17 +299,17 @@ namespace Crypto
          ///   - S(0) = (B(0) + B(1)) mod 256
          ///   - SBox(0) = S(1)
          kucpS[ kuiI ] = static_cast< uint8_t >( kucpB[ kuiI ] + kucpB[ kuiI + 1 ] );
-         this->vucpSBox[ kuiI ] = kucpS[ kuiI ];
+         this->sBox[ kuiI ] = kucpS[ kuiI ];
 
          /// -# While K < 256
          ///   - I = I + 1
          ///   - M = 1 + (K + I * L) mod 256
          ///   - S(i + 1) = (S(i) + B(M)) mod 256
          ///   - L = 0
-         while( kuiK < XuiSizeBox )
+         while( kuiK < BoxSize )
          {
             kuiI = kuiI + 1;
-            kuiM = 1 + ( kuiK + ( kuiI * kuiL ) ) % XuiSizeBox;
+            kuiM = 1 + ( kuiK + ( kuiI * kuiL ) ) % BoxSize;
             kucpS[ kuiI ] = ( kucpS[ kuiI - 1 ] + kucpB[ kuiM ] );
             kuiL = 0;
             /// -# For J = 1 to K
@@ -318,7 +317,7 @@ namespace Crypto
             ///     of the S-Box elements which are not equal to S(I + 1)
             for( kuiJ = 0; kuiJ < kuiK; kuiJ++ )
             {
-               if( kucpS[ kuiI ] != this->vucpSBox[ kuiJ ] )
+               if( kucpS[ kuiI ] != this->sBox[ kuiJ ] )
                {
                   kuiL++;
                }
@@ -326,30 +325,30 @@ namespace Crypto
 
             if( kuiL == kuiJ )
             {
-               this->vucpSBox[ kuiK ] = kucpS[ kuiI ];
+               this->sBox[ kuiK ] = kucpS[ kuiI ];
                kuiK++;
             }
          }
 
-         for( kuiK = 0; kuiK < XuiSizeBox; kuiK++ )
+         for( kuiK = 0; kuiK < BoxSize; kuiK++ )
          {
-            this->vucpIBox[ this->vucpSBox[ kuiK ] ] = static_cast< uint8_t >( kuiK );
+            this->iBox[ this->sBox[ kuiK ] ] = static_cast< uint8_t >( kuiK );
          }
       }
 
-      const uint8_t* TcConfiguration::MExpandedKey( void ) const
+      const uint8_t* Configuration::ExpandedKey( void ) const
       {
-         return( this->vucpEKey );
+         return( this->eKey );
       }
 
-      const uint8_t* TcConfiguration::MSBox( void ) const
+      const uint8_t* Configuration::SBox( void ) const
       {
-         return( this->vucpSBox );
+         return( this->sBox );
       }
 
-      const uint8_t* TcConfiguration::MIBox( void ) const
+      const uint8_t* Configuration::IBox( void ) const
       {
-         return( this->vucpIBox );
+         return( this->iBox );
       }
    }
 }

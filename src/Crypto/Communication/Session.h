@@ -21,39 +21,35 @@
 namespace Crypto
 {
    /// Namespace containing encrypted communication functionality
-   namespace NCommunication
+   namespace Communication
    {
       /**
-       * @brief
-       *
-       *
-       * @details
-       * @par
+       * 
        *
        */
-      class TcSession
+      class Session
       {
       private:    // Private Attributes
-         uint64_t                     vulpPrivateKey[ NMessages::TcEstablishSession::XuiCountKeys ];
-         uint64_t                     vulpSharedSecret[ NMessages::TcEstablishSession::XuiCountKeys ];
-         uint8_t                      vucpHash[ NMessages::TcEstablishSession::XuiCountKeys ][ Hash::SHA512::Length ];
-         NAES128::TcConfiguration voConfig;
-         NAES128::TcEncryptor     voEncryptor;
-         NAES128::TcDecryptor     voDecryptor;
+         uint64_t privateKey[ Messages::EstablishSession::XuiCountKeys ];
+         uint64_t sharedSecret[ Messages::EstablishSession::XuiCountKeys ];
+         uint8_t hash[ Messages::EstablishSession::XuiCountKeys ][ Hash::SHA512::Length ];
+         AES128::Configuration config;
+         AES128::Encryptor encryptor;
+         AES128::Decryptor decryptor;
 
       public:     // Public Methods
-         TcSession( const uint64_t aulpPrivateKey[ NMessages::TcEstablishSession::XuiCountKeys ] );
-         TcSession( const TcSession& aorSession );
-         ~TcSession( void );
-         TcSession& operator=( const TcSession& aorSession );
+         Session( const uint64_t aulpPrivateKey[ Messages::EstablishSession::XuiCountKeys ] );
+         Session( const Session& aorSession );
+         ~Session( void );
+         Session& operator=( const Session& aorSession );
 
-         NMessages::TcEstablishSession MRequest( void );
-         NMessages::TcEstablishSession MEstablish( const NMessages::TcEstablishSession& aorRequest, bool abDynamicSBox );
+         Messages::EstablishSession Request( void );
+         Messages::EstablishSession Establish( const Messages::EstablishSession& aorRequest, bool abDynamicSBox );
 
-         NAES128::TcConfiguration& SConfiguration( void );
+         AES128::Configuration& Configuration( void );
 
-         void MEncrypt( const uint8_t* aucpPlaintext,  uint8_t* aucpCiphertext, const size_t auiBytes );
-         void MDecrypt( const uint8_t* aucpCiphertext, uint8_t* aucpPlaintext,  const size_t auiBytes );
+         void Encrypt( const uint8_t* aucpPlaintext,  uint8_t* aucpCiphertext, const size_t auiBytes );
+         void Decrypt( const uint8_t* aucpCiphertext, uint8_t* aucpPlaintext,  const size_t auiBytes );
       };
    }
 }

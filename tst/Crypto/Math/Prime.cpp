@@ -5,12 +5,12 @@ namespace CryptoTest
 {
    using namespace Microsoft::VisualStudio::CppUnitTestFramework;
    using namespace Crypto;
-   namespace NMath
+   namespace Math
    {
       TEST_CLASS( TuPrime )
       {
       public:
-         TEST_METHOD( MIsPrime )
+         TEST_METHOD( IsPrime )
          {
             const Ti64 xlPrimes[ ] =
             {
@@ -73,7 +73,7 @@ namespace CryptoTest
 
             for( kiValue = 0; kiValue < 7920; kiValue++ )
             {
-               kbIsPrime = Crypto::NMath::MIsPrime( kiValue );
+               kbIsPrime = Crypto::Math::IsPrime( kiValue );
                if( kbIsPrime )
                {
                   Assert::IsTrue( xlPrimes[ kiIndex ] == kiValue, L"ERROR: Expected Prime Value Mismatch" );
@@ -86,17 +86,17 @@ namespace CryptoTest
             }
          }
       
-         TEST_METHOD( MMultiplicativeInverse )
+         TEST_METHOD( MultiplicativeInverse )
          {
             Ti64 klInv;
 
-            klInv = Crypto::NMath::MMultiplicativeInverse( 8, 17 );
+            klInv = Crypto::Math::MultiplicativeInverse( 8, 17 );
             Assert::IsTrue( klInv == 15, L"ERROR: Incorrect Inverse for 8 mod 17" );
-            klInv = Crypto::NMath::MMultiplicativeInverse( 5, 23 );
+            klInv = Crypto::Math::MultiplicativeInverse( 5, 23 );
             Assert::IsTrue( klInv == 14, L"ERROR: Incorrect Inverse for 5 mod 23" );
-            klInv = Crypto::NMath::MMultiplicativeInverse( 60, 101 );
+            klInv = Crypto::Math::MultiplicativeInverse( 60, 101 );
             Assert::IsTrue( klInv == 32, L"ERROR: Incorrect Inverse for 60 mod 101" );
-            klInv = Crypto::NMath::MMultiplicativeInverse( 22, 211 );
+            klInv = Crypto::Math::MultiplicativeInverse( 22, 211 );
             Assert::IsTrue( klInv == 48, L"ERROR: Incorrect Inverse for 22 mod 211" );
          }
       };

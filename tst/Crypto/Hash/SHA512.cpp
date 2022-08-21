@@ -203,7 +203,7 @@ TEST( SHA512, Vector6 )
    koSHA.Finalize( );
 
    /// -# Obtain Digest
-   kulpDigest = reinterpret_cast< const uint64_t* >( koSHA.MDigest( ) );
+   kulpDigest = reinterpret_cast< const uint64_t* >( koSHA.Digest( ) );
 
    for( kuiIdx = 0; kuiIdx < ( SHA512::Length / sizeof( uint64_t ) ); kuiIdx++ )
    {

@@ -4,54 +4,54 @@
 #include <Crypto/KeyExchange/DiffieHellman.h>
 
 using namespace Crypto;
-using namespace Crypto::NKeyExchange;
+using namespace Crypto::KeyExchange;
 
-TcPublicKey::TcPublicKey( void )
+PublicKey::PublicKey( void )
 {
    // Nothing to construct
 }
 
-TcPublicKey::TcPublicKey( const TcPublicKey& aorPublicKey )
+PublicKey::PublicKey( const PublicKey& aorPublicKey )
 {
    *this = aorPublicKey;
 }
 
-TcPublicKey::~TcPublicKey( void )
+PublicKey::~PublicKey( void )
 {
    // Nothing to destruct
 }
 
-TcPublicKey& TcPublicKey::operator=( const TcPublicKey& aorPublicKey )
+PublicKey& PublicKey::operator=( const PublicKey& aorPublicKey )
 {
    if( this != &aorPublicKey )
    {
-      this->vulP         = aorPublicKey.vulP;
-      this->vulG         = aorPublicKey.vulG;
-      this->vulSharedKey = aorPublicKey.vulSharedKey;
+      this->p         = aorPublicKey.p;
+      this->g         = aorPublicKey.g;
+      this->sharedKey = aorPublicKey.sharedKey;
    }
 
    return( *this );
 }
 
-void TcPublicKey::MUpdate( const uint64_t aulP, const uint64_t aulG, const uint64_t aulPrivateKey )
+void PublicKey::Update( const uint64_t aulP, const uint64_t aulG, const uint64_t aulPrivateKey )
 {
-   this->vulP         = aulP;
-   this->vulG         = aulG;
-   this->vulSharedKey = NDiffieHellman::MCalculate( this->vulG, aulPrivateKey, this->vulP );
+   this->p         = aulP;
+   this->g         = aulG;
+   this->sharedKey = DiffieHellman::MCalculate( this->g, aulPrivateKey, this->p );
 }
 
-const uint64_t TcPublicKey::MP( void ) const
+const uint64_t PublicKey::P( void ) const
 {
-   return( this->vulP );
+   return( this->p );
 }
 
-const uint64_t TcPublicKey::MG( void ) const
+const uint64_t PublicKey::G( void ) const
 {
-   return( this->vulG );
+   return( this->g );
 }
 
-const uint64_t TcPublicKey::MSharedKey( void ) const
+const uint64_t PublicKey::SharedKey( void ) const
 {
-   return( this->vulSharedKey );
+   return( this->sharedKey );
 }
 

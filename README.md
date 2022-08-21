@@ -10,7 +10,7 @@
 ## Compilation Instructions:
 
 ### CMake
-    cmake -G "Unix Makefiles" -Bbuild -DCMAKE_VERBOSE_MAKEFILE=ON -DBUILD_TESTING=ON
+    cmake -G "Unix Makefiles" -Bbuild -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=ON
     cmake --build build
     cd build/tst && ctest && cd ../..
     lcov --capture --directory build/src --output-file doc/coverage.info 

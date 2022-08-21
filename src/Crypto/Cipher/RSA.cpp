@@ -28,10 +28,10 @@ namespace Crypto
          this->n = P * Q;
 
          /// -# Compute the Carmichael's totient function of the product as Y(N)=lcm(p - 1, q - 1)
-         y = Crypto::NMath::MLCM( P - 1, Q - 1 );
+         y = Crypto::Math::LCM( P - 1, Q - 1 );
 
          /// -# Choose any number 1 < e < Y that is coprime to 780
-         Inverses = Crypto::NMath::MMultiplicativeInverses( y );
+         Inverses = Crypto::Math::MultiplicativeInverses( y );
          if( I >= static_cast< int64_t >( Inverses.size( ) ) )
          {
             I = Inverses.size( ) / 2;

@@ -13,35 +13,29 @@
 namespace Crypto
 {
    /// Namespace containing encrypted communication functionality
-   namespace NCommunication
+   namespace Communication
    {
       /// Namespace containing encrypted communication messages
-      namespace NMessages
+      namespace Messages
       {
          /**
-          * @brief
-          *
-          *
-          * @details
-          * @par
-          *
           */
-         class TcMessage
+         class Message
          {
          private:    // Private attributes
-            Hash::SHA512 voSHA;     ///< SHA-512 Digest of message
-            uint32_t            vuiLength; ///< Length of payload in bytes, not including hash
-            uint32_t            vuiID;     ///< Message Type identifier
+            Hash::SHA512 sha;    ///< SHA-512 Digest of message
+            uint32_t     length; ///< Length of payload in bytes, not including hash
+            uint32_t     id;     ///< Message Type identifier
 
          public:     // Public Methods
-            void MPrepare( void );
-            bool  MValid( void ) const;
+            void Prepare( void );
+            bool Valid( void ) const;
 
          protected:  // Protected Methods
-            TcMessage( const uint32_t auiLength, const uint32_t auiID );
-            TcMessage( const TcMessage& aorMsg );
-            ~TcMessage( void );
-            TcMessage& operator=( const TcMessage& aorMsg );
+            Message( const uint32_t auiLength, const uint32_t auiID );
+            Message( const Message& aorMsg );
+            ~Message( void );
+            Message& operator=( const Message& aorMsg );
          };
       }
    }

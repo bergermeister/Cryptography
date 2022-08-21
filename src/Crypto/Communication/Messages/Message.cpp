@@ -4,53 +4,53 @@
 #include <Crypto/Communication/Messages/Message.h>
 
 using namespace Crypto;
-using namespace Crypto::NCommunication::NMessages;
+using namespace Crypto::Communication::Messages;
 
-void TcMessage::MPrepare( void )
+void Message::Prepare( void )
 {
-   this->voSHA.Initialize( );
-   this->voSHA.Process( reinterpret_cast< const uint8_t* >( &this->vuiID ), this->vuiLength );
-   this->voSHA.Finalize( );
+   this->sha.Initialize( );
+   this->sha.Process( reinterpret_cast< const uint8_t* >( &this->id ), this->length );
+   this->sha.Finalize( );
 }
 
-bool TcMessage::MValid( void ) const
+bool Message::Valid( void ) const
 {
    Hash::SHA512 koSHA;
    int32_t            kiResult;
 
    koSHA.Initialize( );
-   koSHA.Process( reinterpret_cast< const uint8_t* >( &this->vuiID ), this->vuiLength );
+   koSHA.Process( reinterpret_cast< const uint8_t* >( &this->id ), this->length );
    koSHA.Finalize( );
 
-   kiResult = std::memcmp( reinterpret_cast< const void* >( this->voSHA.Digest( ) ),
+   kiResult = std::memcmp( reinterpret_cast< const void* >( this->sha.Digest( ) ),
                            reinterpret_cast< const void* >( koSHA.Digest( ) ),
-                           this->vuiLength );
+                           this->length );
 
    return( kiResult == 0 );
 }
 
-TcMessage::TcMessage( const uint32_t auiLength, const uint32_t auiID )
+Message::Message( const uint32_t auiLength, const uint32_t auiID )
 {
-   this->vuiLength = auiLength;
-   this->vuiID     = auiID;
+   this->length = auiLength;
+   this->id     = auiID;
 }
 
-TcMessage::TcMessage( const TcMessage& aorMsg )
+Message::Message( const Message& aorMsg )
 {
    *this = aorMsg;
 }
 
-TcMessage::~TcMessage( void )
+Message::~Message( void )
 {
    // Nothing to destruct
 }
 
-TcMessage& TcMessage::operator=( const TcMessage& aorMsg )
+Message& Message::operator=( const Message& aorMsg )
 {
    if( this != &aorMsg )
    {
-      this->vuiID     = aorMsg.vuiID;
-      this->vuiLength = aorMsg.vuiLength;
+      this->id     = aorMsg.id;
+      this->length = aorMsg.length;
    }
 
    return( *this );

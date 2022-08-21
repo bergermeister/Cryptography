@@ -13,36 +13,31 @@
 namespace Crypto
 {
    /// Namespace containing encrypted communication functionality
-   namespace NCommunication
+   namespace Communication
    {
       /// Namespace containing encrypted communication messages
-      namespace NMessages
+      namespace Messages
       {
          /**
-          * @brief
-          *
-          *
-          * @details
-          * @par
           *
           */
-         class TcEstablishSession : public TcMessage
+         class EstablishSession : public Message
          {
          public:     // Public Attributes
             static const uint32_t XuiType      = 1; ///< Message Type Identifier
             static const uint32_t XuiCountKeys = 5; ///< Number of Shared Keys
 
          private:    // Private Attributes
-            NKeyExchange::TcPublicKey voSharedKey[ XuiCountKeys ];
+            KeyExchange::PublicKey voSharedKey[ XuiCountKeys ];
 
          public:     // Public Methods
-            TcEstablishSession( void );
-            TcEstablishSession( const TcEstablishSession& aorRequest );
-            ~TcEstablishSession( void );
-            TcEstablishSession& operator=( const TcEstablishSession& aorRequest );
+            EstablishSession( void );
+            EstablishSession( const EstablishSession& aorRequest );
+            ~EstablishSession( void );
+            EstablishSession& operator=( const EstablishSession& aorRequest );
 
-            NKeyExchange::TcPublicKey& MSharedKey( const uint32_t auiIndex );
-            const NKeyExchange::TcPublicKey& MSharedKey( const uint32_t auiIndex ) const;
+            KeyExchange::PublicKey& SharedKey( const uint32_t auiIndex );
+            const KeyExchange::PublicKey& SharedKey( const uint32_t auiIndex ) const;
          };
       }
    }

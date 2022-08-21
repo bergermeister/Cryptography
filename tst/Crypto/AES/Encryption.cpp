@@ -8,7 +8,7 @@
 #include <Crypto/AES/Encryptor.h>
 
 using namespace Crypto;
-using namespace Crypto::NAES128;
+using namespace Crypto::AES128;
 
 TEST( AES, MRijndael )
 {
@@ -27,27 +27,27 @@ TEST( AES, MRijndael )
       0x69, 0xc4, 0xe0, 0xd8, 0x6a, 0x7b, 0x04, 0x30,
       0xd8, 0xcd, 0xb7, 0x80, 0x70, 0xb4, 0xc5, 0x5a
    };
-   uint8_t kucpResult[ TcConfiguration::XuiSizeKey ];
+   uint8_t kucpResult[ Configuration::KeySize ];
 
-   TcConfiguration* kopCfg = new TcConfiguration( );
-   TcEncryptor*     kopEnc = new TcEncryptor( *kopCfg );
-   TcDecryptor*     kopDec = new TcDecryptor( *kopCfg );
+   Configuration* kopCfg = new Configuration( );
+   Encryptor*     kopEnc = new Encryptor( *kopCfg );
+   Decryptor*     kopDec = new Decryptor( *kopCfg );
 
    /// -# Initialize AES-128 Configuration for Rijndael
-   kopCfg->MExpandKey( kucpKey );
+   kopCfg->ExpandKey( kucpKey );
 
    /// -# Perform Encryption
-   kopEnc->MEncrypt( kucpPlaintext, kucpResult );
+   kopEnc->Encrypt( kucpPlaintext, kucpResult );
 
    /// -# Verify Ciphertext
-   for( auto kuiIter = 0; kuiIter < TcConfiguration::XuiSizeKey; kuiIter++ )
+   for( auto kuiIter = 0; kuiIter < Configuration::KeySize; kuiIter++ )
    {
       ASSERT_EQ( kucpCiphertext[ kuiIter ], kucpResult[ kuiIter ] );
    }
 
    /// -# Perform Decryption
-   kopDec->MDecrypt( kucpCiphertext, kucpResult );
-   for( auto kuiIter = 0; kuiIter < TcConfiguration::XuiSizeKey; kuiIter++ )
+   kopDec->Decrypt( kucpCiphertext, kucpResult );
+   for( auto kuiIter = 0; kuiIter < Configuration::KeySize; kuiIter++ )
    {
       ASSERT_EQ( kucpPlaintext[ kuiIter ], kucpResult[ kuiIter ] );
    }

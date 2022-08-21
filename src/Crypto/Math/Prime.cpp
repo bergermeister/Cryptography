@@ -1,12 +1,11 @@
 // Crypto Includes
-#include <Crypto/Types.h>
 #include <Crypto/Math/Prime.h>
 
 namespace Crypto
 {
-   namespace NMath
+   namespace Math
    {
-      bool MIsPrime( int64_t alN )
+      bool IsPrime( int64_t alN )
       {
          bool  kbPrime = true;
          int64_t klI;
@@ -36,7 +35,7 @@ namespace Crypto
          return( kbPrime );
       }
 
-      bool MGenerateMersennePrime( int64_t alP )
+      bool GenerateMersennePrime( int64_t alP )
       {
          int64_t klP;
          int64_t klM = 1;

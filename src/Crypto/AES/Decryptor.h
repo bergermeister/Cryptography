@@ -13,31 +13,31 @@
 namespace Crypto
 {
    /// Namespace containing the 128-Bit AES Algorithm
-   namespace NAES128
+   namespace AES128
    {
       /**
        *
        */
-      class TcDecryptor
+      class Decryptor
       {
       private:    // Private Attributes
-         const TcConfiguration& vorCfg;   ///< Algorithm Configuration (S-Box, I-Box, Key Schedule)
-         uint8_t vucpState[ TcConfiguration::XuiSizeKey ];
+         const Configuration& config;   ///< Algorithm Configuration (S-Box, I-Box, Key Schedule)
+         uint8_t state[ Configuration::KeySize ];
 
       public:     // Public Methods
-         TcDecryptor( const TcConfiguration& aorConfiguration );
-         TcDecryptor( const TcDecryptor& aorDecryptor );
-         ~TcDecryptor( void );
-         TcDecryptor& operator=( const TcDecryptor& aorDecryptor );
+         Decryptor( const Configuration& aorConfiguration );
+         Decryptor( const Decryptor& aorDecryptor );
+         ~Decryptor( void );
+         Decryptor& operator=( const Decryptor& aorDecryptor );
 
-         void MDecrypt( const uint8_t aucpCiphertext[ TcConfiguration::XuiSizeKey ],
-                        uint8_t aucpPlaintext[ TcConfiguration::XuiSizeKey ] );
+         void Decrypt( const uint8_t aucpCiphertext[ Configuration::KeySize ],
+                       uint8_t aucpPlaintext[ Configuration::KeySize ] );
 
       private:    // Private Methods
-         void mAddRoundKey( const uint8_t* aucpRoundKey );
-         void mSubstitute( void );
-         void mShiftRows( void );
-         void mMixColumns( void );
+         void addRoundKey( const uint8_t* aucpRoundKey );
+         void substitute( void );
+         void shiftRows( void );
+         void mixColumns( void );
       };
    }
 }

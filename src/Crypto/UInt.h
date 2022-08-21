@@ -1,4 +1,4 @@
-#ifndef Crypto_Math_Numebr_h
+#ifndef Crypto_Math_UInt_h
 #define Crypto_Math_UInt_h
 
 // Crypto Includes

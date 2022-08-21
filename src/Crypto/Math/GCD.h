@@ -1,3 +1,6 @@
+/**
+ * @file 
+ */
 #ifndef Crypto_Math_GCD_h
 #define Crypto_Math_GCD_h
 
@@ -9,12 +12,12 @@
 
 namespace Crypto
 {
-   namespace NMath
+   namespace Math
    {
-      int64_t MGCD( int64_t alA, int64_t alB, int64_t& airInverse );
-      int64_t MLCM( int64_t alA, int64_t alB );
-      std::vector< std::pair< int64_t, int64_t > > MMultiplicativeInverses( int64_t alN );
-      int64_t MMultiplicativeInverse( int64_t alA, int64_t alN );
+      int64_t GCD( int64_t alA, int64_t alB, int64_t& airInverse );
+      int64_t LCM( int64_t alA, int64_t alB );
+      std::vector< std::pair< int64_t, int64_t > > MultiplicativeInverses( int64_t alN );
+      int64_t MultiplicativeInverse( int64_t alA, int64_t alN );
    }
 }
 

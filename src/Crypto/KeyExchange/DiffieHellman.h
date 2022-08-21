@@ -12,9 +12,9 @@
 namespace Crypto
 {
    /// Namespace containing Key Exchange functionality
-   namespace NKeyExchange
+   namespace KeyExchange
    {
-      namespace NDiffieHellman
+      namespace DiffieHellman
       {
          uint64_t MCalculate( const uint64_t adA, const uint64_t adB, const uint64_t adP );
       }

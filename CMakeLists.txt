@@ -9,6 +9,7 @@ if( BUILD_TESTING )
    # -pg    enable profiling
    add_compile_options( -fprofile-arcs -ftest-coverage -pg --no-pie -no-pie -fno-pie )
    add_link_options( -fprofile-arcs --coverage -pg --no-pie -no-pie -fno-pie )
+   #set( CMAKE_CXX_ARCHIVE_CREATE "<CMAKE_AR> qc -o <TARGET> <OBJECTS>" )
 endif( )
 
 add_subdirectory( src )

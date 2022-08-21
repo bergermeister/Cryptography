@@ -5,33 +5,33 @@
 #include <Crypto/Communication/Messages/EstablishSession.h>
 
 using namespace Crypto;
-using namespace Crypto::NCommunication::NMessages;
+using namespace Crypto::Communication::Messages;
 
-TcEstablishSession::TcEstablishSession( void ) 
-   : TcMessage( XuiCountKeys * sizeof( NKeyExchange::TcPublicKey ) + sizeof( uint32_t ), XuiType )
+EstablishSession::EstablishSession( void ) 
+   : Message( XuiCountKeys * sizeof( KeyExchange::PublicKey ) + sizeof( uint32_t ), XuiType )
 {
    // Nothing to construct
 }
-TcEstablishSession::TcEstablishSession( const TcEstablishSession& aorEstablish )
-   : TcMessage( XuiCountKeys * sizeof( NKeyExchange::TcPublicKey ) + sizeof( uint32_t ), XuiType )
+EstablishSession::EstablishSession( const EstablishSession& aorEstablish )
+   : Message( XuiCountKeys * sizeof( KeyExchange::PublicKey ) + sizeof( uint32_t ), XuiType )
 {
    // Call assignment operator
    *this = aorEstablish;
 }
 
-TcEstablishSession::~TcEstablishSession( void )
+EstablishSession::~EstablishSession( void )
 {
    // Nothing to destruct
 }
 
-TcEstablishSession& TcEstablishSession::operator=( const TcEstablishSession& aorEstablish )
+EstablishSession& EstablishSession::operator=( const EstablishSession& aorEstablish )
 {
    uint32_t kuiIdx;
 
    if( this != &aorEstablish )
    {
       // Call base class operator=
-      TcMessage::operator=( static_cast< const TcMessage& >( aorEstablish ) );
+      Message::operator=( static_cast< const Message& >( aorEstablish ) );
 
       for( kuiIdx = 0; kuiIdx < XuiCountKeys; kuiIdx++ )
       {
@@ -42,12 +42,12 @@ TcEstablishSession& TcEstablishSession::operator=( const TcEstablishSession& aor
    return( *this );
 }
 
-NKeyExchange::TcPublicKey& TcEstablishSession::MSharedKey( const uint32_t auiIndex )
+KeyExchange::PublicKey& EstablishSession::SharedKey( const uint32_t auiIndex )
 {
    return( this->voSharedKey[ auiIndex ] );
 }
 
-const NKeyExchange::TcPublicKey& TcEstablishSession::MSharedKey( const uint32_t auiIndex ) const
+const KeyExchange::PublicKey& EstablishSession::SharedKey( const uint32_t auiIndex ) const
 {
    return( this->voSharedKey[ auiIndex ] );
 }
